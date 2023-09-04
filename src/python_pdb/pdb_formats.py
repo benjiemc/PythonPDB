@@ -67,7 +67,9 @@ def format_atom_record(chain, residue, atom):
     if len(atom_name) < 4 and atom_name[:1].isalpha() and len(atom.element.strip()) < 2:
         atom_name = ' ' + atom_name
 
-    return (f"{'ATOM':<6}{atom.number:>5} {atom_name:<4}{atom.alt_loc if atom.alt_loc else '':>1}"
+    record_type = 'ATOM' if not atom.het_atom else 'HETATM'
+
+    return (f"{record_type:<6}{atom.number:>5} {atom_name:<4}{atom.alt_loc if atom.alt_loc else '':>1}"
             f"{residue.name:>3} {chain.name:>1}"
             f"{residue.seq_id:>4}{residue.insert_code if residue.insert_code else '':>1}   "
             f"{atom.position[0]:>8.3f}{atom.position[1]:>8.3f}{atom.position[2]:>8.3f}"

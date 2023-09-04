@@ -17,7 +17,7 @@ class TestParsePDB(TestCase):
 
         self.assertEqual(len(structure[0]), 2)
 
-        self.assertEqual(len(structure[0]['E']), 244)
+        self.assertEqual(len(structure[0]['E']), 245)
         self.assertEqual(structure[0]['E'][1].name, 'ASN')
         self.assertEqual(structure[0]['E'][1].seq_id, 1)
 

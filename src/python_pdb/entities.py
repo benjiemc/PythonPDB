@@ -26,6 +26,7 @@ class Atom:
         element (str): str corresponding to the element id of this atom (periodic table style)
         charge (str | None): +/- charge on the atom
         parent (Residue): Residue to which this atom belongs.
+        het_atom (bool): True if the atom comes from a hetero atom record
 
     '''
     def __init__(self,
@@ -38,7 +39,8 @@ class Atom:
                  occupancy: float,
                  b_factor: float,
                  element: str,
-                 charge: str | None):
+                 charge: str | None,
+                 is_het_atom: bool = False):
         self.name = name
         self.number = number
         self.alt_loc = alt_loc
@@ -50,6 +52,7 @@ class Atom:
         self.element = element
         self.charge = charge
         self.parent = None
+        self.het_atom = is_het_atom
 
     @property
     def position(self) -> tuple[float, float, float]:
@@ -314,7 +317,7 @@ class Structure:
                 for residue in chain:
                     for atom in residue:
                         records.append({
-                            'record_type': 'ATOM',
+                            'record_type': 'ATOM' if not atom.het_atom else 'HETATM',
                             'atom_number': atom.number,
                             'atom_name': atom.name,
                             'alt_loc': atom.alt_loc,
@@ -438,7 +441,7 @@ class Structure:
             elif record_type == 'ENDMDL':
                 model = None
 
-            elif record_type == 'ATOM':
+            if record_type == 'ATOM' or record_type == 'HETATM':
                 if model is None:
                     model = Model()
                     structure.add_model(model)
@@ -477,7 +480,8 @@ class Structure:
                                       occupancy,
                                       b_factor,
                                       element,
-                                      charge if charge != '' else None))
+                                      charge if charge != '' else None,
+                                      is_het_atom=record_type == 'HETATM'))
 
         return structure
 

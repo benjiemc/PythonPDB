@@ -1,0 +1,19 @@
+python\_pdb.formats package
+===========================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   python_pdb.formats.pdb
+   python_pdb.formats.residue
+
+Module contents
+---------------
+
+.. automodule:: python_pdb.formats
+   :members:
+   :undoc-members:
+   :show-inheritance:

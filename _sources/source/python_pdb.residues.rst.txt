@@ -1,7 +1,0 @@
-python\_pdb.residues module
-===========================
-
-.. automodule:: python_pdb.residues
-   :members:
-   :undoc-members:
-   :show-inheritance:

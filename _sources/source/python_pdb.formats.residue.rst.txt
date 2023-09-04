@@ -1,0 +1,7 @@
+python\_pdb.formats.residue module
+==================================
+
+.. automodule:: python_pdb.formats.residue
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,6 +1,14 @@
 python\_pdb package
 ===================
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   python_pdb.formats
+
 Submodules
 ----------
 
@@ -9,8 +17,6 @@ Submodules
 
    python_pdb.entities
    python_pdb.parsers
-   python_pdb.pdb_formats
-   python_pdb.residues
 
 Module contents
 ---------------

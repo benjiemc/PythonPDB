@@ -1,7 +1,0 @@
-python\_pdb.pdb\_formats module
-===============================
-
-.. automodule:: python_pdb.pdb_formats
-   :members:
-   :undoc-members:
-   :show-inheritance:

@@ -17,7 +17,7 @@ class Atom:
     Attributes:
         name (str): atom name
         number (int): atom number in PDB file
-        alt_loc (string | None): alternate location of the atom
+        alt_loc (str | None): alternate location of the atom
         pos_x (float): atom's x-coordinate
         pos_y (float): atom's y-coordinate
         pos_z (float): atom's z-coordinate

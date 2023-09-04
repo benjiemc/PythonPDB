@@ -1,0 +1,7 @@
+python\_pdb.parsers module
+==========================
+
+.. automodule:: python_pdb.parsers
+   :members:
+   :undoc-members:
+   :show-inheritance:

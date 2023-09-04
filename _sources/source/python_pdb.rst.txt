@@ -1,0 +1,21 @@
+python\_pdb package
+===================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   python_pdb.entities
+   python_pdb.parsers
+   python_pdb.pdb_formats
+   python_pdb.residues
+
+Module contents
+---------------
+
+.. automodule:: python_pdb
+   :members:
+   :undoc-members:
+   :show-inheritance:

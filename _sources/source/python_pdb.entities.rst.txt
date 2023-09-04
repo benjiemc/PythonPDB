@@ -1,0 +1,7 @@
+python\_pdb.entities module
+===========================
+
+.. automodule:: python_pdb.entities
+   :members:
+   :undoc-members:
+   :show-inheritance:

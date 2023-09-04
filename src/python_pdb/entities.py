@@ -98,7 +98,6 @@ class Residue:
         seq_id (int): Sequence number of the residue.
         insert_code (str | None): Insert code of the residue if available.
         atoms (list[Atom]): Atoms that form the residue.
-        alternates (list[Atom]): Alternate atoms in the residue.
         parent (Chain): Chain that this residue belongs to.
 
     '''
@@ -111,25 +110,16 @@ class Residue:
         self.insert_code = insert_code
 
         self.atoms = []
-        self.alternates = []
         self.parent = None
 
     def add_atom(self, atom: Atom):
-        '''
-        Add an atom to the residue. Alternately located atoms and regular atoms can both be added but these will be
-        treated separately.
-        '''
-        if atom.alt_loc:
-            self.alternates.append(atom)
-
-        else:
-            self.atoms.append(atom)
-
+        '''Add an atom to the residue.'''
+        self.atoms.append(atom)
         atom.parent = self
 
     def get_atoms(self) -> list[Atom]:
         '''Return a list of all atoms in the residue, including atoms with alternate locations.'''
-        return sorted(self.atoms + self.alternates, key=lambda at: at.number)
+        return self.atoms
 
     @property
     def tlc(self) -> str:

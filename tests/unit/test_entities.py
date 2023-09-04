@@ -170,3 +170,56 @@ class TestStructure(TestCase):
         self.assertEqual(len(structure[1].chains), 2)
         self.assertEqual(structure[1]['C'][4].name, 'VAL')
         self.assertEqual(structure[1]['d'][5].name, 'GLN')
+
+    def test_split_states(self):
+        mock_pdb = ('ATOM      1  N  AGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      2  N  BGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      3  CA AGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      4  CA BGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      5  C  AGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      6  C  BGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      7  O  AGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      8  O  BGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      10 N  AGLY A   4     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      11 N  BGLY A   4     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      12 CA AGLY A   4     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      13 CA BGLY A   4     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      14 C  AGLY A   4     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      15 C  BGLY A   4     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      16 O  AGLY A   4     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      17 O  BGLY A   4     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      18 N   GLY A   5     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      19 CA  GLY A   5     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      20 C   GLY A   5     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      21 O   GLY A   5     -13.721   1.351   1.280  1.00  0.00           O \n')
+        structure = Structure.from_pdb(mock_pdb)
+        structure.split_states()
+
+        self.assertEqual(len(structure), 4)
+
+    def test_split_states_different_chains(self):
+        mock_pdb = ('ATOM      1  N  AGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      2  N  BGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      3  CA AGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      4  CA BGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      5  C  AGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      6  C  BGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      7  O  AGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      8  O  BGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      10 N  AGLY B   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      11 N  BGLY B   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      12 CA AGLY B   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      13 CA BGLY B   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      14 C  AGLY B   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      15 C  BGLY B   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      16 O  AGLY B   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      17 O  BGLY B   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      18 N   GLY B   4     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      19 CA  GLY B   4     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      20 C   GLY B   4     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      21 O   GLY B   4     -13.721   1.351   1.280  1.00  0.00           O \n')
+
+        structure = Structure.from_pdb(mock_pdb)
+        structure.split_states()
+
+        self.assertEqual(len(structure), 4)

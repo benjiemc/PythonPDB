@@ -1,5 +1,5 @@
 '''Classes for representing objects contained within PDB files.'''
-
+import itertools
 from typing import Optional
 
 import pandas as pd
@@ -525,6 +525,80 @@ class Structure:
             new_structure.add_model(model.copy())
 
         return new_structure
+
+    def split_states(self):
+        '''Split multiple alternate locations into separate models.
+
+        If there are multiple locations for an atom (as designated by alt_loc's) split the view of the protein into
+        multiple models.
+
+        ..warning::
+           This method modifies the structure object by overriding the existing models property.
+
+        '''
+        # Identify all residues with multiple conformations
+        residues_with_alt_locs = []
+
+        for model in self:
+            for chain in model:
+                for residue in chain:
+                    alt_locs = set()
+
+                    for atom in residue:
+                        if atom.alt_loc:
+                            alt_locs.add(atom.alt_loc)
+
+                    if len(alt_locs) >= 2:
+                        residues_with_alt_locs.append((model.serial_number, chain.name, residue))
+
+        if len(residues_with_alt_locs) == 0:
+            return
+
+        # Create split out new residues for each residue with multiple confromations
+        conformations = []
+
+        for model_serial_number, chain_name, residue in residues_with_alt_locs:
+            residue_states = {}
+
+            for atom in residue:
+                if atom.alt_loc not in residue_states:
+                    residue_states[atom.alt_loc] = Residue(residue.name, residue.seq_id, residue.insert_code)
+
+                residue_states[atom.alt_loc].add_atom(atom.copy())
+
+            conformations.append([(model_serial_number, chain_name, res) for res in residue_states.values()])
+
+        # Create states by finding all combinations of residues with multiple conformations
+        states = list(itertools.product(*conformations))
+
+        # Create new models for each state
+        new_models = []
+
+        for state in states:
+            res_counter = 0
+
+            for model in self:
+                new_model = Model()
+
+                for chain in model:
+                    new_chain = Chain(chain.name)
+
+                    for residue in chain:
+                        if (model.serial_number, chain.name, residue) == state[res_counter]:
+                            new_chain.add_residue(state[res_counter][-1])
+
+                            if res_counter < len(state) - 1:
+                                res_counter += 1
+
+                        else:
+                            new_chain.add_residue(residue.copy())
+
+                    new_model.add_chain(new_chain)
+
+            new_models.append(new_model)
+
+        # Populate THIS structure with models representing each state
+        self.models = new_models
 
     def __getitem__(self, index):
         return self.models[index]

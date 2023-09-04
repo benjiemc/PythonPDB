@@ -4,11 +4,11 @@ from typing import Optional
 
 import pandas as pd
 
-from python_pdb.pdb_formats import (ALT_LOC_RANGE, ATOM_NAME_RANGE, ATOM_NUMBER_RANGE, B_FACTOR_RANGE, CHAIN_ID_RANGE,
+from python_pdb.formats.pdb import (ALT_LOC_RANGE, ATOM_NAME_RANGE, ATOM_NUMBER_RANGE, B_FACTOR_RANGE, CHAIN_ID_RANGE,
                                     CHARGE_RANGE, ELEMENT_RANGE, INSERT_CODE_RANGE, MODEL_SERIAL_RANGE, OCCUPANCY_RANGE,
                                     RECORD_TYPE_RANGE, RESIDUE_NAME_RANGE, SEQ_ID_RANGE, X_POS_RANGE, Y_POS_RANGE,
                                     Z_POS_RANGE, format_atom_record)
-from python_pdb.residues import THREE_TO_ONE_CODE
+from python_pdb.formats.residue import THREE_TO_ONE_CODE
 
 
 class Atom:

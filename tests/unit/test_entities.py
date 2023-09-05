@@ -5,6 +5,41 @@ import pandas as pd
 from python_pdb.entities import Atom, Chain, Model, Residue, Structure
 
 
+class TestAtom(TestCase):
+    def test_copy(self):
+        mock_atom = Atom('N', 1, None, 0.00, 0.00, 0.00, 1.00, 7.9, 'N', None)
+
+        copy = mock_atom.copy()
+
+        self.assertEqual(mock_atom, copy)
+        mock_atom.pos_x += 1.00
+        self.assertNotEqual(mock_atom, copy)
+
+
+class TestResidue(TestCase):
+    def test_copy(self):
+        mock_residue = Residue('ALA', 1, None)
+
+        copy = mock_residue.copy()
+
+        self.assertEqual(mock_residue, copy)
+        mock_residue.name = 'GLY'
+        self.assertNotEqual(mock_residue, copy)
+
+
+class TestChain(TestCase):
+    def test_copy(self):
+        mock_chain = Chain('A')
+
+        copy = mock_chain.copy()
+
+        self.assertEqual(mock_chain, copy)
+
+        mock_chain.name = 'B'
+
+        self.assertNotEqual(mock_chain, copy)
+
+
 class TestStructure(TestCase):
     def test_to_pandas_models(self):
         structure = Structure()

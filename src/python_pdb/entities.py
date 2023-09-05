@@ -134,6 +134,15 @@ class Residue:
         '''One letter code of residue.'''
         return THREE_TO_ONE_CODE[self.name]
 
+    def copy(self) -> 'Residue':
+        '''Create a copy of the Residue. Note: the parent of the copied residue will reset.'''
+        new_residue = Residue(self.name, self.seq_id, self.insert_code)
+
+        for atom in self:
+            new_residue.add_atom(atom.copy())
+
+        return new_residue
+
     def __str__(self):
         return f"Residue({self.name}, {self.seq_id}{self.insert_code if self.insert_code else ''})"
 
@@ -197,6 +206,15 @@ class Chain:
     def get_residues(self):
         return self.residues
 
+    def copy(self) -> 'Chain':
+        '''Create a deep copy of the chain of the chain. Note the parent will be reset.'''
+        new_chain = Chain(self.name)
+
+        for residue in self:
+            new_chain.add_residue(residue.copy())
+
+        return new_chain
+
     def __iter__(self):
         yield from self.get_residues()
 
@@ -254,6 +272,15 @@ class Model:
 
     def get_chains(self):
         return self.chains
+
+    def copy(self):
+        '''Create a deep copy of the Model. Note parent will be reset in copy.'''
+        new_model = Model(self.serial_number)
+
+        for chain in self:
+            new_model.add_chain(chain.copy())
+
+        return new_model
 
     def __getitem__(self, chain_id):
         for chain in self.chains:
@@ -484,6 +511,15 @@ class Structure:
                                       is_het_atom=record_type == 'HETATM'))
 
         return structure
+
+    def copy(self) -> 'Structure':
+        '''Create a deep copy of the structure.'''
+        new_structure = Structure()
+
+        for model in self:
+            new_structure.add_model(model.copy())
+
+        return new_structure
 
     def __getitem__(self, index):
         return self.models[index]

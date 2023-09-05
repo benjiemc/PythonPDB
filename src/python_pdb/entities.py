@@ -422,18 +422,21 @@ class Structure:
                     new_structure.add_model(model)
                     prev_model_index = record.model_index
 
+                    prev_chain_id = None
+                    prev_res_id = None
+
             if prev_chain_id != record.chain_id:
                 chain = Chain(record.chain_id)
                 model.add_chain(chain)
                 prev_chain_id = record.chain_id
 
-            if prev_res_id != (record.residue_seq_id, record.residue_insert_code):
+            if prev_res_id != (record.chain_id, record.residue_seq_id, record.residue_insert_code):
                 residue = Residue(record.residue_name,
                                   record.residue_seq_id,
                                   record.residue_insert_code if record.residue_insert_code != '' else None)
                 chain.add_residue(residue)
 
-                prev_res_id = (record.residue_seq_id, record.residue_insert_code)
+                prev_res_id = (record.chain_id, record.residue_seq_id, record.residue_insert_code)
 
             residue.add_atom(Atom(record.atom_name,
                                   record.atom_number,
@@ -467,6 +470,8 @@ class Structure:
 
             elif record_type == 'ENDMDL':
                 model = None
+                prev_chain_id = None
+                prev_res_id = None
 
             if record_type == 'ATOM' or record_type == 'HETATM':
                 if model is None:
@@ -493,10 +498,10 @@ class Structure:
                     model.add_chain(chain)
                     prev_chain_id = chain_id
 
-                if prev_res_id != (seq_id, insert_code):
+                if prev_res_id != (chain_id, seq_id, insert_code):
                     residue = Residue(res_name, seq_id, insert_code if insert_code != '' else None)
                     chain.add_residue(residue)
-                    prev_res_id = (seq_id, insert_code)
+                    prev_res_id = (chain_id, seq_id, insert_code)
 
                 residue.add_atom(Atom(atom_name,
                                       atom_num,

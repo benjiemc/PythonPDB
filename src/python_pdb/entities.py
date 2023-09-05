@@ -7,7 +7,7 @@ import pandas as pd
 from python_pdb.formats.pdb import (ALT_LOC_RANGE, ATOM_NAME_RANGE, ATOM_NUMBER_RANGE, B_FACTOR_RANGE, CHAIN_ID_RANGE,
                                     CHARGE_RANGE, ELEMENT_RANGE, INSERT_CODE_RANGE, MODEL_SERIAL_RANGE, OCCUPANCY_RANGE,
                                     RECORD_TYPE_RANGE, RESIDUE_NAME_RANGE, SEQ_ID_RANGE, X_POS_RANGE, Y_POS_RANGE,
-                                    Z_POS_RANGE, format_atom_record)
+                                    Z_POS_RANGE, format_atom_record, format_model_record)
 from python_pdb.formats.residue import THREE_TO_ONE_CODE
 
 
@@ -532,10 +532,17 @@ class Structure:
 
     def __str__(self):
         records = []
-        for model in self:
+        for model_number, model in enumerate(self, 1):
+            if len(self) > 1:
+                output_number = model.serial_number if model.serial_number else model_number
+                records.append(format_model_record(output_number))
+
             for chain in model:
                 for residue in chain:
                     for atom in residue:
                         records.append(format_atom_record(chain, residue, atom))
+
+            if len(self) > 1:
+                records.append('ENDMDL')
 
         return '\n'.join(records)

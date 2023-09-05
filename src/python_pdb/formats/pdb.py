@@ -154,3 +154,8 @@ def format_atom_record(chain, residue, atom):
             f"{atom.position[0]:>8.3f}{atom.position[1]:>8.3f}{atom.position[2]:>8.3f}"
             f"{atom.occupancy:>6.2f}{atom.b_factor:>6.2f}          "
             f"{atom.element:>2}{atom.charge if atom.charge else '':>2}")
+
+
+def format_model_record(model_number):
+    '''Format model_number into a MODEL record.'''
+    return f"MODEL     {model_number:>4}"

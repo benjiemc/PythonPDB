@@ -284,6 +284,12 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Chain.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#python_pdb.entities.Chain" title="python_pdb.entities.Chain"><span class="pre">Chain</span></a></span></span><a class="headerlink" href="#python_pdb.entities.Chain.copy" title="Link to this definition"></a></dt>
+<dd><p>Create a deep copy of the chain of the chain. Note the parent will be reset.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="python_pdb.entities.Chain.get_residues">
 <span class="sig-name descname"><span class="pre">get_residues</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Chain.get_residues" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -332,6 +338,12 @@
 <dt class="sig sig-object py" id="python_pdb.entities.Model.add_chain">
 <span class="sig-name descname"><span class="pre">add_chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#python_pdb.entities.Chain" title="python_pdb.entities.Chain"><span class="pre">Chain</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Model.add_chain" title="Link to this definition"></a></dt>
 <dd><p>Add chain to model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Model.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Model.copy" title="Link to this definition"></a></dt>
+<dd><p>Create a deep copy of the Model. Note parent will be reset in copy.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -408,6 +420,12 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Residue.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#python_pdb.entities.Residue" title="python_pdb.entities.Residue"><span class="pre">Residue</span></a></span></span><a class="headerlink" href="#python_pdb.entities.Residue.copy" title="Link to this definition"></a></dt>
+<dd><p>Create a copy of the Residue. Note: the parent of the copied residue will reset.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="python_pdb.entities.Residue.get_atoms">
 <span class="sig-name descname"><span class="pre">get_atoms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#python_pdb.entities.Atom" title="python_pdb.entities.Atom"><span class="pre">Atom</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#python_pdb.entities.Residue.get_atoms" title="Link to this definition"></a></dt>
 <dd><p>Return a list of all atoms in the residue, including atoms with alternate locations.</p>
@@ -450,6 +468,12 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Structure.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#python_pdb.entities.Structure" title="python_pdb.entities.Structure"><span class="pre">Structure</span></a></span></span><a class="headerlink" href="#python_pdb.entities.Structure.copy" title="Link to this definition"></a></dt>
+<dd><p>Create a deep copy of the structure.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="python_pdb.entities.Structure.from_pandas">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_pandas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Structure.from_pandas" title="Link to this definition"></a></dt>
 <dd><p>Create Structure object from a pandas dataframe.</p>
@@ -486,6 +510,18 @@
 <dt class="sig sig-object py" id="python_pdb.entities.Structure.from_pdb">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_pdb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#python_pdb.entities.Structure" title="python_pdb.entities.Structure"><span class="pre">Structure</span></a></span></span><a class="headerlink" href="#python_pdb.entities.Structure.from_pdb" title="Link to this definition"></a></dt>
 <dd><p>Create structure from a PDB formatted file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Structure.split_states">
+<span class="sig-name descname"><span class="pre">split_states</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Structure.split_states" title="Link to this definition"></a></dt>
+<dd><p>Split multiple alternate locations into separate models.</p>
+<p>If there are multiple locations for an atom (as designated by alt_loc’s) split the view of the protein into
+multiple models.</p>
+<dl class="simple">
+<dt>..warning::</dt><dd><p>This method modifies the structure object by overriding the existing models property.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

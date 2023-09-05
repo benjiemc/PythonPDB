@@ -113,6 +113,7 @@
 <li class="toctree-l4"><a class="reference internal" href="python_pdb.formats.pdb.html#python_pdb.formats.pdb.Y_POS_RANGE"><code class="docutils literal notranslate"><span class="pre">Y_POS_RANGE</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="python_pdb.formats.pdb.html#python_pdb.formats.pdb.Z_POS_RANGE"><code class="docutils literal notranslate"><span class="pre">Z_POS_RANGE</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="python_pdb.formats.pdb.html#python_pdb.formats.pdb.format_atom_record"><code class="docutils literal notranslate"><span class="pre">format_atom_record()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pdb.formats.pdb.html#python_pdb.formats.pdb.format_model_record"><code class="docutils literal notranslate"><span class="pre">format_model_record()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.formats.residue.html">python_pdb.formats.residue module</a><ul>
@@ -157,6 +158,7 @@
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Chain.residues"><code class="docutils literal notranslate"><span class="pre">Chain.residues</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Chain.parent"><code class="docutils literal notranslate"><span class="pre">Chain.parent</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Chain.add_residue"><code class="docutils literal notranslate"><span class="pre">Chain.add_residue()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Chain.copy"><code class="docutils literal notranslate"><span class="pre">Chain.copy()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Chain.get_residues"><code class="docutils literal notranslate"><span class="pre">Chain.get_residues()</span></code></a></li>
 </ul>
 </li>
@@ -165,6 +167,7 @@
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Model.parent"><code class="docutils literal notranslate"><span class="pre">Model.parent</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Model.serial_number"><code class="docutils literal notranslate"><span class="pre">Model.serial_number</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Model.add_chain"><code class="docutils literal notranslate"><span class="pre">Model.add_chain()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Model.copy"><code class="docutils literal notranslate"><span class="pre">Model.copy()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Model.get_chains"><code class="docutils literal notranslate"><span class="pre">Model.get_chains()</span></code></a></li>
 </ul>
 </li>
@@ -175,6 +178,7 @@
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Residue.atoms"><code class="docutils literal notranslate"><span class="pre">Residue.atoms</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Residue.parent"><code class="docutils literal notranslate"><span class="pre">Residue.parent</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Residue.add_atom"><code class="docutils literal notranslate"><span class="pre">Residue.add_atom()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Residue.copy"><code class="docutils literal notranslate"><span class="pre">Residue.copy()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Residue.get_atoms"><code class="docutils literal notranslate"><span class="pre">Residue.get_atoms()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Residue.olc"><code class="docutils literal notranslate"><span class="pre">Residue.olc</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Residue.tlc"><code class="docutils literal notranslate"><span class="pre">Residue.tlc</span></code></a></li>
@@ -183,8 +187,10 @@
 <li class="toctree-l2"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Structure"><code class="docutils literal notranslate"><span class="pre">Structure</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Structure.models"><code class="docutils literal notranslate"><span class="pre">Structure.models</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Structure.add_model"><code class="docutils literal notranslate"><span class="pre">Structure.add_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Structure.copy"><code class="docutils literal notranslate"><span class="pre">Structure.copy()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Structure.from_pandas"><code class="docutils literal notranslate"><span class="pre">Structure.from_pandas()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Structure.from_pdb"><code class="docutils literal notranslate"><span class="pre">Structure.from_pdb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Structure.split_states"><code class="docutils literal notranslate"><span class="pre">Structure.split_states()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Structure.to_pandas"><code class="docutils literal notranslate"><span class="pre">Structure.to_pandas()</span></code></a></li>
 </ul>
 </li>

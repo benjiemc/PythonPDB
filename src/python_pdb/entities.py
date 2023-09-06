@@ -1,6 +1,5 @@
 '''Classes for representing objects contained within PDB files.'''
 import itertools
-from typing import Optional
 
 import pandas as pd
 
@@ -99,7 +98,7 @@ class Residue:
     def __init__(self,
                  name: str,
                  seq_id: int,
-                 insert_code: Optional[str]):
+                 insert_code: str | None):
         self.name = name
         self.seq_id = seq_id
         self.insert_code = insert_code

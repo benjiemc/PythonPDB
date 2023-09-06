@@ -79,14 +79,6 @@ class Atom:
         return str(self)
 
     def __eq__(self, other):
-        if self.parent and other.parent:
-            return (
-                (self.parent,
-                 self.name,
-                 self.number,
-                 self.poisition) == (other.parent, other.name, other.number, other.poisition)
-            )
-
         return (self.name, self.number, self.position) == (other.name, other.number, other.position)
 
     def __hash__(self):
@@ -153,15 +145,10 @@ class Residue:
         yield from self.get_atoms()
 
     def __eq__(self, other):
-        if self.parent and other.parent:
-            return (
-                (self.parent.name,
-                 self.name,
-                 self.seq_id,
-                 self.insert_code) == (other.parent.name, other.name, other.seq_id, other.insert_code)
-            )
-
-        return (self.name, self.seq_id, self.insert_code) == (other.name, other.seq_id, other.insert_code)
+        return (self.name,
+                self.seq_id,
+                self.insert_code,
+                self.atoms) == (other.name, other.seq_id, other.insert_code, other.atoms)
 
     def __hash__(self):
         return hash((self.name, self.seq_id, self.insert_code))
@@ -294,6 +281,9 @@ class Model:
 
     def __len__(self):
         return len(self.chains)
+
+    def __eq__(self, other: 'Model'):
+        return (self.serial_number == other.serial_number) and (self.chains == other.chains)
 
 
 class Structure:
@@ -625,3 +615,6 @@ class Structure:
                 records.append('ENDMDL')
 
         return '\n'.join(records)
+
+    def __eq__(self, other: 'Structure'):
+        return self.models == other.models

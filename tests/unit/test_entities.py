@@ -26,6 +26,29 @@ class TestResidue(TestCase):
         mock_residue.name = 'GLY'
         self.assertNotEqual(mock_residue, copy)
 
+    def test_equals_children(self):
+        mock_atom_1 = Atom('N', 1, None, 0.00, 0.00, 0.00, 1.00, 7.9, 'N', None)
+
+        mock_res_1 = Residue('ALA', 1, None)
+        mock_res_2 = Residue('ALA', 1, None)
+
+        mock_res_1.add_atom(mock_atom_1)
+        mock_res_2.add_atom(mock_atom_1)
+
+        self.assertEqual(mock_res_1, mock_res_2)
+
+    def test_not_equals_children(self):
+        mock_atom_1 = Atom('N', 1, None, 0.00, 0.00, 0.00, 1.00, 7.9, 'N', None)
+        mock_atom_2 = Atom('O', 1, None, 0.00, 0.00, 0.00, 1.00, 7.9, 'O', None)
+
+        mock_res_1 = Residue('ALA', 1, None)
+        mock_res_2 = Residue('ALA', 1, None)
+
+        mock_res_1.add_atom(mock_atom_1)
+        mock_res_2.add_atom(mock_atom_2)
+
+        self.assertNotEqual(mock_res_1, mock_res_2)
+
 
 class TestChain(TestCase):
     def test_copy(self):

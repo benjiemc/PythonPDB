@@ -1,5 +1,6 @@
 '''Classes for representing objects contained within PDB files.'''
 import itertools
+import warnings
 
 import pandas as pd
 
@@ -8,6 +9,10 @@ from python_pdb.formats.pdb import (ALT_LOC_RANGE, ATOM_NAME_RANGE, ATOM_NUMBER_
                                     RECORD_TYPE_RANGE, RESIDUE_NAME_RANGE, SEQ_ID_RANGE, X_POS_RANGE, Y_POS_RANGE,
                                     Z_POS_RANGE, format_atom_record, format_model_record)
 from python_pdb.formats.residue import THREE_TO_ONE_CODE
+
+
+class StructureConstructionWarning(Warning):
+    '''Raised if something is flagged for attention while building a structure.'''
 
 
 class Atom:
@@ -426,6 +431,12 @@ class Structure:
 
                 prev_res_id = (record.chain_id, record.residue_seq_id, record.residue_insert_code)
 
+            if record.alt_loc:
+                warnings.warn((f'{record}: ATOM contains alternate location. '
+                               'The `split_states` method can be used to separate these possible conformations '
+                               'into separate models.'),
+                              StructureConstructionWarning)
+
             residue.add_atom(Atom(record.atom_name,
                                   record.atom_number,
                                   record.alt_loc if record.alt_loc != '' else None,
@@ -490,6 +501,12 @@ class Structure:
                     residue = Residue(res_name, seq_id, insert_code if insert_code != '' else None)
                     chain.add_residue(residue)
                     prev_res_id = (chain_id, seq_id, insert_code)
+
+                if alt_loc:
+                    warnings.warn((f'{record}: ATOM contains alternate location. '
+                                   'The `split_states` method can be used to separate these possible conformations '
+                                   'into separate models.'),
+                                  StructureConstructionWarning)
 
                 residue.add_atom(Atom(atom_name,
                                       atom_num,

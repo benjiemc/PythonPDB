@@ -1,8 +1,9 @@
+import warnings
 from unittest import TestCase
 
 import pandas as pd
 
-from python_pdb.entities import Atom, Chain, Model, Residue, Structure
+from python_pdb.entities import Atom, Chain, Model, Residue, Structure, StructureConstructionWarning
 
 
 class TestAtom(TestCase):
@@ -215,7 +216,11 @@ class TestStructure(TestCase):
                     'ATOM      19 CA  GLY A   5     -12.988   2.726   3.102  1.00  0.00           C \n'
                     'ATOM      20 C   GLY A   5     -12.843   2.059   1.732  1.00  0.00           C \n'
                     'ATOM      21 O   GLY A   5     -13.721   1.351   1.280  1.00  0.00           O \n')
-        structure = Structure.from_pdb(mock_pdb)
+
+        with warnings.catch_warnings():
+            warnings.filterwarnings('ignore', category=StructureConstructionWarning)
+            structure = Structure.from_pdb(mock_pdb)
+
         structure.split_states()
 
         self.assertEqual(len(structure), 4)
@@ -242,7 +247,10 @@ class TestStructure(TestCase):
                     'ATOM      20 C   GLY B   4     -12.843   2.059   1.732  1.00  0.00           C \n'
                     'ATOM      21 O   GLY B   4     -13.721   1.351   1.280  1.00  0.00           O \n')
 
-        structure = Structure.from_pdb(mock_pdb)
+        with warnings.catch_warnings():
+            warnings.filterwarnings('ignore', category=StructureConstructionWarning)
+            structure = Structure.from_pdb(mock_pdb)
+
         structure.split_states()
 
         self.assertEqual(len(structure), 4)

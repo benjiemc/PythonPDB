@@ -542,7 +542,7 @@ class Structure:
         if len(residues_with_alt_locs) == 0:
             return
 
-        # Create split out new residues for each residue with multiple confromations
+        # Create new residues for each conformation of residues with multiple confromations
         conformations = []
 
         for model_serial_number, chain_name, residue in residues_with_alt_locs:

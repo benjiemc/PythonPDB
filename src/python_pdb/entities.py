@@ -246,11 +246,10 @@ class Model:
         serial_number (int | None): optional serial number to identify the model.
 
     '''
-    def __init__(self, serial_number=None):
+    def __init__(self, serial_number: int | None = None):
         self.parent = None
         self.chains = []
-
-        self.serial_number = serial_number if serial_number else None
+        self.serial_number = serial_number
 
     def add_chain(self, chain: Chain):
         '''Add chain to model.'''

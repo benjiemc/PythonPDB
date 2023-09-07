@@ -70,6 +70,14 @@ class TestResidue(TestCase):
         with self.assertWarns(Warning):
             mock_res_1.remove_atom(mock_atom_1)
 
+    def test_in(self):
+        mock_atom = Atom('N', 1, None, 0.00, 0.00, 0.00, 1.00, 7.9, 'N', None)
+        mock_res = Residue('ALA', 1, None)
+
+        mock_res.add_atom(mock_atom)
+
+        self.assertTrue(mock_atom in mock_res)
+
 
 class TestChain(TestCase):
     def test_copy(self):
@@ -101,6 +109,24 @@ class TestChain(TestCase):
 
         with self.assertWarns(Warning):
             mock_chain.remove_residue(mock_res)
+
+    def test_in(self):
+        mock_chain = Chain('A')
+        mock_res = Residue('ALA', 1, None)
+
+        mock_chain.add_residue(mock_res)
+
+        self.assertTrue(mock_res in mock_chain)
+
+
+class TestModel(TestCase):
+    def test_in(self):
+        mock_model = Model()
+        mock_chain = Chain('A')
+
+        mock_model.add_chain(mock_chain)
+
+        self.assertTrue(mock_chain in mock_model)
 
 
 class TestStructure(TestCase):
@@ -310,3 +336,16 @@ class TestStructure(TestCase):
         structure.dehydrate()
 
         self.assertEqual(len(structure[0]['A']), 1)
+
+    def test_in(self):
+        mock_structure = Structure()
+        mock_model = Model()
+
+        mock_structure.add_model(mock_model)
+
+        self.assertTrue(mock_model in mock_structure)
+
+        mock_model_2 = Model()
+        mock_model_2.add_chain(Chain('A'))
+
+        self.assertFalse(mock_model_2 in mock_structure)

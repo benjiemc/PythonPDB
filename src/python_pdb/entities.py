@@ -191,6 +191,13 @@ class Residue:
 
         raise KeyError(f"No atom {atom_name}")
 
+    def __contains__(self, atom):
+        for res_atom in self:
+            if atom == res_atom:
+                return True
+
+        return False
+
 
 class Chain:
     '''Chain representation.
@@ -260,6 +267,13 @@ class Chain:
     def __len__(self):
         return len(self.residues)
 
+    def __contains__(self, residue):
+        for chain_residue in self:
+            if residue == chain_residue:
+                return True
+
+        return False
+
     def __getitem__(self, seq_id: str | int) -> Residue:
         '''Get residue from chain by sequence identifier (id and insert code if applicable).
 
@@ -307,6 +321,13 @@ class Model:
             new_model.add_chain(chain.copy())
 
         return new_model
+
+    def __contains__(self, chain):
+        for model_chain in self:
+            if chain == model_chain:
+                return True
+
+        return False
 
     def __getitem__(self, chain_id):
         for chain in self.chains:
@@ -649,6 +670,13 @@ class Structure:
                     for atom in res:
                         if atom.het_atom and res.name == 'HOH':
                             chain.remove_residue(res)
+
+    def __contains__(self, model):
+        for struct_model in self:
+            if model == struct_model:
+                return True
+
+        return False
 
     def __getitem__(self, index):
         return self.models[index]

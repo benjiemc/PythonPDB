@@ -136,7 +136,7 @@ MODEL_SERIAL_RANGE = (10, 14)
 
 
 def format_atom_record(chain, residue, atom):
-    '''Format information as a record entry for pdb files.'''
+    '''Format information as a record entry for pdb files. Function will handle both ATOM and HETATM entries.'''
     # Format atom name - Taken from BioPython PDBIO module
     # Pad if:
     #     - smaller than 4 characters

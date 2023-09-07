@@ -89,8 +89,21 @@
 <p>Functions for parsing PDB files into python objects and vice versa.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="python_pdb.parsers.parse_pdb">
-<span class="sig-prename descclassname"><span class="pre">python_pdb.parsers.</span></span><span class="sig-name descname"><span class="pre">parse_pdb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Structure" title="python_pdb.entities.Structure"><span class="pre">Structure</span></a></span></span><a class="headerlink" href="#python_pdb.parsers.parse_pdb" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">python_pdb.parsers.</span></span><span class="sig-name descname"><span class="pre">parse_pdb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">silent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Structure" title="python_pdb.entities.Structure"><span class="pre">Structure</span></a></span></span><a class="headerlink" href="#python_pdb.parsers.parse_pdb" title="Link to this definition"></a></dt>
 <dd><p>Create structure object from PDB file.</p>
+<p>This function is a wrapper around the Structure.from_pdb(…) classmethod that provides additional functionality of
+suppressing warnings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>contents</strong> – contents of a PDB file in string format.</p></li>
+<li><p><strong>silent</strong> – suppress any warnings while building the structure (Default: False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Structure object parsed from the PDB file.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">

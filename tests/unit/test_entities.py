@@ -50,6 +50,26 @@ class TestResidue(TestCase):
 
         self.assertNotEqual(mock_res_1, mock_res_2)
 
+    def test_remove_atom(self):
+        mock_atom_1 = Atom('N', 1, None, 0.00, 0.00, 0.00, 1.00, 7.9, 'N', None)
+
+        mock_res_1 = Residue('ALA', 1, None)
+        mock_res_1.add_atom(mock_atom_1)
+
+        self.assertEqual(len(mock_res_1), 1)
+
+        mock_res_1.remove_atom(mock_atom_1)
+
+        self.assertEqual(len(mock_res_1), 0)
+
+    def test_remove_atom_warning(self):
+        mock_atom_1 = Atom('N', 1, None, 0.00, 0.00, 0.00, 1.00, 7.9, 'N', None)
+
+        mock_res_1 = Residue('ALA', 1, None)
+
+        with self.assertWarns(Warning):
+            mock_res_1.remove_atom(mock_atom_1)
+
 
 class TestChain(TestCase):
     def test_copy(self):
@@ -62,6 +82,25 @@ class TestChain(TestCase):
         mock_chain.name = 'B'
 
         self.assertNotEqual(mock_chain, copy)
+
+    def test_remove_residue(self):
+        mock_chain = Chain('A')
+        mock_res = Residue('ALA', 1, None)
+
+        mock_chain.add_residue(mock_res)
+
+        self.assertEqual(len(mock_chain), 1)
+
+        mock_chain.remove_residue(mock_res)
+
+        self.assertEqual(len(mock_chain), 0)
+
+    def test_remove_residue_warning(self):
+        mock_chain = Chain('A')
+        mock_res = Residue('ALA', 1, None)
+
+        with self.assertWarns(Warning):
+            mock_chain.remove_residue(mock_res)
 
 
 class TestStructure(TestCase):
@@ -254,3 +293,20 @@ class TestStructure(TestCase):
         structure.split_states()
 
         self.assertEqual(len(structure), 4)
+
+    def test_dehydrate(self):
+        mock_pdb = ('ATOM      1  N   ALA A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      2  CA  ALA A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      3  C   ALA A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      4  O   ALA A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      5  CB  ALA A   3     -11.858   2.289   4.034  1.00  0.00           C \n'
+                    'HETATM    6  O   HOH A   4     -15.330  29.061 101.651  1.00 24.28           O \n')
+
+        structure = Structure.from_pdb(mock_pdb)
+
+        self.assertTrue(structure[0]['A'][4]['O'].het_atom)
+        self.assertEqual(len(structure[0]['A']), 2)
+
+        structure.dehydrate()
+
+        self.assertEqual(len(structure[0]['A']), 1)

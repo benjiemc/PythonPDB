@@ -116,6 +116,24 @@ class Residue:
         self.atoms.append(atom)
         atom.parent = self
 
+    def remove_atom(self, atom: Atom):
+        '''Remove atom from residue.'''
+        removed_atom = False
+
+        new_atom_list = []
+
+        for res_atom in self:
+            if atom == res_atom:
+                removed_atom = True
+                continue
+
+            new_atom_list.append(res_atom)
+
+        self.atoms = new_atom_list
+
+        if not removed_atom:
+            warnings.warn("Atom not found in residue.")
+
     def get_atoms(self) -> list[Atom]:
         '''Return a list of all atoms in the residue, including atoms with alternate locations.'''
         return self.atoms
@@ -193,6 +211,24 @@ class Chain:
         '''Add residue to chain.'''
         self.residues.append(residue)
         residue.parent = self
+
+    def remove_residue(self, residue: Residue):
+        '''Remove residue from residue.'''
+        removed_residue = False
+
+        new_residue_list = []
+
+        for chain_res in self:
+            if residue == chain_res:
+                removed_residue = True
+                continue
+
+            new_residue_list.append(chain_res)
+
+        self.residues = new_residue_list
+
+        if not removed_residue:
+            warnings.warn("Residue not found in chain.")
 
     def get_residues(self):
         return self.residues
@@ -604,6 +640,15 @@ class Structure:
 
         # Populate THIS structure with models representing each state
         self.models = new_models
+
+    def dehydrate(self):
+        '''Remove all water molecules from Structure.'''
+        for model in self:
+            for chain in model:
+                for res in chain:
+                    for atom in res:
+                        if atom.het_atom and res.name == 'HOH':
+                            chain.remove_residue(res)
 
     def __getitem__(self, index):
         return self.models[index]

@@ -4,6 +4,7 @@ from unittest import TestCase
 import pandas as pd
 
 from python_pdb.entities import Atom, Chain, Model, Residue, Structure, StructureConstructionWarning
+from python_pdb.records import AtomRecord, EndModelRecord, ModelRecord
 
 
 class TestAtom(TestCase):
@@ -249,6 +250,40 @@ class TestStructure(TestCase):
                      'element', 'charge', 'model_index'])
 
         structure = Structure.from_pandas(mock_df)
+
+        self.assertEqual(len(structure[0].chains), 2)
+        self.assertEqual(len(structure[0].chains), 2)
+        self.assertEqual(structure[0]['C'][4].name, 'VAL')
+        self.assertEqual(structure[0]['d'][5].name, 'GLN')
+
+        self.assertEqual(len(structure[1].chains), 2)
+        self.assertEqual(len(structure[1].chains), 2)
+        self.assertEqual(structure[1]['C'][4].name, 'VAL')
+        self.assertEqual(structure[1]['d'][5].name, 'GLN')
+
+    def test_construct_from_records(self):
+        records = [
+            ModelRecord(0),
+            AtomRecord(10570, 'N',  None, 'VAL', 'C', 4, None, -15.115, 2.602, -43.993, 1.00, 47.21, 'N', None),
+            AtomRecord(10571, 'CA', None, 'VAL', 'C', 4, None, -14.470, 1.464, -43.338, 1.00, 41.45, 'C', None),
+            AtomRecord(10572, 'C',  None, 'VAL', 'C', 4, None, -13.540, 1.977, -42.246, 1.00, 36.39, 'C', None),
+            AtomRecord(10586, 'N',  None, 'GLN', 'd', 5, None, -13.811, 1.612, -40.993, 1.00, 36.76, 'N', None),
+            AtomRecord(10587, 'CA', None, 'GLN', 'd', 5, None, -13.021, 2.105, -39.861, 1.00, 35.56, 'C', None),
+            AtomRecord(10588, 'C',  None, 'GLN', 'd', 5, None, -12.114, 1.030, -39.260, 1.00, 30.89, 'C', None),
+            AtomRecord(10589, 'O',  None, 'GLN', 'd', 5, None, -12.567, 0.013, -38.744, 1.00, 23.49, 'O', None),
+            EndModelRecord(),
+            ModelRecord(1),
+            AtomRecord(10570, 'N',  None, 'VAL', 'C', 4, None, -15.115, 2.602, -43.993, 1.00, 47.21, 'N', None),
+            AtomRecord(10571, 'CA', None, 'VAL', 'C', 4, None, -14.470, 1.464, -43.338, 1.00, 41.45, 'C', None),
+            AtomRecord(10572, 'C',  None, 'VAL', 'C', 4, None, -13.540, 1.977, -42.246, 1.00, 36.39, 'C', None),
+            AtomRecord(10586, 'N',  None, 'GLN', 'd', 5, None, -13.811, 1.612, -40.993, 1.00, 36.76, 'N', None),
+            AtomRecord(10587, 'CA', None, 'GLN', 'd', 5, None, -13.021, 2.105, -39.861, 1.00, 35.56, 'C', None),
+            AtomRecord(10588, 'C',  None, 'GLN', 'd', 5, None, -12.114, 1.030, -39.260, 1.00, 30.89, 'C', None),
+            AtomRecord(10589, 'O',  None, 'GLN', 'd', 5, None, -12.567, 0.013, -38.744, 1.00, 23.49, 'O', None),
+            EndModelRecord(),
+        ]
+
+        structure = Structure._construct_from_records(records)
 
         self.assertEqual(len(structure[0].chains), 2)
         self.assertEqual(len(structure[0].chains), 2)

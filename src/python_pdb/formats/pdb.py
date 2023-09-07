@@ -81,6 +81,9 @@ https://www.wwpdb.org/documentation/file-format-content/format33/sect9.html
     ...
 
 '''
+from typing import Generator, Type
+
+from python_pdb.records import AtomRecord, EndModelRecord, HetAtomRecord, ModelRecord, Record
 
 RECORD_TYPE_RANGE = (0, 6)
 '''Range indicating the record type (1 - 6)'''
@@ -159,3 +162,76 @@ def format_atom_record(chain, residue, atom):
 def format_model_record(model_number):
     '''Format model_number into a MODEL record.'''
     return f"MODEL     {model_number:>4}"
+
+
+def generate_records_from_pdb(pdb_contents: str) -> Generator[Type[Record], None, None]:
+    '''Generator to create records from a PDB file.
+
+    Args:
+        pdb_contents: contents of a PDB file.
+
+    Yields:
+        individual records from the PDB file.
+
+    '''
+    def steralize(input):
+        input = input.strip()
+        return None if input == '' else input
+
+    for line in pdb_contents.split('\n'):
+        record_type = steralize(line[RECORD_TYPE_RANGE[0]:RECORD_TYPE_RANGE[1]])
+
+        if record_type == 'MODEL':
+            serial_number = int(steralize(line[MODEL_SERIAL_RANGE[0]:MODEL_SERIAL_RANGE[1]]))
+            yield ModelRecord(serial_number)
+
+        if record_type == 'ENDMDL':
+            yield EndModelRecord()
+
+        if record_type == 'ATOM' or record_type == 'HETATM':
+            atom_num = int(steralize(line[ATOM_NUMBER_RANGE[0]:ATOM_NUMBER_RANGE[1]]))
+            atom_name = steralize(line[ATOM_NAME_RANGE[0]:ATOM_NAME_RANGE[1]])
+            alt_loc = steralize(line[ALT_LOC_RANGE[0]:ALT_LOC_RANGE[1]])
+            res_name = steralize(line[RESIDUE_NAME_RANGE[0]:RESIDUE_NAME_RANGE[1]])
+            chain_id = steralize(line[CHAIN_ID_RANGE[0]:CHAIN_ID_RANGE[1]])
+            seq_id = int(steralize(line[SEQ_ID_RANGE[0]:SEQ_ID_RANGE[1]]))
+            insert_code = steralize(line[INSERT_CODE_RANGE[0]:INSERT_CODE_RANGE[1]])
+            x_pos = float(steralize(line[X_POS_RANGE[0]:X_POS_RANGE[1]]))
+            y_pos = float(steralize(line[Y_POS_RANGE[0]:Y_POS_RANGE[1]]))
+            z_pos = float(steralize(line[Z_POS_RANGE[0]:Z_POS_RANGE[1]]))
+            occupancy = float(steralize(line[OCCUPANCY_RANGE[0]:OCCUPANCY_RANGE[1]]))
+            b_factor = float(steralize(line[B_FACTOR_RANGE[0]:B_FACTOR_RANGE[1]]))
+            element = steralize(line[ELEMENT_RANGE[0]:ELEMENT_RANGE[1]])
+            charge = steralize(line[CHARGE_RANGE[0]:CHARGE_RANGE[1]])
+
+            if record_type == 'ATOM':
+                yield AtomRecord(atom_num,
+                                 atom_name,
+                                 alt_loc,
+                                 res_name,
+                                 chain_id,
+                                 seq_id,
+                                 insert_code,
+                                 x_pos,
+                                 y_pos,
+                                 z_pos,
+                                 occupancy,
+                                 b_factor,
+                                 element,
+                                 charge)
+
+            if record_type == 'HETATM':
+                yield HetAtomRecord(atom_num,
+                                    atom_name,
+                                    alt_loc,
+                                    res_name,
+                                    chain_id,
+                                    seq_id,
+                                    insert_code,
+                                    x_pos,
+                                    y_pos,
+                                    z_pos,
+                                    occupancy,
+                                    b_factor,
+                                    element,
+                                    charge)

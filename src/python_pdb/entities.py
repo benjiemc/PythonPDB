@@ -1,14 +1,14 @@
 '''Classes for representing objects contained within PDB files.'''
 import itertools
 import warnings
+from typing import Iterable, Type
 
 import pandas as pd
 
-from python_pdb.formats.pdb import (ALT_LOC_RANGE, ATOM_NAME_RANGE, ATOM_NUMBER_RANGE, B_FACTOR_RANGE, CHAIN_ID_RANGE,
-                                    CHARGE_RANGE, ELEMENT_RANGE, INSERT_CODE_RANGE, MODEL_SERIAL_RANGE, OCCUPANCY_RANGE,
-                                    RECORD_TYPE_RANGE, RESIDUE_NAME_RANGE, SEQ_ID_RANGE, X_POS_RANGE, Y_POS_RANGE,
-                                    Z_POS_RANGE, format_atom_record, format_model_record)
+from python_pdb.formats.pandas import generate_records_from_pandas
+from python_pdb.formats.pdb import format_atom_record, format_model_record, generate_records_from_pdb
 from python_pdb.formats.residue import THREE_TO_ONE_CODE
+from python_pdb.records import Record
 
 
 class StructureConstructionWarning(Warning):
@@ -451,131 +451,63 @@ class Structure:
             Structure with chains, residues, and atoms from the input dataset.
 
         '''
-        new_structure = cls()
-
-        if 'model_index' in df.columns:
-            model = None
-
-        else:
-            model = Model()
-            new_structure.add_model(model)
-
-        prev_res_id = None
-        prev_chain_id = None
-        prev_model_index = None
-
-        for record in df.itertuples():
-
-            if hasattr(record, 'model_index'):
-                if record.model_index != prev_model_index:
-                    model = Model(record.model_index)
-                    new_structure.add_model(model)
-                    prev_model_index = record.model_index
-
-                    prev_chain_id = None
-                    prev_res_id = None
-
-            if prev_chain_id != record.chain_id:
-                chain = Chain(record.chain_id)
-                model.add_chain(chain)
-                prev_chain_id = record.chain_id
-
-            if prev_res_id != (record.chain_id, record.residue_seq_id, record.residue_insert_code):
-                residue = Residue(record.residue_name,
-                                  record.residue_seq_id,
-                                  record.residue_insert_code if record.residue_insert_code != '' else None)
-                chain.add_residue(residue)
-
-                prev_res_id = (record.chain_id, record.residue_seq_id, record.residue_insert_code)
-
-            if record.alt_loc:
-                warnings.warn((f'{record}: ATOM contains alternate location. '
-                               'The `split_states` method can be used to separate these possible conformations '
-                               'into separate models.'),
-                              StructureConstructionWarning)
-
-            residue.add_atom(Atom(record.atom_name,
-                                  record.atom_number,
-                                  record.alt_loc if record.alt_loc != '' else None,
-                                  record.pos_x,
-                                  record.pos_y,
-                                  record.pos_z,
-                                  record.occupancy,
-                                  record.b_factor,
-                                  record.element,
-                                  record.charge if record.charge != '' else None))
-
-        return new_structure
+        return cls._construct_from_records(generate_records_from_pandas(df))
 
     @classmethod
     def from_pdb(cls, contents: str) -> 'Structure':
         '''Create structure from a PDB formatted file.'''
+        return cls._construct_from_records(generate_records_from_pdb(contents))
+
+    @classmethod
+    def _construct_from_records(cls, records: Iterable[Type[Record]]):
+        '''Construction logic for building structure from records.'''
         structure = cls()
         model = None
         prev_res_id = None
         prev_chain_id = None
 
-        for record in contents.split('\n'):
-            record_type = record[RECORD_TYPE_RANGE[0]:RECORD_TYPE_RANGE[1]].strip()
-
-            if record_type == 'MODEL':
-                serial_number = int(record[MODEL_SERIAL_RANGE[0]:MODEL_SERIAL_RANGE[1]].strip())
-
-                model = Model(serial_number)
+        for record in records:
+            if record.record_type == 'MODEL':
+                model = Model(record.serial_number)
                 structure.add_model(model)
 
-            elif record_type == 'ENDMDL':
+            elif record.record_type == 'ENDMDL':
                 model = None
                 prev_chain_id = None
                 prev_res_id = None
 
-            if record_type == 'ATOM' or record_type == 'HETATM':
+            if record.record_type == 'ATOM' or record.record_type == 'HETATM':
                 if model is None:
                     model = Model()
                     structure.add_model(model)
 
-                atom_num = int(record[ATOM_NUMBER_RANGE[0]:ATOM_NUMBER_RANGE[1]].strip())
-                atom_name = record[ATOM_NAME_RANGE[0]:ATOM_NAME_RANGE[1]].strip()
-                alt_loc = record[ALT_LOC_RANGE[0]:ALT_LOC_RANGE[1]].strip()
-                res_name = record[RESIDUE_NAME_RANGE[0]:RESIDUE_NAME_RANGE[1]].strip()
-                chain_id = record[CHAIN_ID_RANGE[0]:CHAIN_ID_RANGE[1]].strip()
-                seq_id = int(record[SEQ_ID_RANGE[0]:SEQ_ID_RANGE[1]].strip())
-                insert_code = record[INSERT_CODE_RANGE[0]:INSERT_CODE_RANGE[1]].strip()
-                x_pos = float(record[X_POS_RANGE[0]:X_POS_RANGE[1]].strip())
-                y_pos = float(record[Y_POS_RANGE[0]:Y_POS_RANGE[1]].strip())
-                z_pos = float(record[Z_POS_RANGE[0]:Z_POS_RANGE[1]].strip())
-                occupancy = float(record[OCCUPANCY_RANGE[0]:OCCUPANCY_RANGE[1]].strip())
-                b_factor = float(record[B_FACTOR_RANGE[0]:B_FACTOR_RANGE[1]].strip())
-                element = record[ELEMENT_RANGE[0]:ELEMENT_RANGE[1]].strip()
-                charge = record[CHARGE_RANGE[0]:CHARGE_RANGE[1]].strip()
-
-                if prev_chain_id != chain_id:
-                    chain = Chain(chain_id)
+                if prev_chain_id != record.chain_id:
+                    chain = Chain(record.chain_id)
                     model.add_chain(chain)
-                    prev_chain_id = chain_id
+                    prev_chain_id = record.chain_id
 
-                if prev_res_id != (chain_id, seq_id, insert_code):
-                    residue = Residue(res_name, seq_id, insert_code if insert_code != '' else None)
+                if prev_res_id != (record.chain_id, record.seq_id, record.insert_code):
+                    residue = Residue(record.res_name, record.seq_id, record.insert_code)
                     chain.add_residue(residue)
-                    prev_res_id = (chain_id, seq_id, insert_code)
+                    prev_res_id = (record.chain_id, record.seq_id, record.insert_code)
 
-                if alt_loc:
+                if record.alt_loc:
                     warnings.warn((f'{record}: ATOM contains alternate location. '
                                    'The `split_states` method can be used to separate these possible conformations '
                                    'into separate models.'),
                                   StructureConstructionWarning)
 
-                residue.add_atom(Atom(atom_name,
-                                      atom_num,
-                                      alt_loc if alt_loc != '' else None,
-                                      x_pos,
-                                      y_pos,
-                                      z_pos,
-                                      occupancy,
-                                      b_factor,
-                                      element,
-                                      charge if charge != '' else None,
-                                      is_het_atom=record_type == 'HETATM'))
+                residue.add_atom(Atom(record.atom_name,
+                                      record.atom_num,
+                                      record.alt_loc,
+                                      record.x_pos,
+                                      record.y_pos,
+                                      record.z_pos,
+                                      record.occupancy,
+                                      record.b_factor,
+                                      record.element,
+                                      record.charge,
+                                      is_het_atom=record.record_type == 'HETATM'))
 
         return structure
 

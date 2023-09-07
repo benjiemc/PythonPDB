@@ -1,6 +1,8 @@
 import os
+import warnings
 from unittest import TestCase
 
+from python_pdb.entities import StructureConstructionWarning
 from python_pdb.parsers import parse_pdb, stringify_structure
 
 TEST_DATA = 'tests/data'
@@ -30,6 +32,35 @@ class TestParsePDB(TestCase):
         self.assertEqual(structure[0]['E'][1]['N'].b_factor, 96.09)
         self.assertEqual(structure[0]['E'][1]['N'].element, 'N')
         self.assertEqual(structure[0]['E'][1]['N'].charge, None)
+
+    def test_silent(self):
+        mock_pdb = ('ATOM      1  N  AGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      2  N  BGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      3  CA AGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      4  CA BGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      5  C  AGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      6  C  BGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      7  O  AGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      8  O  BGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      10 N  AGLY A   4     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      11 N  BGLY A   4     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      12 CA AGLY A   4     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      13 CA BGLY A   4     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      14 C  AGLY A   4     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      15 C  BGLY A   4     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      16 O  AGLY A   4     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      17 O  BGLY A   4     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      18 N   GLY A   5     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      19 CA  GLY A   5     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      20 C   GLY A   5     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      21 O   GLY A   5     -13.721   1.351   1.280  1.00  0.00           O \n')
+
+        with self.assertWarns(StructureConstructionWarning):
+            parse_pdb(mock_pdb)
+
+        with warnings.catch_warnings():
+            warnings.filterwarnings("error", category=StructureConstructionWarning)
+            parse_pdb(mock_pdb, silent=True)
 
 
 class TestStringifyStructure(TestCase):

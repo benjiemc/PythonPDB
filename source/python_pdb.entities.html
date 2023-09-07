@@ -548,10 +548,9 @@ multiple models.</p>
 <dd><p>Convert Structure into pandas dataframe.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><p>dataframe with the following columns representing a structure:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>record_type</p></li>
+<dd class="field-odd"><p><ul class="simple">
+<li><dl class="simple">
+<dt>record_type</dt><dd><ul>
 <li><p>atom_number</p></li>
 <li><p>atom_name</p></li>
 <li><p>alt_loc</p></li>
@@ -567,12 +566,15 @@ multiple models.</p>
 <li><p>element</p></li>
 <li><p>charge</p></li>
 </ul>
-</div></blockquote>
+</dd>
+</dl>
+</li>
+</ul>
 <p>and optionally <cite>model_index</cite> if there are multiple models.</p>
 </p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>pd.Dataframe</p>
+<dd class="field-even"><p>dataframe with the following columns representing a structure</p>
 </dd>
 </dl>
 </dd></dl>

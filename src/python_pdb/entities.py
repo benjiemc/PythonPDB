@@ -364,7 +364,7 @@ class Structure:
         '''Convert Structure into pandas dataframe.
 
         Returns:
-            pd.Dataframe: dataframe with the following columns representing a structure:
+            dataframe with the following columns representing a structure:
 
                 - record_type
                 - atom_number

@@ -100,6 +100,12 @@
 </li>
       <li><a href="source/python_pdb.entities.html#python_pdb.entities.Model.add_chain">add_chain() (python_pdb.entities.Model method)</a>
 </li>
+      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Atom.add_child">add_child() (python_pdb.entities.Atom method)</a>
+
+      <ul>
+        <li><a href="source/python_pdb.entities.html#python_pdb.entities.Entity.add_child">(python_pdb.entities.Entity method)</a>
+</li>
+      </ul></li>
       <li><a href="source/python_pdb.entities.html#python_pdb.entities.Structure.add_model">add_model() (python_pdb.entities.Structure method)</a>
 </li>
       <li><a href="source/python_pdb.entities.html#python_pdb.entities.Chain.add_residue">add_residue() (python_pdb.entities.Chain method)</a>
@@ -110,10 +116,10 @@
         <li><a href="source/python_pdb.records.html#python_pdb.records.ParticleRecord.alt_loc">(python_pdb.records.ParticleRecord attribute)</a>
 </li>
       </ul></li>
-      <li><a href="source/python_pdb.formats.pdb.html#python_pdb.formats.pdb.ALT_LOC_RANGE">ALT_LOC_RANGE (in module python_pdb.formats.pdb)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/python_pdb.formats.pdb.html#python_pdb.formats.pdb.ALT_LOC_RANGE">ALT_LOC_RANGE (in module python_pdb.formats.pdb)</a>
+</li>
       <li><a href="source/python_pdb.formats.residue.html#python_pdb.formats.residue.AMINO_ACIDS">AMINO_ACIDS (in module python_pdb.formats.residue)</a>
 </li>
       <li><a href="source/python_pdb.entities.html#python_pdb.entities.Atom">Atom (class in python_pdb.entities)</a>
@@ -127,8 +133,6 @@
       <li><a href="source/python_pdb.formats.pdb.html#python_pdb.formats.pdb.ATOM_NUMBER_RANGE">ATOM_NUMBER_RANGE (in module python_pdb.formats.pdb)</a>
 </li>
       <li><a href="source/python_pdb.records.html#python_pdb.records.AtomRecord">AtomRecord (class in python_pdb.records)</a>
-</li>
-      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Residue.atoms">atoms (python_pdb.entities.Residue attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -158,18 +162,24 @@
 </li>
       <li><a href="source/python_pdb.formats.pdb.html#python_pdb.formats.pdb.CHAIN_ID_RANGE">CHAIN_ID_RANGE (in module python_pdb.formats.pdb)</a>
 </li>
-      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Model.chains">chains (python_pdb.entities.Model attribute)</a>
-</li>
       <li><a href="source/python_pdb.entities.html#python_pdb.entities.Atom.charge">charge (python_pdb.entities.Atom attribute)</a>
 
       <ul>
         <li><a href="source/python_pdb.records.html#python_pdb.records.ParticleRecord.charge">(python_pdb.records.ParticleRecord attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/python_pdb.formats.pdb.html#python_pdb.formats.pdb.CHARGE_RANGE">CHARGE_RANGE (in module python_pdb.formats.pdb)</a>
 </li>
+      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Entity.children">children (python_pdb.entities.Entity attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Atom.children_equal">children_equal() (python_pdb.entities.Atom method)</a>
+
+      <ul>
+        <li><a href="source/python_pdb.entities.html#python_pdb.entities.Entity.children_equal">(python_pdb.entities.Entity method)</a>
+</li>
+      </ul></li>
       <li><a href="source/python_pdb.entities.html#python_pdb.entities.Atom.copy">copy() (python_pdb.entities.Atom method)</a>
 
       <ul>
@@ -208,6 +218,8 @@
 </li>
       <li><a href="source/python_pdb.records.html#python_pdb.records.EndModelRecord">EndModelRecord (class in python_pdb.records)</a>
 </li>
+      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Entity">Entity (class in python_pdb.entities)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -234,11 +246,19 @@
 </li>
       <li><a href="source/python_pdb.formats.pdb.html#python_pdb.formats.pdb.generate_records_from_pdb">generate_records_from_pdb() (in module python_pdb.formats.pdb)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/python_pdb.entities.html#python_pdb.entities.Residue.get_atoms">get_atoms() (python_pdb.entities.Residue method)</a>
 </li>
       <li><a href="source/python_pdb.entities.html#python_pdb.entities.Model.get_chains">get_chains() (python_pdb.entities.Model method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Atom.get_children">get_children() (python_pdb.entities.Atom method)</a>
+
+      <ul>
+        <li><a href="source/python_pdb.entities.html#python_pdb.entities.Entity.get_children">(python_pdb.entities.Entity method)</a>
+</li>
+      </ul></li>
+      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Structure.get_models">get_models() (python_pdb.entities.Structure method)</a>
 </li>
       <li><a href="source/python_pdb.entities.html#python_pdb.entities.Chain.get_residues">get_residues() (python_pdb.entities.Chain method)</a>
 </li>
@@ -281,8 +301,6 @@
       <li><a href="source/python_pdb.formats.pdb.html#python_pdb.formats.pdb.MODEL_SERIAL_RANGE">MODEL_SERIAL_RANGE (in module python_pdb.formats.pdb)</a>
 </li>
       <li><a href="source/python_pdb.records.html#python_pdb.records.ModelRecord">ModelRecord (class in python_pdb.records)</a>
-</li>
-      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Structure.models">models (python_pdb.entities.Structure attribute)</a>
 </li>
       <li>
     module
@@ -349,16 +367,8 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Atom.parent">parent (python_pdb.entities.Atom attribute)</a>
-
-      <ul>
-        <li><a href="source/python_pdb.entities.html#python_pdb.entities.Chain.parent">(python_pdb.entities.Chain attribute)</a>
+      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Entity.parent">parent (python_pdb.entities.Entity attribute)</a>
 </li>
-        <li><a href="source/python_pdb.entities.html#python_pdb.entities.Model.parent">(python_pdb.entities.Model attribute)</a>
-</li>
-        <li><a href="source/python_pdb.entities.html#python_pdb.entities.Residue.parent">(python_pdb.entities.Residue attribute)</a>
-</li>
-      </ul></li>
       <li><a href="source/python_pdb.parsers.html#python_pdb.parsers.parse_pdb">parse_pdb() (in module python_pdb.parsers)</a>
 </li>
       <li><a href="source/python_pdb.records.html#python_pdb.records.ParticleRecord">ParticleRecord (class in python_pdb.records)</a>
@@ -449,9 +459,19 @@
       </ul></li>
       <li><a href="source/python_pdb.formats.pdb.html#python_pdb.formats.pdb.RECORD_TYPE_RANGE">RECORD_TYPE_RANGE (in module python_pdb.formats.pdb)</a>
 </li>
+      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Residue.remove_atom">remove_atom() (python_pdb.entities.Residue method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Residue.remove_atom">remove_atom() (python_pdb.entities.Residue method)</a>
+      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Model.remove_chain">remove_chain() (python_pdb.entities.Model method)</a>
+</li>
+      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Atom.remove_child">remove_child() (python_pdb.entities.Atom method)</a>
+
+      <ul>
+        <li><a href="source/python_pdb.entities.html#python_pdb.entities.Entity.remove_child">(python_pdb.entities.Entity method)</a>
+</li>
+      </ul></li>
+      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Structure.remove_model">remove_model() (python_pdb.entities.Structure method)</a>
 </li>
       <li><a href="source/python_pdb.entities.html#python_pdb.entities.Chain.remove_residue">remove_residue() (python_pdb.entities.Chain method)</a>
 </li>
@@ -460,8 +480,6 @@
       <li><a href="source/python_pdb.entities.html#python_pdb.entities.Residue">Residue (class in python_pdb.entities)</a>
 </li>
       <li><a href="source/python_pdb.formats.pdb.html#python_pdb.formats.pdb.RESIDUE_NAME_RANGE">RESIDUE_NAME_RANGE (in module python_pdb.formats.pdb)</a>
-</li>
-      <li><a href="source/python_pdb.entities.html#python_pdb.entities.Chain.residues">residues (python_pdb.entities.Chain attribute)</a>
 </li>
   </ul></td>
 </tr></table>

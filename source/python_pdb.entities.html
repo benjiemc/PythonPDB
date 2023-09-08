@@ -92,7 +92,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pdb.entities.Atom">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pdb.entities.</span></span><span class="sig-name descname"><span class="pre">Atom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alt_loc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">occupancy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charge</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_het_atom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Atom" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="#python_pdb.entities.Entity" title="python_pdb.entities.Entity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Entity</span></code></a></p>
 <p>Atom representation.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="python_pdb.entities.Atom.name">
@@ -205,17 +205,6 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="python_pdb.entities.Atom.parent">
-<span class="sig-name descname"><span class="pre">parent</span></span><a class="headerlink" href="#python_pdb.entities.Atom.parent" title="Link to this definition"></a></dt>
-<dd><p>Residue to which this atom belongs.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#python_pdb.entities.Residue" title="python_pdb.entities.Residue">Residue</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="python_pdb.entities.Atom.het_atom">
 <span class="sig-name descname"><span class="pre">het_atom</span></span><a class="headerlink" href="#python_pdb.entities.Atom.het_atom" title="Link to this definition"></a></dt>
 <dd><p>True if the atom comes from a hetero atom record</p>
@@ -227,9 +216,26 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Atom.add_child">
+<span class="sig-name descname"><span class="pre">add_child</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Atom.add_child" title="Link to this definition"></a></dt>
+<dd><p>Add child to entitity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Atom.children_equal">
+<span class="sig-name descname"><span class="pre">children_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Atom.children_equal" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="python_pdb.entities.Atom.copy">
 <span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#python_pdb.entities.Atom" title="python_pdb.entities.Atom"><span class="pre">Atom</span></a></span></span><a class="headerlink" href="#python_pdb.entities.Atom.copy" title="Link to this definition"></a></dt>
 <dd><p>Create a copy of the atom with the same propeties. Note the parent will be reset of the copy.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Atom.get_children">
+<span class="sig-name descname"><span class="pre">get_children</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Atom.get_children" title="Link to this definition"></a></dt>
+<dd><p>Get children of this entity.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -238,12 +244,18 @@
 <dd><p>the x,y,z coordinates of the atom</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Atom.remove_child">
+<span class="sig-name descname"><span class="pre">remove_child</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Atom.remove_child" title="Link to this definition"></a></dt>
+<dd><p>Remove child from entity.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pdb.entities.Chain">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pdb.entities.</span></span><span class="sig-name descname"><span class="pre">Chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Chain" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="#python_pdb.entities.Entity" title="python_pdb.entities.Entity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Entity</span></code></a></p>
 <p>Chain representation.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="python_pdb.entities.Chain.name">
@@ -256,31 +268,9 @@
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="python_pdb.entities.Chain.residues">
-<span class="sig-name descname"><span class="pre">residues</span></span><a class="headerlink" href="#python_pdb.entities.Chain.residues" title="Link to this definition"></a></dt>
-<dd><p>residues contained in the chain</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list[<a class="reference internal" href="#python_pdb.entities.Residue" title="python_pdb.entities.Residue">Residue</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="python_pdb.entities.Chain.parent">
-<span class="sig-name descname"><span class="pre">parent</span></span><a class="headerlink" href="#python_pdb.entities.Chain.parent" title="Link to this definition"></a></dt>
-<dd><p>Model that the chain belongs to.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#python_pdb.entities.Model" title="python_pdb.entities.Model">Model</a> | None</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pdb.entities.Chain.add_residue">
-<span class="sig-name descname"><span class="pre">add_residue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">residue</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Chain.add_residue" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_residue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">residue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#python_pdb.entities.Residue" title="python_pdb.entities.Residue"><span class="pre">Residue</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Chain.add_residue" title="Link to this definition"></a></dt>
 <dd><p>Add residue to chain.</p>
 </dd></dl>
 
@@ -292,13 +282,66 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pdb.entities.Chain.get_residues">
-<span class="sig-name descname"><span class="pre">get_residues</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Chain.get_residues" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">get_residues</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#python_pdb.entities.Residue" title="python_pdb.entities.Residue"><span class="pre">Residue</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#python_pdb.entities.Chain.get_residues" title="Link to this definition"></a></dt>
+<dd><p>Get all residues on a chain.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pdb.entities.Chain.remove_residue">
 <span class="sig-name descname"><span class="pre">remove_residue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">residue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#python_pdb.entities.Residue" title="python_pdb.entities.Residue"><span class="pre">Residue</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Chain.remove_residue" title="Link to this definition"></a></dt>
-<dd><p>Remove residue from residue.</p>
+<dd><p>Remove residue from chain.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="python_pdb.entities.Entity">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pdb.entities.</span></span><span class="sig-name descname"><span class="pre">Entity</span></span><a class="headerlink" href="#python_pdb.entities.Entity" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class that Atom, Residue, Chain, Model, and Structure inherit from.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pdb.entities.Entity.children">
+<span class="sig-name descname"><span class="pre">children</span></span><a class="headerlink" href="#python_pdb.entities.Entity.children" title="Link to this definition"></a></dt>
+<dd><p>Entities that form this entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="#python_pdb.entities.Entity" title="python_pdb.entities.Entity">Entity</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="python_pdb.entities.Entity.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><a class="headerlink" href="#python_pdb.entities.Entity.parent" title="Link to this definition"></a></dt>
+<dd><p>Entity that this entity belongs too.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#python_pdb.entities.Entity" title="python_pdb.entities.Entity">Entity</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Entity.add_child">
+<span class="sig-name descname"><span class="pre">add_child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#python_pdb.entities.Entity" title="python_pdb.entities.Entity"><span class="pre">Entity</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Entity.add_child" title="Link to this definition"></a></dt>
+<dd><p>Add child to entitity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Entity.children_equal">
+<span class="sig-name descname"><span class="pre">children_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#python_pdb.entities.Entity" title="python_pdb.entities.Entity"><span class="pre">Entity</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#python_pdb.entities.Entity.children_equal" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Entity.get_children">
+<span class="sig-name descname"><span class="pre">get_children</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#python_pdb.entities.Entity" title="python_pdb.entities.Entity"><span class="pre">Entity</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#python_pdb.entities.Entity.get_children" title="Link to this definition"></a></dt>
+<dd><p>Get children of this entity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Entity.remove_child">
+<span class="sig-name descname"><span class="pre">remove_child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#python_pdb.entities.Entity" title="python_pdb.entities.Entity"><span class="pre">Entity</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Entity.remove_child" title="Link to this definition"></a></dt>
+<dd><p>Remove child from entity.</p>
 </dd></dl>
 
 </dd></dl>
@@ -306,30 +349,8 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pdb.entities.Model">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pdb.entities.</span></span><span class="sig-name descname"><span class="pre">Model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serial_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Model" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="#python_pdb.entities.Entity" title="python_pdb.entities.Entity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Entity</span></code></a></p>
 <p>Representation of a PDB model.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="python_pdb.entities.Model.chains">
-<span class="sig-name descname"><span class="pre">chains</span></span><a class="headerlink" href="#python_pdb.entities.Model.chains" title="Link to this definition"></a></dt>
-<dd><p>Chains contained by the model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list[<a class="reference internal" href="#python_pdb.entities.Chain" title="python_pdb.entities.Chain">Chain</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="python_pdb.entities.Model.parent">
-<span class="sig-name descname"><span class="pre">parent</span></span><a class="headerlink" href="#python_pdb.entities.Model.parent" title="Link to this definition"></a></dt>
-<dd><p>PDB structure that the Model comes from.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#python_pdb.entities.Structure" title="python_pdb.entities.Structure">Structure</a> | None</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py attribute">
 <dt class="sig sig-object py" id="python_pdb.entities.Model.serial_number">
 <span class="sig-name descname"><span class="pre">serial_number</span></span><a class="headerlink" href="#python_pdb.entities.Model.serial_number" title="Link to this definition"></a></dt>
@@ -349,21 +370,28 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pdb.entities.Model.copy">
-<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Model.copy" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#python_pdb.entities.Model" title="python_pdb.entities.Model"><span class="pre">Model</span></a></span></span><a class="headerlink" href="#python_pdb.entities.Model.copy" title="Link to this definition"></a></dt>
 <dd><p>Create a deep copy of the Model. Note parent will be reset in copy.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pdb.entities.Model.get_chains">
-<span class="sig-name descname"><span class="pre">get_chains</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Model.get_chains" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">get_chains</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#python_pdb.entities.Chain" title="python_pdb.entities.Chain"><span class="pre">Chain</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#python_pdb.entities.Model.get_chains" title="Link to this definition"></a></dt>
+<dd><p>Get all the chains in the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Model.remove_chain">
+<span class="sig-name descname"><span class="pre">remove_chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#python_pdb.entities.Chain" title="python_pdb.entities.Chain"><span class="pre">Chain</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Model.remove_chain" title="Link to this definition"></a></dt>
+<dd><p>Remove chain from model.</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pdb.entities.Residue">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pdb.entities.</span></span><span class="sig-name descname"><span class="pre">Residue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">insert_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Residue" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="#python_pdb.entities.Entity" title="python_pdb.entities.Entity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Entity</span></code></a></p>
 <p>Residue representation.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="python_pdb.entities.Residue.name">
@@ -394,28 +422,6 @@
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str | None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="python_pdb.entities.Residue.atoms">
-<span class="sig-name descname"><span class="pre">atoms</span></span><a class="headerlink" href="#python_pdb.entities.Residue.atoms" title="Link to this definition"></a></dt>
-<dd><p>Atoms that form the residue.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list[<a class="reference internal" href="#python_pdb.entities.Atom" title="python_pdb.entities.Atom">Atom</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="python_pdb.entities.Residue.parent">
-<span class="sig-name descname"><span class="pre">parent</span></span><a class="headerlink" href="#python_pdb.entities.Residue.parent" title="Link to this definition"></a></dt>
-<dd><p>Chain that this residue belongs to.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#python_pdb.entities.Chain" title="python_pdb.entities.Chain">Chain</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -461,23 +467,12 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="python_pdb.entities.Structure">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">python_pdb.entities.</span></span><span class="sig-name descname"><span class="pre">Structure</span></span><a class="headerlink" href="#python_pdb.entities.Structure" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="#python_pdb.entities.Entity" title="python_pdb.entities.Entity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Entity</span></code></a></p>
 <p>PDB Structure representation.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="python_pdb.entities.Structure.models">
-<span class="sig-name descname"><span class="pre">models</span></span><a class="headerlink" href="#python_pdb.entities.Structure.models" title="Link to this definition"></a></dt>
-<dd><p>models contained within the PDB structure.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list[<a class="reference internal" href="#python_pdb.entities.Model" title="python_pdb.entities.Model">Model</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pdb.entities.Structure.add_model">
 <span class="sig-name descname"><span class="pre">add_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#python_pdb.entities.Model" title="python_pdb.entities.Model"><span class="pre">Model</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Structure.add_model" title="Link to this definition"></a></dt>
-<dd><p>Add model to structure.</p>
+<dd><p>Add model to the structure.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -489,12 +484,12 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pdb.entities.Structure.dehydrate">
 <span class="sig-name descname"><span class="pre">dehydrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Structure.dehydrate" title="Link to this definition"></a></dt>
-<dd><p>Remove all water molecules from Structure.</p>
+<dd><p>Remove all water molecules from the Structure.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="python_pdb.entities.Structure.from_pandas">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_pandas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Structure.from_pandas" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_pandas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#python_pdb.entities.Structure" title="python_pdb.entities.Structure"><span class="pre">Structure</span></a></span></span><a class="headerlink" href="#python_pdb.entities.Structure.from_pandas" title="Link to this definition"></a></dt>
 <dd><p>Create Structure object from a pandas dataframe.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -532,15 +527,27 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Structure.get_models">
+<span class="sig-name descname"><span class="pre">get_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#python_pdb.entities.Model" title="python_pdb.entities.Model"><span class="pre">Model</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#python_pdb.entities.Structure.get_models" title="Link to this definition"></a></dt>
+<dd><p>Get models from the structure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Structure.remove_model">
+<span class="sig-name descname"><span class="pre">remove_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#python_pdb.entities.Model" title="python_pdb.entities.Model"><span class="pre">Model</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Structure.remove_model" title="Link to this definition"></a></dt>
+<dd><p>Remove model from the structure.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="python_pdb.entities.Structure.split_states">
 <span class="sig-name descname"><span class="pre">split_states</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Structure.split_states" title="Link to this definition"></a></dt>
 <dd><p>Split multiple alternate locations into separate models.</p>
 <p>If there are multiple locations for an atom (as designated by alt_loc’s) split the view of the protein into
 multiple models.</p>
-<dl class="simple">
-<dt>..warning::</dt><dd><p>This method modifies the structure object by overriding the existing models property.</p>
-</dd>
-</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method modifies the structure object by overriding the existing models property.</p>
+</div>
 </dd></dl>
 
 <dl class="py method">

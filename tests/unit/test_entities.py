@@ -225,7 +225,7 @@ class TestStructure(TestCase):
 
         structure = Structure.from_pandas(mock_df)
 
-        self.assertEqual(len(structure[0].chains), 2)
+        self.assertEqual(len(structure[0]), 2)
         self.assertEqual(structure[0]['C'][4].name, 'VAL')
         self.assertEqual(structure[0]['d'][5].name, 'GLN')
 
@@ -251,13 +251,13 @@ class TestStructure(TestCase):
 
         structure = Structure.from_pandas(mock_df)
 
-        self.assertEqual(len(structure[0].chains), 2)
-        self.assertEqual(len(structure[0].chains), 2)
+        self.assertEqual(len(structure[0]), 2)
+        self.assertEqual(len(structure[0]), 2)
         self.assertEqual(structure[0]['C'][4].name, 'VAL')
         self.assertEqual(structure[0]['d'][5].name, 'GLN')
 
-        self.assertEqual(len(structure[1].chains), 2)
-        self.assertEqual(len(structure[1].chains), 2)
+        self.assertEqual(len(structure[1]), 2)
+        self.assertEqual(len(structure[1]), 2)
         self.assertEqual(structure[1]['C'][4].name, 'VAL')
         self.assertEqual(structure[1]['d'][5].name, 'GLN')
 
@@ -285,13 +285,13 @@ class TestStructure(TestCase):
 
         structure = Structure._construct_from_records(records)
 
-        self.assertEqual(len(structure[0].chains), 2)
-        self.assertEqual(len(structure[0].chains), 2)
+        self.assertEqual(len(structure[0]), 2)
+        self.assertEqual(len(structure[0]), 2)
         self.assertEqual(structure[0]['C'][4].name, 'VAL')
         self.assertEqual(structure[0]['d'][5].name, 'GLN')
 
-        self.assertEqual(len(structure[1].chains), 2)
-        self.assertEqual(len(structure[1].chains), 2)
+        self.assertEqual(len(structure[1]), 2)
+        self.assertEqual(len(structure[1]), 2)
         self.assertEqual(structure[1]['C'][4].name, 'VAL')
         self.assertEqual(structure[1]['d'][5].name, 'GLN')
 

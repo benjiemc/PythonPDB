@@ -15,7 +15,68 @@ class StructureConstructionWarning(Warning):
     '''Raised if something is flagged for attention while building a structure.'''
 
 
-class Atom:
+class Entity:
+    '''Base class that Atom, Residue, Chain, Model, and Structure inherit from.
+
+    Attributes:
+        children (list[Entity]): Entities that form this entity.
+        parent (Entity): Entity that this entity belongs too.
+
+    '''
+
+    def __init__(self):
+        self.children = []
+        self.parent = None
+
+    def add_child(self, child: Type['Entity']):
+        '''Add child to entitity.'''
+        self.children.append(child)
+        child.parent = self
+
+    def remove_child(self, child: Type['Entity']):
+        '''Remove child from entity.'''
+        removed_child = False
+
+        new_children = []
+
+        for parent_child in self:
+            if child == parent_child:
+                removed_child = True
+                continue
+
+            new_children.append(parent_child)
+
+        self.children = new_children
+
+        if not removed_child:
+            warnings.warn(f'{child} not found in {self}.')
+
+    def get_children(self) -> list[Type['Entity']]:
+        '''Get children of this entity.'''
+        return self.children
+
+    def children_equal(self, other: list[Type['Entity']]) -> bool:
+        return self.children == other.children
+
+    def __len__(self):
+        '''Number of children.'''
+        return len(self.get_children())
+
+    def __contains__(self, child: Type['Entity']):
+        for parent_child in self:
+            if child == parent_child:
+                return True
+
+        return False
+
+    def __repr__(self):
+        return str(self)
+
+    def __iter__(self):
+        yield from self.get_children()
+
+
+class Atom(Entity):
     '''Atom representation.
 
     Attributes:
@@ -45,6 +106,8 @@ class Atom:
                  element: str,
                  charge: str | None,
                  is_het_atom: bool = False):
+        super().__init__()
+
         self.name = name
         self.number = number
         self.alt_loc = alt_loc
@@ -76,11 +139,29 @@ class Atom:
                     self.element,
                     self.charge)
 
+    def get_children(self):
+        raise NotImplementedError("Atom's have no children.")
+
+    def add_child(self):
+        raise NotImplementedError("Atom's have no children.")
+
+    def remove_child(self):
+        raise NotImplementedError("Atom's have no children.")
+
+    def children_equal(self, other):
+        raise NotImplementedError("Atom's have no children.")
+
+    def __contains__(self):
+        raise NotImplementedError("Atom's have no children.")
+
+    def __len__(self):
+        raise NotImplementedError('Atom has no length property.')
+
+    def __iter__(self):
+        raise NotImplementedError('Atom has no length property.')
+
     def __str__(self):
         return f'Atom({self.name})'
-
-    def __repr__(self):
-        return str(self)
 
     def __eq__(self, other):
         return (self.name, self.number, self.position) == (other.name, other.number, other.position)
@@ -89,54 +170,36 @@ class Atom:
         return hash((self.name, self.number, self.position))
 
 
-class Residue:
+class Residue(Entity):
     '''Residue representation.
 
     Attributes:
         name (str): Name of the residue (three letter code)
         seq_id (int): Sequence number of the residue.
         insert_code (str | None): Insert code of the residue if available.
-        atoms (list[Atom]): Atoms that form the residue.
-        parent (Chain): Chain that this residue belongs to.
 
     '''
     def __init__(self,
                  name: str,
                  seq_id: int,
                  insert_code: str | None):
+        super().__init__()
+
         self.name = name
         self.seq_id = seq_id
         self.insert_code = insert_code
 
-        self.atoms = []
-        self.parent = None
-
     def add_atom(self, atom: Atom):
         '''Add an atom to the residue.'''
-        self.atoms.append(atom)
-        atom.parent = self
+        self.add_child(atom)
 
     def remove_atom(self, atom: Atom):
         '''Remove atom from residue.'''
-        removed_atom = False
-
-        new_atom_list = []
-
-        for res_atom in self:
-            if atom == res_atom:
-                removed_atom = True
-                continue
-
-            new_atom_list.append(res_atom)
-
-        self.atoms = new_atom_list
-
-        if not removed_atom:
-            warnings.warn("Atom not found in residue.")
+        self.remove_child(atom)
 
     def get_atoms(self) -> list[Atom]:
         '''Return a list of all atoms in the residue, including atoms with alternate locations.'''
-        return self.atoms
+        return self.get_children()
 
     @property
     def tlc(self) -> str:
@@ -160,23 +223,13 @@ class Residue:
     def __str__(self):
         return f"Residue({self.name}, {self.seq_id}{self.insert_code if self.insert_code else ''})"
 
-    def __repr__(self):
-        return str(self)
-
-    def __iter__(self):
-        yield from self.get_atoms()
-
     def __eq__(self, other):
-        return (self.name,
+        return ((self.name,
                 self.seq_id,
-                self.insert_code,
-                self.atoms) == (other.name, other.seq_id, other.insert_code, other.atoms)
+                self.insert_code) == (other.name, other.seq_id, other.insert_code) and self.children_equal(other))
 
     def __hash__(self):
         return hash((self.name, self.seq_id, self.insert_code))
-
-    def __len__(self):
-        return len(self.atoms)
 
     def __getitem__(self, atom_name: str) -> Atom:
         '''Get atom from residue.
@@ -191,54 +244,30 @@ class Residue:
 
         raise KeyError(f"No atom {atom_name}")
 
-    def __contains__(self, atom):
-        for res_atom in self:
-            if atom == res_atom:
-                return True
 
-        return False
-
-
-class Chain:
+class Chain(Entity):
     '''Chain representation.
 
     Attributes:
         name (str): name of the chain
-        residues (list[Residue]): residues contained in the chain
-        parent (Model | None): Model that the chain belongs to.
 
     '''
     def __init__(self, name: str):
+        super().__init__()
+
         self.name = name
 
-        self.parent = None
-        self.residues = []
-
-    def add_residue(self, residue):
+    def add_residue(self, residue: Residue):
         '''Add residue to chain.'''
-        self.residues.append(residue)
-        residue.parent = self
+        self.add_child(residue)
 
     def remove_residue(self, residue: Residue):
-        '''Remove residue from residue.'''
-        removed_residue = False
+        '''Remove residue from chain.'''
+        self.remove_child(residue)
 
-        new_residue_list = []
-
-        for chain_res in self:
-            if residue == chain_res:
-                removed_residue = True
-                continue
-
-            new_residue_list.append(chain_res)
-
-        self.residues = new_residue_list
-
-        if not removed_residue:
-            warnings.warn("Residue not found in chain.")
-
-    def get_residues(self):
-        return self.residues
+    def get_residues(self) -> list['Residue']:
+        '''Get all residues on a chain.'''
+        return self.get_children()
 
     def copy(self) -> 'Chain':
         '''Create a deep copy of the chain of the chain. Note the parent will be reset.'''
@@ -249,30 +278,14 @@ class Chain:
 
         return new_chain
 
-    def __iter__(self):
-        yield from self.get_residues()
-
     def __str__(self):
         return f'Chain({self.name})'
 
-    def __repr__(self):
-        return str(self)
-
     def __eq__(self, other):
-        return (self.name == other.name) and (self.residues == other.residues)
+        return (self.name == other.name) and self.children_equal(other)
 
     def __hash__(self):
         return hash(self.name)
-
-    def __len__(self):
-        return len(self.residues)
-
-    def __contains__(self, residue):
-        for chain_residue in self:
-            if residue == chain_residue:
-                return True
-
-        return False
 
     def __getitem__(self, seq_id: str | int) -> Residue:
         '''Get residue from chain by sequence identifier (id and insert code if applicable).
@@ -291,27 +304,28 @@ class Chain:
         raise KeyError(f"No residue {seq_id}")
 
 
-class Model:
+class Model(Entity):
     '''Representation of a PDB model.
 
     Attributes:
-        chains (list[Chain]): Chains contained by the model.
-        parent (Structure | None): PDB structure that the Model comes from.
         serial_number (int | None): optional serial number to identify the model.
 
     '''
     def __init__(self, serial_number: int | None = None):
-        self.parent = None
-        self.chains = []
+        super().__init__()
+
         self.serial_number = serial_number
 
     def add_chain(self, chain: Chain):
         '''Add chain to model.'''
-        self.chains.append(chain)
-        chain.parent = self
+        self.add_child(chain)
 
-    def get_chains(self):
-        return self.chains
+    def remove_chain(self, chain: Chain):
+        '''Remove chain from model.'''
+        self.remove_child(chain)
+
+    def get_chains(self) -> list[Chain]:
+        return self.get_children()
 
     def copy(self):
         '''Create a deep copy of the Model. Note parent will be reset in copy.'''
@@ -322,43 +336,31 @@ class Model:
 
         return new_model
 
-    def __contains__(self, chain):
-        for model_chain in self:
-            if chain == model_chain:
-                return True
-
-        return False
-
     def __getitem__(self, chain_id):
-        for chain in self.chains:
+        for chain in self.get_chains():
             if chain_id == chain.name:
                 return chain
 
         raise KeyError(f'No chain named {chain_id}')
 
-    def __iter__(self):
-        yield from self.get_chains()
-
-    def __len__(self):
-        return len(self.chains)
-
     def __eq__(self, other: 'Model'):
-        return (self.serial_number == other.serial_number) and (self.chains == other.chains)
+        return (self.serial_number == other.serial_number) and self.children_equal(other)
 
 
-class Structure:
-    '''PDB Structure representation.
-
-    Attributes:
-        models (list[Model]): models contained within the PDB structure.
-
-    '''
-    def __init__(self):
-        self.models = []
+class Structure(Entity):
+    '''PDB Structure representation.'''
 
     def add_model(self, model: Model):
         '''Add model to structure.'''
-        self.models.append(model)
+        self.add_child(model)
+
+    def remove_model(self, model: Model):
+        '''Remove model from structure.'''
+        self.remove_child(model)
+
+    def get_models(self) -> list[Model]:
+        '''Get models from structure.'''
+        return self.get_children()
 
     def to_pandas(self) -> pd.DataFrame:
         '''Convert Structure into pandas dataframe.
@@ -592,7 +594,7 @@ class Structure:
             new_models.append(new_model)
 
         # Populate THIS structure with models representing each state
-        self.models = new_models
+        self.children = new_models
 
     def dehydrate(self):
         '''Remove all water molecules from Structure.'''
@@ -603,21 +605,8 @@ class Structure:
                         if atom.het_atom and res.name == 'HOH':
                             chain.remove_residue(res)
 
-    def __contains__(self, model):
-        for struct_model in self:
-            if model == struct_model:
-                return True
-
-        return False
-
     def __getitem__(self, index):
-        return self.models[index]
-
-    def __iter__(self):
-        yield from self.models
-
-    def __len__(self):
-        return len(self.models)
+        return self.children[index]
 
     def __str__(self):
         records = []
@@ -637,4 +626,4 @@ class Structure:
         return '\n'.join(records)
 
     def __eq__(self, other: 'Structure'):
-        return self.models == other.models
+        return self.children_equal(other)

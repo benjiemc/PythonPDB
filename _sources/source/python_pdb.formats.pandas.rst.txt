@@ -1,0 +1,7 @@
+python\_pdb.formats.pandas module
+=================================
+
+.. automodule:: python_pdb.formats.pandas
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+python\_pdb.records module
+==========================
+
+.. automodule:: python_pdb.records
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -17,6 +17,7 @@ Submodules
 
    python_pdb.entities
    python_pdb.parsers
+   python_pdb.records
 
 Module contents
 ---------------

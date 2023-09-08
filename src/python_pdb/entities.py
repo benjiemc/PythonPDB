@@ -90,7 +90,6 @@ class Atom(Entity):
         b_factor (float): b_factor from experimentally derived data
         element (str): str corresponding to the element id of this atom (periodic table style)
         charge (str | None): +/- charge on the atom
-        parent (Residue): Residue to which this atom belongs.
         het_atom (bool): True if the atom comes from a hetero atom record
 
     '''
@@ -325,9 +324,10 @@ class Model(Entity):
         self.remove_child(chain)
 
     def get_chains(self) -> list[Chain]:
+        '''Get all the chains in the model.'''
         return self.get_children()
 
-    def copy(self):
+    def copy(self) -> 'Model':
         '''Create a deep copy of the Model. Note parent will be reset in copy.'''
         new_model = Model(self.serial_number)
 
@@ -351,15 +351,15 @@ class Structure(Entity):
     '''PDB Structure representation.'''
 
     def add_model(self, model: Model):
-        '''Add model to structure.'''
+        '''Add model to the structure.'''
         self.add_child(model)
 
     def remove_model(self, model: Model):
-        '''Remove model from structure.'''
+        '''Remove model from the structure.'''
         self.remove_child(model)
 
     def get_models(self) -> list[Model]:
-        '''Get models from structure.'''
+        '''Get models from the structure.'''
         return self.get_children()
 
     def to_pandas(self) -> pd.DataFrame:
@@ -425,7 +425,7 @@ class Structure(Entity):
         return pd.DataFrame(records, columns=column_names)
 
     @classmethod
-    def from_pandas(cls, df: pd.DataFrame):
+    def from_pandas(cls, df: pd.DataFrame) -> 'Structure':
         '''Create Structure object from a pandas dataframe.
 
         Args:
@@ -528,7 +528,7 @@ class Structure(Entity):
         If there are multiple locations for an atom (as designated by alt_loc's) split the view of the protein into
         multiple models.
 
-        ..warning::
+        .. warning::
            This method modifies the structure object by overriding the existing models property.
 
         '''
@@ -597,7 +597,7 @@ class Structure(Entity):
         self.children = new_models
 
     def dehydrate(self):
-        '''Remove all water molecules from Structure.'''
+        '''Remove all water molecules from the Structure.'''
         for model in self:
             for chain in model:
                 for res in chain:

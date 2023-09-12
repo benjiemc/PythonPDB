@@ -3,6 +3,7 @@ import itertools
 import warnings
 from typing import Iterable, Type
 
+import numpy as np
 import pandas as pd
 
 from python_pdb.formats.pandas import generate_records_from_pandas
@@ -57,6 +58,17 @@ class Entity:
 
     def children_equal(self, other: list[Type['Entity']]) -> bool:
         return self.children == other.children
+
+    def get_coordinates(self) -> np.ndarray:
+        '''Get n x 3 matrix of atomic coordinates based on all the atoms in the Entitity. Ordering is preserved.'''
+        if hasattr(self, 'position'):
+            return np.array([self.position])
+
+        coords = []
+        for child_entity in self:
+            coords.append(child_entity.get_coordinates())
+
+        return np.concatenate(coords)
 
     def __len__(self):
         '''Number of children.'''

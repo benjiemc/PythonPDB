@@ -2,8 +2,24 @@ from unittest import TestCase
 
 import numpy as np
 
-from python_pdb.aligners import align
+from python_pdb.aligners import align, align_sequences
 from python_pdb.entities import Structure
+
+
+class TestAlignSequence(TestCase):
+    def test(self):
+        alignment, score = align_sequences('GCATGCG', 'GATTACA')
+
+        self.assertEqual(alignment, [('G', 'G'),
+                                     ('C', '-'),
+                                     ('A', 'A'),
+                                     ('T', 'T'),
+                                     ('G', 'T'),
+                                     ('-', 'A'),
+                                     ('C', 'C'),
+                                     ('G', 'A')])
+
+        self.assertEqual(score, 0.0)
 
 
 class TestAlign(TestCase):

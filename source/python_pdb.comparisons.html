@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>python_pdb.parsers module &mdash; PythonPDB  documentation</title>
+  <title>python_pdb.comparisons module &mdash; PythonPDB  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="python_pdb.records module" href="python_pdb.records.html" />
-    <link rel="prev" title="python_pdb.entities module" href="python_pdb.entities.html" /> 
+    <link rel="next" title="python_pdb.entities module" href="python_pdb.entities.html" />
+    <link rel="prev" title="python_pdb.aligners module" href="python_pdb.aligners.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,9 +49,9 @@
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.html#subpackages">Subpackages</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="python_pdb.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="python_pdb.aligners.html">python_pdb.aligners module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="python_pdb.comparisons.html">python_pdb.comparisons module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">python_pdb.comparisons module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="python_pdb.entities.html">python_pdb.entities module</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">python_pdb.parsers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pdb.parsers.html">python_pdb.parsers module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="python_pdb.records.html">python_pdb.records module</a></li>
 </ul>
 </li>
@@ -78,9 +78,9 @@
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="modules.html">python_pdb</a></li>
           <li class="breadcrumb-item"><a href="python_pdb.html">python_pdb package</a></li>
-      <li class="breadcrumb-item active">python_pdb.parsers module</li>
+      <li class="breadcrumb-item active">python_pdb.comparisons module</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/source/python_pdb.parsers.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/source/python_pdb.comparisons.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -88,32 +88,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-python_pdb.parsers">
-<span id="python-pdb-parsers-module"></span><h1>python_pdb.parsers module<a class="headerlink" href="#module-python_pdb.parsers" title="Link to this heading"></a></h1>
-<p>Functions for parsing PDB files into python objects and vice versa.</p>
+  <section id="module-python_pdb.comparisons">
+<span id="python-pdb-comparisons-module"></span><h1>python_pdb.comparisons module<a class="headerlink" href="#module-python_pdb.comparisons" title="Link to this heading"></a></h1>
+<p>Functions for comparing PDB structures.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="python_pdb.parsers.parse_pdb">
-<span class="sig-prename descclassname"><span class="pre">python_pdb.parsers.</span></span><span class="sig-name descname"><span class="pre">parse_pdb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">silent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Structure" title="python_pdb.entities.Structure"><span class="pre">Structure</span></a></span></span><a class="headerlink" href="#python_pdb.parsers.parse_pdb" title="Link to this definition"></a></dt>
-<dd><p>Create structure object from PDB file.</p>
-<p>This function is a wrapper around the Structure.from_pdb(…) classmethod that provides additional functionality of
-suppressing warnings.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>contents</strong> – contents of a PDB file in string format.</p></li>
-<li><p><strong>silent</strong> – suppress any warnings while building the structure (Default: False)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Structure object parsed from the PDB file.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="python_pdb.parsers.stringify_structure">
-<span class="sig-prename descclassname"><span class="pre">python_pdb.parsers.</span></span><span class="sig-name descname"><span class="pre">stringify_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">structure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Structure" title="python_pdb.entities.Structure"><span class="pre">Structure</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#python_pdb.parsers.stringify_structure" title="Link to this definition"></a></dt>
-<dd><p>Format structure as pdb atom records.</p>
+<dt class="sig sig-object py" id="python_pdb.comparisons.rmsd">
+<span class="sig-prename descclassname"><span class="pre">python_pdb.comparisons.</span></span><span class="sig-name descname"><span class="pre">rmsd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#python_pdb.comparisons.rmsd" title="Link to this definition"></a></dt>
+<dd><p>Calculate Root Mean Squard Deviation between two sets of coordinates.</p>
 </dd></dl>
 
 </section>
@@ -122,8 +103,8 @@ suppressing warnings.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="python_pdb.entities.html" class="btn btn-neutral float-left" title="python_pdb.entities module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="python_pdb.records.html" class="btn btn-neutral float-right" title="python_pdb.records module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="python_pdb.aligners.html" class="btn btn-neutral float-left" title="python_pdb.aligners module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="python_pdb.entities.html" class="btn btn-neutral float-right" title="python_pdb.entities module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

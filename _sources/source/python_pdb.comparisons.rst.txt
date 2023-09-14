@@ -1,0 +1,7 @@
+python\_pdb.comparisons module
+==============================
+
+.. automodule:: python_pdb.comparisons
+   :members:
+   :undoc-members:
+   :show-inheritance:

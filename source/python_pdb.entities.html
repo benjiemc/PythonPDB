@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="python_pdb.parsers module" href="python_pdb.parsers.html" />
-    <link rel="prev" title="python_pdb.formats.residue module" href="python_pdb.formats.residue.html" /> 
+    <link rel="prev" title="python_pdb.comparisons module" href="python_pdb.comparisons.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,6 +48,8 @@
 <li class="toctree-l2 current"><a class="reference internal" href="python_pdb.html">python_pdb package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.html#subpackages">Subpackages</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="python_pdb.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="python_pdb.aligners.html">python_pdb.aligners module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pdb.comparisons.html">python_pdb.comparisons module</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">python_pdb.entities module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="python_pdb.parsers.html">python_pdb.parsers module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="python_pdb.records.html">python_pdb.records module</a></li>
@@ -339,6 +341,12 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="python_pdb.entities.Entity.get_coordinates">
+<span class="sig-name descname"><span class="pre">get_coordinates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#python_pdb.entities.Entity.get_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Get n x 3 matrix of atomic coordinates based on all the atoms in the Entitity. Ordering is preserved.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="python_pdb.entities.Entity.remove_child">
 <span class="sig-name descname"><span class="pre">remove_child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#python_pdb.entities.Entity" title="python_pdb.entities.Entity"><span class="pre">Entity</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#python_pdb.entities.Entity.remove_child" title="Link to this definition"></a></dt>
 <dd><p>Remove child from entity.</p>
@@ -602,7 +610,7 @@ multiple models.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="python_pdb.formats.residue.html" class="btn btn-neutral float-left" title="python_pdb.formats.residue module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="python_pdb.comparisons.html" class="btn btn-neutral float-left" title="python_pdb.comparisons module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="python_pdb.parsers.html" class="btn btn-neutral float-right" title="python_pdb.parsers module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

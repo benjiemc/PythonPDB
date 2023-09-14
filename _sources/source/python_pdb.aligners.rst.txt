@@ -1,0 +1,7 @@
+python\_pdb.aligners module
+===========================
+
+.. automodule:: python_pdb.aligners
+   :members:
+   :undoc-members:
+   :show-inheritance:

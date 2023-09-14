@@ -47,7 +47,7 @@ class TestAlign(TestCase):
              'ATOM      8  H3  ALA A   3    -115.041  -8.374  3.119  1.00  0.00           H \n')
         )
 
-        new_structure = align(structure_1, structure_2)
+        new_structure = align(structure_1.get_coordinates(), structure_2.get_coordinates(), structure_1)
 
         np.testing.assert_array_almost_equal(new_structure.get_coordinates(),
                                              np.array([[-114.23727413,   -8.65418163,    3.78295986],

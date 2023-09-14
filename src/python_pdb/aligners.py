@@ -80,17 +80,13 @@ def align_sequences(seq1: str, seq2: str,
     return (list(reversed(reverse_alignment)), alignment_matrix[-1, -1])
 
 
-def align(mobile: Type[Entity], target: Type[Entity], entity_to_move: Type[Entity] = None) -> Type[Entity]:
+def align(mobile_coords: np.ndarray, target_coords: np.ndarray, entity_to_move: Type[Entity]) -> Type[Entity]:
     '''Align entities structure in 3D space.
 
     Args:
-        mobile: movable region that will align to target.
-        target: target entity to align mobile region on to.
-        entity_to_move: the entity to move based on the alignment of mobile and target region (optional).
-
-                        It may be desirable to move an entire protein complex into a new reference frame based on the
-                        alignment of domains. If this is not provided, the new entity created will just be the mobile
-                        region moved onto the target region.
+        mobile: coordinates of atoms in movable region that will align to target.
+        target: coordinates of atoms to align mobile region on to.
+        entity_to_move: the entity to move based on the alignment of mobile and target region.
 
     Returns:
         A new view of the entity (Structure, Model, etc) aligned with the target region.
@@ -99,8 +95,6 @@ def align(mobile: Type[Entity], target: Type[Entity], entity_to_move: Type[Entit
         the same as the mobile region.
 
     '''
-    mobile_coords = mobile.get_coordinates()
-    target_coords = target.get_coordinates()
     # center on centroid
     mobile_average = sum(mobile_coords) / len(mobile_coords)
     target_average = sum(target_coords) / len(target_coords)
@@ -120,7 +114,7 @@ def align(mobile: Type[Entity], target: Type[Entity], entity_to_move: Type[Entit
 
     translation = target_average - np.dot(mobile_average, rotation)
 
-    region = entity_to_move.copy() if entity_to_move is not None else mobile.copy()
+    region = entity_to_move.copy()
 
     _apply_transform(region, rotation, translation)
 

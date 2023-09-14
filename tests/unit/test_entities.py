@@ -1,6 +1,7 @@
 import warnings
 from unittest import TestCase
 
+import numpy as np
 import pandas as pd
 
 from python_pdb.entities import Atom, Chain, Model, Residue, Structure, StructureConstructionWarning
@@ -16,6 +17,10 @@ class TestAtom(TestCase):
         self.assertEqual(mock_atom, copy)
         mock_atom.pos_x += 1.00
         self.assertNotEqual(mock_atom, copy)
+
+    def test_get_coordinates(self):
+        mock_atom = Atom('N', 1, None, 0.00, 0.00, 0.00, 1.00, 7.9, 'N', None)
+        np.testing.assert_array_equal(mock_atom.get_coordinates(), np.array([[0.00, 0.00, 0.00]]))
 
 
 class TestResidue(TestCase):
@@ -79,6 +84,17 @@ class TestResidue(TestCase):
 
         self.assertTrue(mock_atom in mock_res)
 
+    def test_get_coordinates(self):
+        mock_atom_1 = Atom('N', 1, None, 0.00, 0.00, 0.00, 1.00, 7.9, 'N', None)
+        mock_atom_2 = Atom('O', 1, None, 0.00, 0.00, 0.00, 1.00, 7.9, 'O', None)
+
+        mock_res = Residue('ALA', 1, None)
+        mock_res.add_atom(mock_atom_1)
+        mock_res.add_atom(mock_atom_2)
+
+        np.testing.assert_array_equal(mock_res.get_coordinates(), np.array([[0.00, 0.00, 0.00],
+                                                                            [0.00, 0.00, 0.00]]))
+
 
 class TestChain(TestCase):
     def test_copy(self):
@@ -119,6 +135,23 @@ class TestChain(TestCase):
 
         self.assertTrue(mock_res in mock_chain)
 
+    def test_get_coordinates(self):
+        mock_atom_1 = Atom('N', 1, None, 1.00, 0.00, 0.00, 1.00, 7.9, 'N', None)
+        mock_atom_2 = Atom('O', 1, None, 1.00, 0.00, 0.00, 1.00, 7.9, 'O', None)
+
+        mock_res = Residue('ALA', 1, None)
+        mock_res.add_atom(mock_atom_1.copy())
+        mock_res.add_atom(mock_atom_2.copy())
+
+        mock_chain = Chain('A')
+        mock_chain.add_residue(mock_res.copy())
+        mock_chain.add_residue(mock_res.copy())
+
+        np.testing.assert_array_equal(mock_chain.get_coordinates(), np.array([[1.00, 0.00, 0.00],
+                                                                              [1.00, 0.00, 0.00],
+                                                                              [1.00, 0.00, 0.00],
+                                                                              [1.00, 0.00, 0.00]]))
+
 
 class TestModel(TestCase):
     def test_in(self):
@@ -128,6 +161,32 @@ class TestModel(TestCase):
         mock_model.add_chain(mock_chain)
 
         self.assertTrue(mock_chain in mock_model)
+
+    def test_get_coordinates(self):
+        mock_atom_1 = Atom('N', 1, None, 1.00, 0.00, 0.00, 1.00, 7.9, 'N', None)
+        mock_atom_2 = Atom('O', 1, None, 0.00, 1.00, 0.00, 1.00, 7.9, 'O', None)
+
+        mock_res = Residue('ALA', 1, None)
+        mock_res.add_atom(mock_atom_1.copy())
+        mock_res.add_atom(mock_atom_2.copy())
+
+        mock_chain_1 = Chain('A')
+        mock_chain_1.add_residue(mock_res.copy())
+        mock_chain_1.add_residue(mock_res.copy())
+
+        mock_model = Model()
+
+        mock_model.add_chain(mock_chain_1.copy())
+        mock_model.add_chain(mock_chain_1.copy())
+
+        np.testing.assert_array_equal(mock_model.get_coordinates(), np.array([[1.00, 0.00, 0.00],
+                                                                              [0.00, 1.00, 0.00],
+                                                                              [1.00, 0.00, 0.00],
+                                                                              [0.00, 1.00, 0.00],
+                                                                              [1.00, 0.00, 0.00],
+                                                                              [0.00, 1.00, 0.00],
+                                                                              [1.00, 0.00, 0.00],
+                                                                              [0.00, 1.00, 0.00]]))
 
 
 class TestStructure(TestCase):
@@ -384,3 +443,42 @@ class TestStructure(TestCase):
         mock_model_2.add_chain(Chain('A'))
 
         self.assertFalse(mock_model_2 in mock_structure)
+
+    def test_get_coordinates(self):
+        mock_atom_1 = Atom('N', 1, None, 1.00, 0.00, 0.00, 1.00, 7.9, 'N', None)
+        mock_atom_2 = Atom('O', 1, None, 0.00, 1.00, 0.00, 1.00, 7.9, 'O', None)
+
+        mock_res = Residue('ALA', 1, None)
+        mock_res.add_atom(mock_atom_1.copy())
+        mock_res.add_atom(mock_atom_2.copy())
+
+        mock_chain = Chain('A')
+        mock_chain.add_residue(mock_res.copy())
+        mock_chain.add_residue(mock_res.copy())
+
+        mock_model = Model()
+
+        mock_model.add_chain(mock_chain.copy())
+        mock_model.add_chain(mock_chain.copy())
+
+        mock_structure = Structure()
+
+        mock_structure.add_model(mock_model.copy())
+        mock_structure.add_model(mock_model.copy())
+
+        np.testing.assert_array_equal(mock_structure.get_coordinates(), np.array([[1.00, 0.00, 0.00],
+                                                                                  [0.00, 1.00, 0.00],
+                                                                                  [1.00, 0.00, 0.00],
+                                                                                  [0.00, 1.00, 0.00],
+                                                                                  [1.00, 0.00, 0.00],
+                                                                                  [0.00, 1.00, 0.00],
+                                                                                  [1.00, 0.00, 0.00],
+                                                                                  [0.00, 1.00, 0.00],
+                                                                                  [1.00, 0.00, 0.00],
+                                                                                  [0.00, 1.00, 0.00],
+                                                                                  [1.00, 0.00, 0.00],
+                                                                                  [0.00, 1.00, 0.00],
+                                                                                  [1.00, 0.00, 0.00],
+                                                                                  [0.00, 1.00, 0.00],
+                                                                                  [1.00, 0.00, 0.00],
+                                                                                  [0.00, 1.00, 0.00]]))

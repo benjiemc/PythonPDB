@@ -12,6 +12,7 @@ readme = "README.md"
 description = "Tools for working with Protein Data Bank Files"
 requires-python = ">=3.10"
 dependencies = [
+    "numpy",
     "pandas",
 ]
 

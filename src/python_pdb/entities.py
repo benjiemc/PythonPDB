@@ -580,6 +580,11 @@ class Structure(Entity):
             # Create states by finding all combinations of residues with multiple conformations
             states = list(itertools.product(*conformations))
         else:
+            # Pad conformations to be the same length with first conformation
+            longest = len(max(conformations, key=len))
+            for conformation in conformations:
+                while len(conformation) < longest:
+                    conformation.append(conformation[0])
             # transposes list
             states = [[row[i] for row in conformations] for i in range(len(conformations[0]))]
     

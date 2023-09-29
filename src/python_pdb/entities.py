@@ -534,7 +534,7 @@ class Structure(Entity):
 
         return new_structure
 
-    def split_states(self):
+    def split_states(self, all_combinations=False):
         '''Split multiple alternate locations into separate models.
 
         If there are multiple locations for an atom (as designated by alt_loc's) split the view of the protein into
@@ -576,8 +576,13 @@ class Structure(Entity):
 
             conformations.append([(model_serial_number, chain_name, res) for res in residue_states.values()])
 
-        # Create states by finding all combinations of residues with multiple conformations
-        states = list(itertools.product(*conformations))
+        if all_combinations:
+            # Create states by finding all combinations of residues with multiple conformations
+            states = list(itertools.product(*conformations))
+        else:
+            # transposes list
+            states = [[row[i] for row in conformations] for i in range(len(conformations[0]))]
+    
 
         # Create new models for each state
         new_models = []
@@ -592,8 +597,9 @@ class Structure(Entity):
                     new_chain = Chain(chain.name)
 
                     for residue in chain:
-                        if (model.serial_number, chain.name, residue) == state[res_counter]:
-                            new_chain.add_residue(state[res_counter][-1])
+                        if ((model.serial_number, chain.name, residue.name, residue.seq_id) == 
+                            (state[res_counter][0], state[res_counter][1], state[res_counter][2].name, state[res_counter][2].seq_id)):
+                            new_chain.add_residue(state[res_counter][2])
 
                             if res_counter < len(state) - 1:
                                 res_counter += 1

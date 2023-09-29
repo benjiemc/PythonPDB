@@ -573,10 +573,15 @@ class Structure(Entity):
             residue_states = {}
 
             for atom in residue:
-                if atom.alt_loc not in residue_states:
-                    residue_states[atom.alt_loc] = Residue(residue.name, residue.seq_id, residue.insert_code)
+                if atom.alt_loc:
+                    if atom.alt_loc not in residue_states:
+                        residue_states[atom.alt_loc] = Residue(residue.name, residue.seq_id, residue.insert_code)
 
-                residue_states[atom.alt_loc].add_atom(atom.copy())
+                    residue_states[atom.alt_loc].add_atom(atom.copy())
+
+                else:
+                    for residue_state in residue_states.values():
+                        residue_state.add_atom(atom.copy())
 
             conformations.append([(model_serial_number, chain_name, res) for res in residue_states.values()])
 

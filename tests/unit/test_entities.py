@@ -444,6 +444,17 @@ class TestStructure(TestCase):
 
         self.assertEqual(len(structure), 2)
 
+    def test_split_states_8ecq(self):
+        '''pdb was causing issues splitting into three states instead of two as expected.'''
+        with open('tests/data/8ecq.pdb', 'r') as fh:
+            with warnings.catch_warnings():
+                warnings.filterwarnings('ignore', category=StructureConstructionWarning)
+                structure = Structure.from_pdb(fh.read())
+
+        self.assertEqual(len(structure), 1)
+        structure.split_states()
+        self.assertEqual(len(structure), 2)
+
     def test_dehydrate(self):
         mock_pdb = ('ATOM      1  N   ALA A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
                     'ATOM      2  CA  ALA A   3     -12.988   2.726   3.102  1.00  0.00           C \n'

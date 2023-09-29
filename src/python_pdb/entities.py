@@ -543,6 +543,10 @@ class Structure(Entity):
         .. warning::
            This method modifies the structure object by overriding the existing models property.
 
+        Args:
+            all_combinations: states will be grouped by alt code if False (ie all 'A's are together) or else every
+                              different combination of alt codes will be used (Default: False).
+
         '''
         # Identify all residues with multiple conformations
         residues_with_alt_locs = []

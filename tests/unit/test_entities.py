@@ -382,6 +382,36 @@ class TestStructure(TestCase):
 
         structure.split_states()
 
+        self.assertEqual(len(structure), 2)
+
+    def test_split_states_all_combinations(self):
+        mock_pdb = ('ATOM      1  N  AGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      2  N  BGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      3  CA AGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      4  CA BGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      5  C  AGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      6  C  BGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      7  O  AGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      8  O  BGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      10 N  AGLY A   4     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      11 N  BGLY A   4     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      12 CA AGLY A   4     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      13 CA BGLY A   4     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      14 C  AGLY A   4     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      15 C  BGLY A   4     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      16 O  AGLY A   4     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      17 O  BGLY A   4     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      18 N   GLY A   5     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      19 CA  GLY A   5     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      20 C   GLY A   5     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      21 O   GLY A   5     -13.721   1.351   1.280  1.00  0.00           O \n')
+
+        with warnings.catch_warnings():
+            warnings.filterwarnings('ignore', category=StructureConstructionWarning)
+            structure = Structure.from_pdb(mock_pdb)
+
+        structure.split_states(all_combinations=True)
+
         self.assertEqual(len(structure), 4)
 
     def test_split_states_different_chains(self):
@@ -412,7 +442,18 @@ class TestStructure(TestCase):
 
         structure.split_states()
 
-        self.assertEqual(len(structure), 4)
+        self.assertEqual(len(structure), 2)
+
+    def test_split_states_8ecq(self):
+        '''pdb was causing issues splitting into three states instead of two as expected.'''
+        with open('tests/data/8ecq.pdb', 'r') as fh:
+            with warnings.catch_warnings():
+                warnings.filterwarnings('ignore', category=StructureConstructionWarning)
+                structure = Structure.from_pdb(fh.read())
+
+        self.assertEqual(len(structure), 1)
+        structure.split_states()
+        self.assertEqual(len(structure), 2)
 
     def test_dehydrate(self):
         mock_pdb = ('ATOM      1  N   ALA A   3     -14.239   2.261   3.769  1.00  0.00           N \n'

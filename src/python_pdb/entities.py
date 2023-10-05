@@ -543,6 +543,10 @@ class Structure(Entity):
         .. warning::
            This method modifies the structure object by overriding the existing models property.
 
+        Args:
+            all_combinations: states will be grouped by alt code if False (ie all 'A's are together) or else every
+                              different combination of alt codes will be used (Default: False).
+
         '''
         # Identify all residues with multiple conformations
         residues_with_alt_locs = []
@@ -596,7 +600,6 @@ class Structure(Entity):
                     conformation.append(conformation[0])
             # transposes list
             states = [[row[i] for row in conformations] for i in range(len(conformations[0]))]
-    
 
         # Create new models for each state
         new_models = []
@@ -611,8 +614,13 @@ class Structure(Entity):
                     new_chain = Chain(chain.name)
 
                     for residue in chain:
-                        if ((model.serial_number, chain.name, residue.name, residue.seq_id) == 
-                            (state[res_counter][0], state[res_counter][1], state[res_counter][2].name, state[res_counter][2].seq_id)):
+                        if ((model.serial_number,
+                             chain.name,
+                             residue.name,
+                             residue.seq_id) == (state[res_counter][0],
+                                                 state[res_counter][1],
+                                                 state[res_counter][2].name,
+                                                 state[res_counter][2].seq_id)):
                             new_chain.add_residue(state[res_counter][2])
 
                             if res_counter < len(state) - 1:

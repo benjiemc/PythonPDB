@@ -24,7 +24,7 @@ _amino_acids = [
     ('THR', 'T'),
 ]
 
-AMINO_ACIDS = [olc for _, olc in _amino_acids]
+AMINO_ACIDS = [tlc for tlc, _ in _amino_acids]
 '''List of amino acid residue one letter codes.'''
 
 THREE_TO_ONE_CODE = {tlc: olc for tlc, olc in _amino_acids}

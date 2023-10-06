@@ -8,7 +8,7 @@ import pandas as pd
 
 from python_pdb.formats.pandas import generate_records_from_pandas
 from python_pdb.formats.pdb import format_atom_record, format_model_record, generate_records_from_pdb
-from python_pdb.formats.residue import THREE_TO_ONE_CODE
+from python_pdb.formats.residue import AMINO_ACIDS, THREE_TO_ONE_CODE
 from python_pdb.records import Record
 
 
@@ -647,14 +647,11 @@ class Structure(Entity):
 
     def remove_non_amino_acids(self):
         '''Remove all non amino acids from the Structure.'''
-        amino_acids = ['GLN', 'GLU', 'VAL', 'LEU', 'SER', 'GLY', 'ALA', 'LYS', 'PRO',
-                       'CYS', 'ARG', 'PHE', 'TYR', 'THR', 'ASN', 'HIS', 'TRP', 'ILE',
-                       'ASP', 'MET']
         for model in self:
             for chain in model:
                 for res in chain:
                     for atom in res:
-                        if atom.het_atom and ~(res.name in amino_acids):
+                        if atom.het_atom and res.name not in AMINO_ACIDS:
                             chain.remove_residue(res)
 
     def __getitem__(self, index):

@@ -581,12 +581,12 @@ class Structure(Entity):
                     residue_states[atom.alt_loc] = Residue(residue.name, residue.seq_id, residue.insert_code)
 
                 residue_states[atom.alt_loc].add_atom(atom.copy())
-            
+
             # add atoms in residues with alt_locs that don't have alt loc themselves
             for k, v in residue_states.items():
                 for atom in none_states:
                     residue_states[k].add_atom(atom)
-            
+
             conformations.append([(model_serial_number, chain_name, res) for res in residue_states.values()])
 
         if all_combinations:
@@ -644,7 +644,7 @@ class Structure(Entity):
                     for atom in res:
                         if atom.het_atom and res.name == 'HOH':
                             chain.remove_residue(res)
-    
+
     def remove_non_amino_acids(self):
         '''Remove all non amino acids from the Structure.'''
         amino_acids = ['GLN', 'GLU', 'VAL', 'LEU', 'SER', 'GLY', 'ALA', 'LYS', 'PRO',

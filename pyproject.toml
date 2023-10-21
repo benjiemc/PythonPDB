@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "python_pdb"
-version = "0.0.0"
+dynamic = ["version"]
 authors = [
     { name="Benjamin McMaster", email="benjamin.mcmaster@rdm.ox.ac.uk"}
 ]
@@ -15,6 +15,9 @@ dependencies = [
     "numpy",
     "pandas",
 ]
+
+[tool.setuptools.dynamic]
+version = {attr = "python_pdb.__version__"}
 
 [project.optional-dependencies]
 develop = [

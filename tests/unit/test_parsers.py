@@ -2,8 +2,10 @@ import os
 import warnings
 from unittest import TestCase
 
+import pandas as pd
+
 from python_pdb.entities import StructureConstructionWarning
-from python_pdb.parsers import parse_pdb, stringify_structure
+from python_pdb.parsers import parse_pdb, parse_pdb_to_pandas, stringify_structure
 
 TEST_DATA = 'tests/data'
 
@@ -61,6 +63,160 @@ class TestParsePDB(TestCase):
         with warnings.catch_warnings():
             warnings.filterwarnings("error", category=StructureConstructionWarning)
             parse_pdb(mock_pdb, silent=True)
+
+
+class TestParsePDBToPandas(TestCase):
+    def test(self):
+        mock_pdb = ('ATOM      1  N   GLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      2  CA  GLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      3  C   GLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      4  O   GLY A   3     -13.721   1.351   1.280  1.00  0.00           O ')
+
+        df = parse_pdb_to_pandas(mock_pdb)
+
+        mock_df = pd.DataFrame([
+            {'record_type': 'ATOM',
+             'atom_number': 1,
+             'atom_name': 'N',
+             'alt_loc': None,
+             'residue_name': 'GLY',
+             'chain_id': 'A',
+             'residue_seq_id': 3,
+             'residue_insert_code': None,
+             'pos_x': -14.239,
+             'pos_y': 2.261,
+             'pos_z': 3.769,
+             'occupancy': 1.00,
+             'b_factor': 0.00,
+             'element': 'N',
+             'charge': None},
+            {'record_type': 'ATOM',
+             'atom_number': 2,
+             'atom_name': 'CA',
+             'alt_loc': None,
+             'residue_name': 'GLY',
+             'chain_id': 'A',
+             'residue_seq_id': 3,
+             'residue_insert_code': None,
+             'pos_x': -12.988,
+             'pos_y': 2.726,
+             'pos_z': 3.102,
+             'occupancy': 1.00,
+             'b_factor': 0.00,
+             'element': 'C',
+             'charge': None},
+            {'record_type': 'ATOM',
+             'atom_number': 3,
+             'atom_name': 'C',
+             'alt_loc': None,
+             'residue_name': 'GLY',
+             'chain_id': 'A',
+             'residue_seq_id': 3,
+             'residue_insert_code': None,
+             'pos_x': -12.843,
+             'pos_y': 2.059,
+             'pos_z': 1.732,
+             'occupancy': 1.00,
+             'b_factor': 0.00,
+             'element': 'C',
+             'charge': None},
+            {'record_type': 'ATOM',
+             'atom_number': 4,
+             'atom_name': 'O',
+             'alt_loc': None,
+             'residue_name': 'GLY',
+             'chain_id': 'A',
+             'residue_seq_id': 3,
+             'residue_insert_code': None,
+             'pos_x': -13.721,
+             'pos_y': 1.351,
+             'pos_z': 1.280,
+             'occupancy': 1.00,
+             'b_factor': 0.00,
+             'element': 'O',
+             'charge': None},
+        ])
+
+        pd.testing.assert_frame_equal(df, mock_df)
+
+    def test_with_models(self):
+        mock_pdb = ('MODEL        1 \n'
+                    'ATOM      1  N   GLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      2  CA  GLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      3  C   GLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      4  O   GLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ENDMDL ')
+
+        df = parse_pdb_to_pandas(mock_pdb)
+
+        mock_df = pd.DataFrame([
+            {'record_type': 'ATOM',
+             'atom_number': 1,
+             'atom_name': 'N',
+             'alt_loc': None,
+             'residue_name': 'GLY',
+             'chain_id': 'A',
+             'residue_seq_id': 3,
+             'residue_insert_code': None,
+             'pos_x': -14.239,
+             'pos_y': 2.261,
+             'pos_z': 3.769,
+             'occupancy': 1.00,
+             'b_factor': 0.00,
+             'element': 'N',
+             'charge': None,
+             'model_index': 1},
+            {'record_type': 'ATOM',
+             'atom_number': 2,
+             'atom_name': 'CA',
+             'alt_loc': None,
+             'residue_name': 'GLY',
+             'chain_id': 'A',
+             'residue_seq_id': 3,
+             'residue_insert_code': None,
+             'pos_x': -12.988,
+             'pos_y': 2.726,
+             'pos_z': 3.102,
+             'occupancy': 1.00,
+             'b_factor': 0.00,
+             'element': 'C',
+             'charge': None,
+             'model_index': 1},
+            {'record_type': 'ATOM',
+             'atom_number': 3,
+             'atom_name': 'C',
+             'alt_loc': None,
+             'residue_name': 'GLY',
+             'chain_id': 'A',
+             'residue_seq_id': 3,
+             'residue_insert_code': None,
+             'pos_x': -12.843,
+             'pos_y': 2.059,
+             'pos_z': 1.732,
+             'occupancy': 1.00,
+             'b_factor': 0.00,
+             'element': 'C',
+             'charge': None,
+             'model_index': 1},
+            {'record_type': 'ATOM',
+             'atom_number': 4,
+             'atom_name': 'O',
+             'alt_loc': None,
+             'residue_name': 'GLY',
+             'chain_id': 'A',
+             'residue_seq_id': 3,
+             'residue_insert_code': None,
+             'pos_x': -13.721,
+             'pos_y': 1.351,
+             'pos_z': 1.280,
+             'occupancy': 1.00,
+             'b_factor': 0.00,
+             'element': 'O',
+             'charge': None,
+             'model_index': 1},
+        ])
+
+        pd.testing.assert_frame_equal(df, mock_df)
 
 
 class TestStringifyStructure(TestCase):

@@ -111,6 +111,46 @@ suppressing warnings.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="python_pdb.parsers.parse_pdb_to_pandas">
+<span class="sig-prename descclassname"><span class="pre">python_pdb.parsers.</span></span><span class="sig-name descname"><span class="pre">parse_pdb_to_pandas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#python_pdb.parsers.parse_pdb_to_pandas" title="Link to this definition"></a></dt>
+<dd><p>Create pandas dataframe from the contents of a pdb file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>contents</strong> – the contents of a pdb file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><dl class="simple">
+<dt>record_type</dt><dd><ul>
+<li><p>atom_number</p></li>
+<li><p>atom_name</p></li>
+<li><p>alt_loc</p></li>
+<li><p>residue_name</p></li>
+<li><p>chain_id</p></li>
+<li><p>residue_seq_id</p></li>
+<li><p>residue_insert_code</p></li>
+<li><p>pos_x</p></li>
+<li><p>pos_y</p></li>
+<li><p>pos_z</p></li>
+<li><p>occupancy</p></li>
+<li><p>b_factor</p></li>
+<li><p>element</p></li>
+<li><p>charge</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>and optionally <cite>model_index</cite> if there are multiple models.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dataframe with the following columns representing a structure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="python_pdb.parsers.stringify_structure">
 <span class="sig-prename descclassname"><span class="pre">python_pdb.parsers.</span></span><span class="sig-name descname"><span class="pre">stringify_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">structure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Structure" title="python_pdb.entities.Structure"><span class="pre">Structure</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#python_pdb.parsers.stringify_structure" title="Link to this definition"></a></dt>
 <dd><p>Format structure as pdb atom records.</p>

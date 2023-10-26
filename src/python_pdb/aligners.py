@@ -2,6 +2,7 @@
 from typing import Type
 
 import numpy as np
+import pandas as pd
 
 from python_pdb.entities import Entity
 
@@ -132,3 +133,54 @@ def _apply_transform(entity, rotation, translation):
     else:
         for child in entity:
             _apply_transform(child, rotation, translation)
+
+
+def _compute_rot_trans(mobile_coords, target_coords):
+    '''Compute the rotation matrix and translation vector for an alignment.'''
+    # center on centroid
+    mobile_average = sum(mobile_coords) / len(mobile_coords)
+    target_average = sum(target_coords) / len(target_coords)
+
+    mobile_coords = mobile_coords - mobile_average
+    target_coords = target_coords - target_average
+
+    # correlation matrix
+    a = np.dot(np.transpose(mobile_coords), target_coords)
+    u, d, vt = np.linalg.svd(a)
+    rotation = np.transpose(np.dot(np.transpose(vt), np.transpose(u)))
+
+    # check if we have found a reflection
+    if np.linalg.det(rotation) < 0:
+        vt[2] = -vt[2]
+        rotation = np.transpose(np.dot(np.transpose(vt), np.transpose(u)))
+
+    translation = target_average - np.dot(mobile_average, rotation)
+
+    return rotation, translation
+
+
+def align_pandas_structure(mobile_coords: np.ndarray,
+                           target_coords: np.ndarray,
+                           df_to_move: pd.DataFrame) -> pd.DataFrame:
+    '''Align entities structure in 3D space.
+
+    Args:
+        mobile: coordinates of atoms in movable region that will align to target.
+        target: coordinates of atoms to align mobile region on to.
+        df_to_move: the dataframe to update coordinates based on the alignment of mobile and target region.
+
+    Returns:
+        A new dataframe with updated coordinates.
+
+    '''
+    def _transform(rotation, translation, row):
+        return pd.Series(np.dot(row.to_numpy(), rotation) + translation)
+
+    rotation, translation = _compute_rot_trans(mobile_coords, target_coords)
+
+    new_df = df_to_move.copy()
+
+    new_coords = new_df[['pos_x', 'pos_y', 'pos_z']].apply(lambda row: _transform(rotation, translation, row), axis=1)
+    new_df[['pos_x', 'pos_y', 'pos_z']] = new_coords
+
+    return new_df

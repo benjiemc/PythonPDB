@@ -92,8 +92,8 @@
 <span id="python-pdb-aligners-module"></span><h1>python_pdb.aligners module<a class="headerlink" href="#module-python_pdb.aligners" title="Link to this heading"></a></h1>
 <p>Functions for aligning protein strcutures.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="python_pdb.aligners.align">
-<span class="sig-prename descclassname"><span class="pre">python_pdb.aligners.</span></span><span class="sig-name descname"><span class="pre">align</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mobile_coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_to_move</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Entity" title="python_pdb.entities.Entity"><span class="pre">Entity</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Entity" title="python_pdb.entities.Entity"><span class="pre">Entity</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#python_pdb.aligners.align" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="python_pdb.aligners.align_entities">
+<span class="sig-prename descclassname"><span class="pre">python_pdb.aligners.</span></span><span class="sig-name descname"><span class="pre">align_entities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mobile_coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_to_move</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Entity" title="python_pdb.entities.Entity"><span class="pre">Entity</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="python_pdb.entities.html#python_pdb.entities.Entity" title="python_pdb.entities.Entity"><span class="pre">Entity</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#python_pdb.aligners.align_entities" title="Link to this definition"></a></dt>
 <dd><p>Align entities structure in 3D space.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -108,6 +108,24 @@
 <p>The return type will be an entity with the same level as the <cite>entity_to_move</cite>, or if that is not provided than
 the same as the mobile region.</p>
 </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="python_pdb.aligners.align_pandas_structure">
+<span class="sig-prename descclassname"><span class="pre">python_pdb.aligners.</span></span><span class="sig-name descname"><span class="pre">align_pandas_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mobile_coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_to_move</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#python_pdb.aligners.align_pandas_structure" title="Link to this definition"></a></dt>
+<dd><p>Align entities structure in 3D space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mobile</strong> – coordinates of atoms in movable region that will align to target.</p></li>
+<li><p><strong>target</strong> – coordinates of atoms to align mobile region on to.</p></li>
+<li><p><strong>df_to_move</strong> – the dataframe to update coordinates based on the alignment of mobile and target region.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new dataframe with updated coordinates.</p>
 </dd>
 </dl>
 </dd></dl>

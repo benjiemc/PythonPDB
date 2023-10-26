@@ -2,6 +2,7 @@
 from typing import Type
 
 import numpy as np
+import pandas as pd
 
 from python_pdb.entities import Entity
 
@@ -80,7 +81,7 @@ def align_sequences(seq1: str, seq2: str,
     return (list(reversed(reverse_alignment)), alignment_matrix[-1, -1])
 
 
-def align(mobile_coords: np.ndarray, target_coords: np.ndarray, entity_to_move: Type[Entity]) -> Type[Entity]:
+def align_entities(mobile_coords: np.ndarray, target_coords: np.ndarray, entity_to_move: Type[Entity]) -> Type[Entity]:
     '''Align entities structure in 3D space.
 
     Args:
@@ -95,6 +96,56 @@ def align(mobile_coords: np.ndarray, target_coords: np.ndarray, entity_to_move: 
         the same as the mobile region.
 
     '''
+    def _apply_transform(entity, rotation, translation):
+        if hasattr(entity, 'position'):
+            new_coords = np.dot(np.array(entity.position), rotation) + translation
+
+            entity.pos_x = new_coords[0]
+            entity.pos_y = new_coords[1]
+            entity.pos_z = new_coords[2]
+
+        else:
+            for child in entity:
+                _apply_transform(child, rotation, translation)
+
+    rotation, translation = _compute_rot_trans(mobile_coords, target_coords)
+
+    region = entity_to_move.copy()
+
+    _apply_transform(region, rotation, translation)
+
+    return region
+
+
+def align_pandas_structure(mobile_coords: np.ndarray,
+                           target_coords: np.ndarray,
+                           df_to_move: pd.DataFrame) -> pd.DataFrame:
+    '''Align entities structure in 3D space.
+
+    Args:
+        mobile: coordinates of atoms in movable region that will align to target.
+        target: coordinates of atoms to align mobile region on to.
+        df_to_move: the dataframe to update coordinates based on the alignment of mobile and target region.
+
+    Returns:
+        A new dataframe with updated coordinates.
+
+    '''
+    def _transform(rotation, translation, row):
+        return pd.Series(np.dot(row.to_numpy(), rotation) + translation)
+
+    rotation, translation = _compute_rot_trans(mobile_coords, target_coords)
+
+    new_df = df_to_move.copy()
+
+    new_coords = new_df[['pos_x', 'pos_y', 'pos_z']].apply(lambda row: _transform(rotation, translation, row), axis=1)
+    new_df[['pos_x', 'pos_y', 'pos_z']] = new_coords
+
+    return new_df
+
+
+def _compute_rot_trans(mobile_coords, target_coords):
+    '''Compute the rotation matrix and translation vector for an alignment.'''
     # center on centroid
     mobile_average = sum(mobile_coords) / len(mobile_coords)
     target_average = sum(target_coords) / len(target_coords)
@@ -114,21 +165,4 @@ def align(mobile_coords: np.ndarray, target_coords: np.ndarray, entity_to_move: 
 
     translation = target_average - np.dot(mobile_average, rotation)
 
-    region = entity_to_move.copy()
-
-    _apply_transform(region, rotation, translation)
-
-    return region
-
-
-def _apply_transform(entity, rotation, translation):
-    if hasattr(entity, 'position'):
-        new_coords = np.dot(np.array(entity.position), rotation) + translation
-
-        entity.pos_x = new_coords[0]
-        entity.pos_y = new_coords[1]
-        entity.pos_z = new_coords[2]
-
-    else:
-        for child in entity:
-            _apply_transform(child, rotation, translation)
+    return rotation, translation

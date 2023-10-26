@@ -2,9 +2,8 @@ from unittest import TestCase
 
 import numpy as np
 
-from python_pdb.aligners import align, align_pandas_structure, align_sequences
-from python_pdb.entities import Structure
-from python_pdb.parsers import parse_pdb_to_pandas
+from python_pdb.aligners import align_entities, align_pandas_structure, align_sequences
+from python_pdb.parsers import parse_pdb, parse_pdb_to_pandas
 
 
 class TestAlignSequence(TestCase):
@@ -26,7 +25,7 @@ class TestAlignSequence(TestCase):
 class TestAlign(TestCase):
 
     def test(self):
-        structure_1 = Structure.from_pdb(
+        structure_1 = parse_pdb(
             ('ATOM      1  N   ALA A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
              'ATOM      2  CA  ALA A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
              'ATOM      3  C   ALA A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
@@ -37,7 +36,7 @@ class TestAlign(TestCase):
              'ATOM      8  H3  ALA A   3     -15.041   2.374   3.119  1.00  0.00           H \n')
         )
 
-        structure_2 = Structure.from_pdb(
+        structure_2 = parse_pdb(
             ('ATOM      1  N   ALA A   3    -114.239  -8.261  3.769  1.00  0.00           N \n'
              'ATOM      2  CA  ALA A   3    -112.988  -8.726  3.102  1.00  0.00           C \n'
              'ATOM      3  C   ALA A   3    -112.843  -8.059  1.732  1.00  0.00           C \n'
@@ -48,7 +47,7 @@ class TestAlign(TestCase):
              'ATOM      8  H3  ALA A   3    -115.041  -8.374  3.119  1.00  0.00           H \n')
         )
 
-        new_structure = align(structure_1.get_coordinates(), structure_2.get_coordinates(), structure_1)
+        new_structure = align_entities(structure_1.get_coordinates(), structure_2.get_coordinates(), structure_1)
 
         np.testing.assert_array_almost_equal(new_structure.get_coordinates(),
                                              np.array([[-114.23727413,   -8.65418163,    3.78295986],

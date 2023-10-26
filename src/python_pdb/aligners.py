@@ -81,7 +81,7 @@ def align_sequences(seq1: str, seq2: str,
     return (list(reversed(reverse_alignment)), alignment_matrix[-1, -1])
 
 
-def align(mobile_coords: np.ndarray, target_coords: np.ndarray, entity_to_move: Type[Entity]) -> Type[Entity]:
+def align_entities(mobile_coords: np.ndarray, target_coords: np.ndarray, entity_to_move: Type[Entity]) -> Type[Entity]:
     '''Align entities structure in 3D space.
 
     Args:
@@ -96,67 +96,25 @@ def align(mobile_coords: np.ndarray, target_coords: np.ndarray, entity_to_move: 
         the same as the mobile region.
 
     '''
-    # center on centroid
-    mobile_average = sum(mobile_coords) / len(mobile_coords)
-    target_average = sum(target_coords) / len(target_coords)
+    def _apply_transform(entity, rotation, translation):
+        if hasattr(entity, 'position'):
+            new_coords = np.dot(np.array(entity.position), rotation) + translation
 
-    mobile_coords = mobile_coords - mobile_average
-    target_coords = target_coords - target_average
+            entity.pos_x = new_coords[0]
+            entity.pos_y = new_coords[1]
+            entity.pos_z = new_coords[2]
 
-    # correlation matrix
-    a = np.dot(np.transpose(mobile_coords), target_coords)
-    u, d, vt = np.linalg.svd(a)
-    rotation = np.transpose(np.dot(np.transpose(vt), np.transpose(u)))
+        else:
+            for child in entity:
+                _apply_transform(child, rotation, translation)
 
-    # check if we have found a reflection
-    if np.linalg.det(rotation) < 0:
-        vt[2] = -vt[2]
-        rotation = np.transpose(np.dot(np.transpose(vt), np.transpose(u)))
-
-    translation = target_average - np.dot(mobile_average, rotation)
+    rotation, translation = _compute_rot_trans(mobile_coords, target_coords)
 
     region = entity_to_move.copy()
 
     _apply_transform(region, rotation, translation)
 
     return region
-
-
-def _apply_transform(entity, rotation, translation):
-    if hasattr(entity, 'position'):
-        new_coords = np.dot(np.array(entity.position), rotation) + translation
-
-        entity.pos_x = new_coords[0]
-        entity.pos_y = new_coords[1]
-        entity.pos_z = new_coords[2]
-
-    else:
-        for child in entity:
-            _apply_transform(child, rotation, translation)
-
-
-def _compute_rot_trans(mobile_coords, target_coords):
-    '''Compute the rotation matrix and translation vector for an alignment.'''
-    # center on centroid
-    mobile_average = sum(mobile_coords) / len(mobile_coords)
-    target_average = sum(target_coords) / len(target_coords)
-
-    mobile_coords = mobile_coords - mobile_average
-    target_coords = target_coords - target_average
-
-    # correlation matrix
-    a = np.dot(np.transpose(mobile_coords), target_coords)
-    u, d, vt = np.linalg.svd(a)
-    rotation = np.transpose(np.dot(np.transpose(vt), np.transpose(u)))
-
-    # check if we have found a reflection
-    if np.linalg.det(rotation) < 0:
-        vt[2] = -vt[2]
-        rotation = np.transpose(np.dot(np.transpose(vt), np.transpose(u)))
-
-    translation = target_average - np.dot(mobile_average, rotation)
-
-    return rotation, translation
 
 
 def align_pandas_structure(mobile_coords: np.ndarray,
@@ -184,3 +142,27 @@ def align_pandas_structure(mobile_coords: np.ndarray,
     new_df[['pos_x', 'pos_y', 'pos_z']] = new_coords
 
     return new_df
+
+
+def _compute_rot_trans(mobile_coords, target_coords):
+    '''Compute the rotation matrix and translation vector for an alignment.'''
+    # center on centroid
+    mobile_average = sum(mobile_coords) / len(mobile_coords)
+    target_average = sum(target_coords) / len(target_coords)
+
+    mobile_coords = mobile_coords - mobile_average
+    target_coords = target_coords - target_average
+
+    # correlation matrix
+    a = np.dot(np.transpose(mobile_coords), target_coords)
+    u, d, vt = np.linalg.svd(a)
+    rotation = np.transpose(np.dot(np.transpose(vt), np.transpose(u)))
+
+    # check if we have found a reflection
+    if np.linalg.det(rotation) < 0:
+        vt[2] = -vt[2]
+        rotation = np.transpose(np.dot(np.transpose(vt), np.transpose(u)))
+
+    translation = target_average - np.dot(mobile_average, rotation)
+
+    return rotation, translation

@@ -2,6 +2,39 @@
 
 
 
+## v0.0.2 (2023-12-15)
+
+### Fix
+
+* fix: Fix release workflow ([`f6a4227`](https://github.com/benjiemc/PythonPDB/commit/f6a4227fefc250f40fd3027f737edf2c8e64ac29))
+
+* fix: Add build command ([`908bda2`](https://github.com/benjiemc/PythonPDB/commit/908bda2cc1d3969882f52b0b80b54e760f5dd612))
+
+### Unknown
+
+* Merge pull request #23 from benjiemc/publishing
+
+fix: Fix release workflow ([`28041d4`](https://github.com/benjiemc/PythonPDB/commit/28041d49437ac83e69784b546cb6a348ef8217c9))
+
+* Merge pull request #22 from benjiemc/publishing
+
+feat: Add build command ([`d32b743`](https://github.com/benjiemc/PythonPDB/commit/d32b7432c9495ee484f04c235ed6b14270ffea59))
+
+* Merge pull request #21 from benjiemc/license
+
+Add LICENSE file ([`b535a47`](https://github.com/benjiemc/PythonPDB/commit/b535a4756c7b81c1969ce172354ba0ea18cb5818))
+
+* Add LICENSE file
+
+Closes #14 ([`268f29b`](https://github.com/benjiemc/PythonPDB/commit/268f29bd1edfe944d6d875b93dfb5f044de075c6))
+
+* Merge pull request #20 from benjiemc/versioning
+
+Update variables for semantic versioning ([`f52f7d1`](https://github.com/benjiemc/PythonPDB/commit/f52f7d124d7244567f4d0e7e09e68b448efa10d5))
+
+* Update variables for semantic versioning ([`3f45225`](https://github.com/benjiemc/PythonPDB/commit/3f452253f3cdee33c73c71a510e71117ac27b00d))
+
+
 ## v0.0.1 (2023-10-26)
 
 ### Fix

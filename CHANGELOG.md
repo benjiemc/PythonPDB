@@ -2,6 +2,19 @@
 
 
 
+## v0.0.3 (2023-12-15)
+
+### Fix
+
+* fix: pypi release script ([`80f1093`](https://github.com/benjiemc/PythonPDB/commit/80f1093029809c1162bdea6f1181d7d62272e869))
+
+### Unknown
+
+* Merge pull request #24 from benjiemc/publishing
+
+fix: pypi release script ([`d7ac466`](https://github.com/benjiemc/PythonPDB/commit/d7ac466da1bedd883910da7cfd1cb05792469360))
+
+
 ## v0.0.2 (2023-12-15)
 
 ### Fix

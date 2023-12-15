@@ -28,6 +28,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Download all the dists
+      if: if(${{ steps.semantic_release.outputs.release }} == "true")
       uses: actions/download-artifact@v3
       with:
           name: python-package-distributions

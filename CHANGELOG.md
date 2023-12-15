@@ -2,6 +2,17 @@
 
 
 
+## v0.0.6 (2023-12-15)
+
+### Fix
+
+* fix: add upload to gh artifacts ([`9d4a237`](https://github.com/benjiemc/PythonPDB/commit/9d4a237add60af0a3747cd7f117940643ecc2b2a))
+
+### Unknown
+
+* Remove unused option ([`6cac1d2`](https://github.com/benjiemc/PythonPDB/commit/6cac1d2cf2e6c3dbb51857ca58d430ff72c7f7de))
+
+
 ## v0.0.5 (2023-12-15)
 
 ### Fix

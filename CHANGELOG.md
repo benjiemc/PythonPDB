@@ -2,6 +2,15 @@
 
 
 
+## v0.0.5 (2023-12-15)
+
+### Fix
+
+* fix: missing src/ path ([`da83ce8`](https://github.com/benjiemc/PythonPDB/commit/da83ce82a0ab99180fc3e2a206cdc26f97bec6ee))
+
+* fix: semantic versioning variables ([`d25c02a`](https://github.com/benjiemc/PythonPDB/commit/d25c02acd06d1d317b73a7d445fd0e73b38d20e0))
+
+
 ## v0.0.4 (2023-12-15)
 
 ### Fix

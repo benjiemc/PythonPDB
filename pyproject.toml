@@ -90,5 +90,5 @@ env = "GH_TOKEN"
 
 [tool.semantic_release.publish]
 dist_glob_patterns = ["dist/*"]
+build_command = "pip install build && python3 -m build"
 upload_to_vcs_release = true
-

@@ -2,6 +2,25 @@
 
 
 
+## v0.0.4 (2023-12-15)
+
+### Fix
+
+* fix: add check to workflow step ([`9453a62`](https://github.com/benjiemc/PythonPDB/commit/9453a6222025149fa6e075e7c0d9e96c0e6d95bd))
+
+### Unknown
+
+* Merge pull request #26 from benjiemc/publishing
+
+fix: add check to workflow step ([`2d03409`](https://github.com/benjiemc/PythonPDB/commit/2d03409f2b08587642c51772c35848adb550af9d))
+
+* Merge pull request #25 from benjiemc/publishing
+
+fix: Move build command ([`a7be9d3`](https://github.com/benjiemc/PythonPDB/commit/a7be9d351f465db5bef0ea819a125894f6e29a24))
+
+* Move build command ([`f4bea70`](https://github.com/benjiemc/PythonPDB/commit/f4bea7046d1fd9508d17d64178493f8d6c1870f0))
+
+
 ## v0.0.3 (2023-12-15)
 
 ### Fix

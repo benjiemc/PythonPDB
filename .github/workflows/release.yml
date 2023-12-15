@@ -27,13 +27,13 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Download all the dists
-      if: if(${{ steps.semantic_release.outputs.release }} == "true")
-      uses: actions/download-artifact@v3
+    - name: Publish package to GitHub Release
+      uses: python-semantic-release/upload-to-gh-release@main
+      if: ${{ steps.release.outputs.released }} == 'true'
       with:
-          name: python-package-distributions
-          path: dist/
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ steps.release.outputs.tag }}
 
     - name: Publish Python 🐍 distribution 📦 to PyPI
-      if: if(${{ steps.semantic_release.outputs.release }} == "true")
+      if: ${{ steps.release.outputs.released }} == 'true'
       uses: pypa/gh-action-pypi-publish@release/v1

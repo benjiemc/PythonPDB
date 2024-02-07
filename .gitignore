@@ -6,3 +6,4 @@ build/*
 public/*
 docs/source/*
 **/.DS_Store
+**/.ipynb_checkpoints/*

@@ -1,0 +1,7 @@
+python\_pdb.chemistry module
+============================
+
+.. automodule:: python_pdb.chemistry
+   :members:
+   :undoc-members:
+   :show-inheritance:

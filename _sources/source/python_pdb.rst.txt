@@ -16,6 +16,7 @@ Submodules
    :maxdepth: 4
 
    python_pdb.aligners
+   python_pdb.chemistry
    python_pdb.comparisons
    python_pdb.entities
    python_pdb.parsers

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>python_pdb.comparisons module &mdash; PythonPDB  documentation</title>
+  <title>python_pdb.chemistry module &mdash; PythonPDB  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
 
@@ -21,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="python_pdb.entities module" href="python_pdb.entities.html" />
-    <link rel="prev" title="python_pdb.chemistry module" href="python_pdb.chemistry.html" /> 
+    <link rel="next" title="python_pdb.comparisons module" href="python_pdb.comparisons.html" />
+    <link rel="prev" title="python_pdb.aligners module" href="python_pdb.aligners.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -51,8 +51,8 @@
 <li class="toctree-l3"><a class="reference internal" href="python_pdb.html#subpackages">Subpackages</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="python_pdb.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="python_pdb.aligners.html">python_pdb.aligners module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="python_pdb.chemistry.html">python_pdb.chemistry module</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">python_pdb.comparisons module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">python_pdb.chemistry module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python_pdb.comparisons.html">python_pdb.comparisons module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="python_pdb.entities.html">python_pdb.entities module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="python_pdb.parsers.html">python_pdb.parsers module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="python_pdb.records.html">python_pdb.records module</a></li>
@@ -81,9 +81,9 @@
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="modules.html">python_pdb</a></li>
           <li class="breadcrumb-item"><a href="python_pdb.html">python_pdb package</a></li>
-      <li class="breadcrumb-item active">python_pdb.comparisons module</li>
+      <li class="breadcrumb-item active">python_pdb.chemistry module</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/source/python_pdb.comparisons.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/source/python_pdb.chemistry.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -91,13 +91,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-python_pdb.comparisons">
-<span id="python-pdb-comparisons-module"></span><h1>python_pdb.comparisons module<a class="headerlink" href="#module-python_pdb.comparisons" title="Link to this heading"></a></h1>
-<p>Functions for comparing PDB structures.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="python_pdb.comparisons.rmsd">
-<span class="sig-prename descclassname"><span class="pre">python_pdb.comparisons.</span></span><span class="sig-name descname"><span class="pre">rmsd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#python_pdb.comparisons.rmsd" title="Link to this definition"></a></dt>
-<dd><p>Calculate Root Mean Squard Deviation between two sets of coordinates.</p>
+  <section id="module-python_pdb.chemistry">
+<span id="python-pdb-chemistry-module"></span><h1>python_pdb.chemistry module<a class="headerlink" href="#module-python_pdb.chemistry" title="Link to this heading"></a></h1>
+<dl class="py data">
+<dt class="sig sig-object py" id="python_pdb.chemistry.MOLECULAR_WEIGHTS">
+<span class="sig-prename descclassname"><span class="pre">python_pdb.chemistry.</span></span><span class="sig-name descname"><span class="pre">MOLECULAR_WEIGHTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'C':</span> <span class="pre">12.011,</span> <span class="pre">'H':</span> <span class="pre">1.008,</span> <span class="pre">'N':</span> <span class="pre">14.007,</span> <span class="pre">'O':</span> <span class="pre">15.999,</span> <span class="pre">'S':</span> <span class="pre">32.06}</span></em><a class="headerlink" href="#python_pdb.chemistry.MOLECULAR_WEIGHTS" title="Link to this definition"></a></dt>
+<dd><p>//www.rsc.org/periodic-table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Molecular weights of protein atoms. Taken from https</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -106,8 +110,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="python_pdb.chemistry.html" class="btn btn-neutral float-left" title="python_pdb.chemistry module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="python_pdb.entities.html" class="btn btn-neutral float-right" title="python_pdb.entities module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="python_pdb.aligners.html" class="btn btn-neutral float-left" title="python_pdb.aligners module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="python_pdb.comparisons.html" class="btn btn-neutral float-right" title="python_pdb.comparisons module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

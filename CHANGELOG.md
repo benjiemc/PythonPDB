@@ -2,6 +2,27 @@
 
 
 
+## v0.1.0 (2024-03-01)
+
+### Feature
+
+* feat: add molecular weights information ([`8da1ddd`](https://github.com/benjiemc/PythonPDB/commit/8da1ddd689601cf177e08af79a5e27ba6898da65))
+
+### Unknown
+
+* Merge pull request #28 from benjiemc/molecular-weights
+
+feat: add molecular weights information ([`53ea0de`](https://github.com/benjiemc/PythonPDB/commit/53ea0de1385029cf06e79f66a4faec897cb4c650))
+
+* Minor fixes ([`73baf0d`](https://github.com/benjiemc/PythonPDB/commit/73baf0d91c69972b40522535a2b372fe2421af33))
+
+* Merge pull request #27 from benjiemc/blogpig-example
+
+Add pandas example ([`e2be8f3`](https://github.com/benjiemc/PythonPDB/commit/e2be8f324d7b472648b6a411accd3df8ed41f3c5))
+
+* Add pandas example ([`7938e67`](https://github.com/benjiemc/PythonPDB/commit/7938e6722e56e941d0d26ccced38e7e4c0ea7f96))
+
+
 ## v0.0.6 (2023-12-15)
 
 ### Fix

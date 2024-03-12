@@ -2,6 +2,24 @@
 
 
 
+## v0.1.1 (2024-03-12)
+
+### Fix
+
+* fix: Fix bug with HETATMs at the end of file
+
+PDB files sometimes have the HETATMs separate to the rest of the chain
+residues (see 1ac6 as an example). This was leading to unexpected
+behaviour where two chains with the same name where being added to the
+model as oppose to one chain with all residues. ([`19bfd4c`](https://github.com/benjiemc/PythonPDB/commit/19bfd4ce26538a0a786e6548183fae0705d072ac))
+
+### Unknown
+
+* Merge pull request #29 from benjiemc/hot-fix-chain-handling
+
+fix: Fix bug with HETATMs at the end of file ([`74bde2a`](https://github.com/benjiemc/PythonPDB/commit/74bde2a03abe7762c19250551a1f0c84a9461d44))
+
+
 ## v0.1.0 (2024-03-01)
 
 ### Feature

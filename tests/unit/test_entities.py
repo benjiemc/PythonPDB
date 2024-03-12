@@ -269,6 +269,30 @@ class TestStructure(TestCase):
         self.assertEqual(structure[0]['A'].name, 'A')
         self.assertEqual(structure[0]['A'][3]['N'].element, 'N')
 
+    def test_from_pdb_disjoint_chain(self):
+        mock_pdb = ('ATOM      1  N   ALA A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      2  CA  ALA A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      3  C   ALA A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      4  O   ALA A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM      6  CB  ALA A   3     -11.858   2.289   4.034  1.00  0.00           C \n'
+                    'ATOM      3  N   ALA B   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+                    'ATOM      5  CA  ALA B   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+                    'ATOM      7  C   ALA B   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+                    'ATOM      9  O   ALA B   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+                    'ATOM     10  CB  ALA B   3     -11.858   2.289   4.034  1.00  0.00           C \n'
+                    'HETATM 1768  O   HOH A 168      24.679  20.455  20.656  1.00 50.95           O  \n'
+                    'HETATM 1769  O   HOH A 169      49.185  15.758  26.653  1.00 51.45           O  \n'
+                    'HETATM 1770  O   HOH A 170      48.796  14.301  14.334  1.00 52.69           O  \n'
+                    'HETATM 1771  O   HOH A 171      50.515  13.139  24.430  1.00 49.28           O  \n'
+                    'HETATM 1772  O   HOH A 172      41.001  28.226  -9.244  1.00 51.36           O  \n'
+                    'HETATM 1773  O   HOH A 173      47.928  17.149  19.716  1.00 53.37           O  \n'
+                    'HETATM 1774  O   HOH A 174      54.474  15.840  24.498  1.00 53.86           O  \n')
+
+        structure = Structure.from_pdb(mock_pdb)
+
+        self.assertEqual(len(structure[0]['A']), 8)
+        self.assertEqual(len(structure[0]['B']), 1)
+
     def test_from_pandas(self):
         mock_df = pd.DataFrame(
             [['ATOM', 10570, 'N',  '', 'VAL', 'C', 4, '', -15.115, 2.602, -43.993, 1.00, 47.21, 'N', ''],

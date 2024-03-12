@@ -496,8 +496,12 @@ class Structure(Entity):
                     structure.add_model(model)
 
                 if prev_chain_id != record.chain_id:
-                    chain = Chain(record.chain_id)
-                    model.add_chain(chain)
+                    if record.chain_id not in [chain.name for chain in model]:
+                        chain = Chain(record.chain_id)
+                        model.add_chain(chain)
+                    else:
+                        chain = model[record.chain_id]
+
                     prev_chain_id = record.chain_id
 
                 if prev_res_id != (record.chain_id, record.seq_id, record.insert_code):

@@ -6,9 +6,9 @@ Tools for working with Protein Data Bank Files. This package was created to prov
 
 ## Key Links
 
-* Source code: [https://github.com/benjiemc/PythonPDB]()
-* Documentation: [https://benjiemc.github.io/PythonPDB/]()
-* PyPi: [https://pypi.org/project/python-pdb/]()
+* Source code: [https://github.com/benjiemc/PythonPDB](https://github.com/benjiemc/PythonPDB)
+* Documentation: [https://benjiemc.github.io/PythonPDB/](https://benjiemc.github.io/PythonPDB/)
+* PyPi: [https://pypi.org/project/python-pdb/](https://pypi.org/project/python-pdb/)
 
 ## Installation
 
@@ -40,4 +40,4 @@ pip install -e '.[develop]'
 
 ## Documentation
 
-Documentation can be found at [https://benjiemc.github.io/PythonPDB/]().
+Documentation can be found at [https://benjiemc.github.io/PythonPDB/](https://benjiemc.github.io/PythonPDB/).

@@ -15,6 +15,10 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+      - name: Install
+        uses: pandoc/actions/setup@{main}
+        with:
+          version: 2.19
       - name: Build
         run: docs/build_docs.sh
       - name: Publish documentation

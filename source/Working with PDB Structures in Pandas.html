@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Working with PDB Structures in Pandas &mdash; PythonPDB  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="python_pdb" href="modules.html" />
+    <link rel="prev" title="PythonPDB" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            PythonPDB
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Working with PDB Structures in Pandas</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">python_pdb</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PythonPDB</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Working with PDB Structures in Pandas</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/source/Working with PDB Structures in Pandas.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Working-with-PDB-Structures-in-Pandas">
+<h1>Working with PDB Structures in Pandas<a class="headerlink" href="#Working-with-PDB-Structures-in-Pandas" title="Link to this heading"></a></h1>
+<p>Let’s start by loading up a PDB structure from my favourite OPIG tool, the <a class="reference external" href="https://opig.stats.ox.ac.uk/webapps/stcrdab-stcrpred/">STCRDab</a>! Here we will look at <a class="reference external" href="https://opig.stats.ox.ac.uk/webapps/stcrdab-stcrpred/StrViewer?pdb=6eqb">PDB ID 6eqb</a>. It is a crystal structure of a T cell receptor interacting with a peptide presented by an MHC class I molecule.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import nglview
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "5c3f16634dce4fc7b93dfc0fa04874c3", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>view = nglview.show_file(&#39;data/6eqb.pdb&#39;)
+view
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "b588bfc687354568b301ff1cb8a8ac41", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<p>Now let’s load this molecules into a pandas dataframe and do some analysis. The PDB data is loaded into columns in a similar way that PDB files are formatted as columns.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from python_pdb.parsers import parse_pdb_to_pandas
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>with open(&#39;data/6eqb.pdb&#39;, &#39;r&#39;) as fh:
+    df = parse_pdb_to_pandas(fh.read())
+
+df
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>record_type</th>
+      <th>atom_number</th>
+      <th>atom_name</th>
+      <th>alt_loc</th>
+      <th>residue_name</th>
+      <th>chain_id</th>
+      <th>residue_seq_id</th>
+      <th>residue_insert_code</th>
+      <th>pos_x</th>
+      <th>pos_y</th>
+      <th>pos_z</th>
+      <th>occupancy</th>
+      <th>b_factor</th>
+      <th>element</th>
+      <th>charge</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ATOM</td>
+      <td>1</td>
+      <td>N</td>
+      <td>A</td>
+      <td>ALA</td>
+      <td>C</td>
+      <td>2</td>
+      <td>None</td>
+      <td>48.681</td>
+      <td>-11.013</td>
+      <td>29.600</td>
+      <td>0.5</td>
+      <td>30.86</td>
+      <td>N</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ATOM</td>
+      <td>2</td>
+      <td>CA</td>
+      <td>A</td>
+      <td>ALA</td>
+      <td>C</td>
+      <td>2</td>
+      <td>None</td>
+      <td>49.343</td>
+      <td>-9.708</td>
+      <td>29.330</td>
+      <td>0.5</td>
+      <td>29.82</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ATOM</td>
+      <td>3</td>
+      <td>C</td>
+      <td>A</td>
+      <td>ALA</td>
+      <td>C</td>
+      <td>2</td>
+      <td>None</td>
+      <td>49.310</td>
+      <td>-8.792</td>
+      <td>30.562</td>
+      <td>0.5</td>
+      <td>29.16</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ATOM</td>
+      <td>4</td>
+      <td>O</td>
+      <td>A</td>
+      <td>ALA</td>
+      <td>C</td>
+      <td>2</td>
+      <td>None</td>
+      <td>48.668</td>
+      <td>-9.107</td>
+      <td>31.537</td>
+      <td>0.5</td>
+      <td>29.75</td>
+      <td>O</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ATOM</td>
+      <td>5</td>
+      <td>CB</td>
+      <td>A</td>
+      <td>ALA</td>
+      <td>C</td>
+      <td>2</td>
+      <td>None</td>
+      <td>48.679</td>
+      <td>-9.044</td>
+      <td>28.146</td>
+      <td>0.5</td>
+      <td>29.57</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6644</th>
+      <td>HETATM</td>
+      <td>6645</td>
+      <td>O</td>
+      <td>None</td>
+      <td>HOH</td>
+      <td>B</td>
+      <td>128</td>
+      <td>None</td>
+      <td>63.467</td>
+      <td>-9.052</td>
+      <td>4.232</td>
+      <td>1.0</td>
+      <td>46.86</td>
+      <td>O</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6645</th>
+      <td>HETATM</td>
+      <td>6646</td>
+      <td>O</td>
+      <td>None</td>
+      <td>HOH</td>
+      <td>B</td>
+      <td>129</td>
+      <td>None</td>
+      <td>64.998</td>
+      <td>-3.887</td>
+      <td>10.735</td>
+      <td>1.0</td>
+      <td>48.05</td>
+      <td>O</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6646</th>
+      <td>HETATM</td>
+      <td>6647</td>
+      <td>O</td>
+      <td>None</td>
+      <td>HOH</td>
+      <td>B</td>
+      <td>130</td>
+      <td>None</td>
+      <td>69.089</td>
+      <td>-37.773</td>
+      <td>1.079</td>
+      <td>1.0</td>
+      <td>63.55</td>
+      <td>O</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6647</th>
+      <td>HETATM</td>
+      <td>6648</td>
+      <td>O</td>
+      <td>None</td>
+      <td>HOH</td>
+      <td>B</td>
+      <td>131</td>
+      <td>None</td>
+      <td>70.137</td>
+      <td>-40.643</td>
+      <td>1.067</td>
+      <td>1.0</td>
+      <td>59.75</td>
+      <td>O</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6648</th>
+      <td>HETATM</td>
+      <td>6649</td>
+      <td>O</td>
+      <td>None</td>
+      <td>HOH</td>
+      <td>B</td>
+      <td>132</td>
+      <td>None</td>
+      <td>66.479</td>
+      <td>4.782</td>
+      <td>14.497</td>
+      <td>1.0</td>
+      <td>64.56</td>
+      <td>O</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+<p>6649 rows × 15 columns</p>
+</div></div>
+</div>
+<p>To start things off, let’s clean up this structure by highlighting one of the most powerful aspects of this approach: querying. As you can seen from the data frame above- there are water molecules in the structure that we might not care about. Let’s remove them…</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_clean = df.query(&quot;record_type == &#39;ATOM&#39;&quot;)  # or &quot;residue_name != &#39;HOH&#39;&quot; would have worked as well
+df_clean.tail()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>record_type</th>
+      <th>atom_number</th>
+      <th>atom_name</th>
+      <th>alt_loc</th>
+      <th>residue_name</th>
+      <th>chain_id</th>
+      <th>residue_seq_id</th>
+      <th>residue_insert_code</th>
+      <th>pos_x</th>
+      <th>pos_y</th>
+      <th>pos_z</th>
+      <th>occupancy</th>
+      <th>b_factor</th>
+      <th>element</th>
+      <th>charge</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>6633</th>
+      <td>ATOM</td>
+      <td>6634</td>
+      <td>CB</td>
+      <td>None</td>
+      <td>MET</td>
+      <td>B</td>
+      <td>125</td>
+      <td>None</td>
+      <td>74.125</td>
+      <td>-32.337</td>
+      <td>9.293</td>
+      <td>1.0</td>
+      <td>121.02</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6634</th>
+      <td>ATOM</td>
+      <td>6635</td>
+      <td>CG</td>
+      <td>None</td>
+      <td>MET</td>
+      <td>B</td>
+      <td>125</td>
+      <td>None</td>
+      <td>73.143</td>
+      <td>-31.632</td>
+      <td>10.263</td>
+      <td>1.0</td>
+      <td>116.33</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6635</th>
+      <td>ATOM</td>
+      <td>6636</td>
+      <td>SD</td>
+      <td>None</td>
+      <td>MET</td>
+      <td>B</td>
+      <td>125</td>
+      <td>None</td>
+      <td>71.379</td>
+      <td>-32.103</td>
+      <td>10.373</td>
+      <td>1.0</td>
+      <td>113.91</td>
+      <td>S</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6636</th>
+      <td>ATOM</td>
+      <td>6637</td>
+      <td>CE</td>
+      <td>None</td>
+      <td>MET</td>
+      <td>B</td>
+      <td>125</td>
+      <td>None</td>
+      <td>70.626</td>
+      <td>-31.028</td>
+      <td>9.134</td>
+      <td>1.0</td>
+      <td>109.06</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6637</th>
+      <td>ATOM</td>
+      <td>6638</td>
+      <td>OXT</td>
+      <td>None</td>
+      <td>MET</td>
+      <td>B</td>
+      <td>125</td>
+      <td>None</td>
+      <td>74.839</td>
+      <td>-34.197</td>
+      <td>6.246</td>
+      <td>1.0</td>
+      <td>130.70</td>
+      <td>O</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>By using pandas’ built in querying function- we can easily get rid of the HETATMs in the file that we might not care about. We can also use this querying to just select the TCR or pMHC to perform analysis on this molecule seperately. In this example, the TCR <span class="math notranslate nohighlight">\(\alpha\)</span>- and <span class="math notranslate nohighlight">\(\beta\)</span> chain is labelled as chains D and E repectively. The MHC molecule is chain A (B- representing the <span class="math notranslate nohighlight">\(\beta_2\)</span>m) and C the peptide.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>!head -n5 data/6eqb.pdb
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+REMARK   5 IMGT RENUMBERED STRUCTURE 6EQB GENERATED BY STCRDAB
+REMARK   5 TCR CHAINS ARE RENUMBERED IN THE VARIABLE REGIONS ONLY
+REMARK   5 MHC CHAINS ARE RENUMBERED IN THE G DOMAINS OR FOR B2M-GLOBULIN
+REMARK   5 NON-TCR AND NON-MHC CHAINS ARE LEFT WITH RESIDUE IDS AS IN PDB
+REMARK   5 PAIRED_ABTCR BCHAIN=E ACHAIN=D MHCCHAINS=AB AGCHAIN=C AGTYPE=PEPTIDE
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tcr_df = df_clean.query(&quot;chain_id == &#39;D&#39; or chain_id == &#39;E&#39;&quot;)
+tcr_df
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>record_type</th>
+      <th>atom_number</th>
+      <th>atom_name</th>
+      <th>alt_loc</th>
+      <th>residue_name</th>
+      <th>chain_id</th>
+      <th>residue_seq_id</th>
+      <th>residue_insert_code</th>
+      <th>pos_x</th>
+      <th>pos_y</th>
+      <th>pos_z</th>
+      <th>occupancy</th>
+      <th>b_factor</th>
+      <th>element</th>
+      <th>charge</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>57</th>
+      <td>ATOM</td>
+      <td>58</td>
+      <td>N</td>
+      <td>None</td>
+      <td>SER</td>
+      <td>E</td>
+      <td>1</td>
+      <td>None</td>
+      <td>44.786</td>
+      <td>19.936</td>
+      <td>31.694</td>
+      <td>1.0</td>
+      <td>91.71</td>
+      <td>N</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>ATOM</td>
+      <td>59</td>
+      <td>CA</td>
+      <td>None</td>
+      <td>SER</td>
+      <td>E</td>
+      <td>1</td>
+      <td>None</td>
+      <td>43.328</td>
+      <td>20.085</td>
+      <td>31.879</td>
+      <td>1.0</td>
+      <td>88.14</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>ATOM</td>
+      <td>60</td>
+      <td>C</td>
+      <td>None</td>
+      <td>SER</td>
+      <td>E</td>
+      <td>1</td>
+      <td>None</td>
+      <td>42.582</td>
+      <td>19.234</td>
+      <td>30.860</td>
+      <td>1.0</td>
+      <td>80.31</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>ATOM</td>
+      <td>61</td>
+      <td>O</td>
+      <td>None</td>
+      <td>SER</td>
+      <td>E</td>
+      <td>1</td>
+      <td>None</td>
+      <td>41.944</td>
+      <td>19.762</td>
+      <td>29.940</td>
+      <td>1.0</td>
+      <td>81.48</td>
+      <td>O</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>ATOM</td>
+      <td>62</td>
+      <td>CB</td>
+      <td>None</td>
+      <td>SER</td>
+      <td>E</td>
+      <td>1</td>
+      <td>None</td>
+      <td>42.912</td>
+      <td>21.571</td>
+      <td>31.778</td>
+      <td>1.0</td>
+      <td>93.53</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3519</th>
+      <td>ATOM</td>
+      <td>3520</td>
+      <td>CD1</td>
+      <td>None</td>
+      <td>PHE</td>
+      <td>D</td>
+      <td>215</td>
+      <td>None</td>
+      <td>-5.784</td>
+      <td>33.229</td>
+      <td>67.928</td>
+      <td>1.0</td>
+      <td>154.28</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3520</th>
+      <td>ATOM</td>
+      <td>3521</td>
+      <td>CD2</td>
+      <td>None</td>
+      <td>PHE</td>
+      <td>D</td>
+      <td>215</td>
+      <td>None</td>
+      <td>-6.202</td>
+      <td>32.551</td>
+      <td>65.649</td>
+      <td>1.0</td>
+      <td>145.03</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3521</th>
+      <td>ATOM</td>
+      <td>3522</td>
+      <td>CE1</td>
+      <td>None</td>
+      <td>PHE</td>
+      <td>D</td>
+      <td>215</td>
+      <td>None</td>
+      <td>-6.684</td>
+      <td>34.292</td>
+      <td>67.786</td>
+      <td>1.0</td>
+      <td>160.08</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3522</th>
+      <td>ATOM</td>
+      <td>3523</td>
+      <td>CE2</td>
+      <td>None</td>
+      <td>PHE</td>
+      <td>D</td>
+      <td>215</td>
+      <td>None</td>
+      <td>-7.092</td>
+      <td>33.613</td>
+      <td>65.506</td>
+      <td>1.0</td>
+      <td>151.52</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3523</th>
+      <td>ATOM</td>
+      <td>3524</td>
+      <td>CZ</td>
+      <td>None</td>
+      <td>PHE</td>
+      <td>D</td>
+      <td>215</td>
+      <td>None</td>
+      <td>-7.336</td>
+      <td>34.483</td>
+      <td>66.576</td>
+      <td>1.0</td>
+      <td>159.15</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+<p>3461 rows × 15 columns</p>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mhc_df = df_clean.query(&quot;chain_id == &#39;A&#39;&quot;)
+mhc_df
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>record_type</th>
+      <th>atom_number</th>
+      <th>atom_name</th>
+      <th>alt_loc</th>
+      <th>residue_name</th>
+      <th>chain_id</th>
+      <th>residue_seq_id</th>
+      <th>residue_insert_code</th>
+      <th>pos_x</th>
+      <th>pos_y</th>
+      <th>pos_z</th>
+      <th>occupancy</th>
+      <th>b_factor</th>
+      <th>element</th>
+      <th>charge</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3541</th>
+      <td>ATOM</td>
+      <td>3542</td>
+      <td>N</td>
+      <td>None</td>
+      <td>GLY</td>
+      <td>A</td>
+      <td>1</td>
+      <td>None</td>
+      <td>63.937</td>
+      <td>-26.599</td>
+      <td>37.997</td>
+      <td>1.0</td>
+      <td>88.67</td>
+      <td>N</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3542</th>
+      <td>ATOM</td>
+      <td>3543</td>
+      <td>CA</td>
+      <td>None</td>
+      <td>GLY</td>
+      <td>A</td>
+      <td>1</td>
+      <td>None</td>
+      <td>64.891</td>
+      <td>-25.601</td>
+      <td>38.583</td>
+      <td>1.0</td>
+      <td>88.18</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3543</th>
+      <td>ATOM</td>
+      <td>3544</td>
+      <td>C</td>
+      <td>None</td>
+      <td>GLY</td>
+      <td>A</td>
+      <td>1</td>
+      <td>None</td>
+      <td>64.208</td>
+      <td>-24.275</td>
+      <td>38.448</td>
+      <td>1.0</td>
+      <td>82.85</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3544</th>
+      <td>ATOM</td>
+      <td>3545</td>
+      <td>O</td>
+      <td>None</td>
+      <td>GLY</td>
+      <td>A</td>
+      <td>1</td>
+      <td>None</td>
+      <td>63.079</td>
+      <td>-24.143</td>
+      <td>38.876</td>
+      <td>1.0</td>
+      <td>81.66</td>
+      <td>O</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3545</th>
+      <td>ATOM</td>
+      <td>3546</td>
+      <td>N</td>
+      <td>None</td>
+      <td>SER</td>
+      <td>A</td>
+      <td>2</td>
+      <td>None</td>
+      <td>64.856</td>
+      <td>-23.315</td>
+      <td>37.808</td>
+      <td>1.0</td>
+      <td>80.55</td>
+      <td>N</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5790</th>
+      <td>ATOM</td>
+      <td>5791</td>
+      <td>O</td>
+      <td>None</td>
+      <td>PRO</td>
+      <td>A</td>
+      <td>1186</td>
+      <td>None</td>
+      <td>77.326</td>
+      <td>-47.026</td>
+      <td>15.302</td>
+      <td>1.0</td>
+      <td>147.25</td>
+      <td>O</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>5791</th>
+      <td>ATOM</td>
+      <td>5792</td>
+      <td>CB</td>
+      <td>None</td>
+      <td>PRO</td>
+      <td>A</td>
+      <td>1186</td>
+      <td>None</td>
+      <td>79.797</td>
+      <td>-49.588</td>
+      <td>14.420</td>
+      <td>1.0</td>
+      <td>159.44</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>5792</th>
+      <td>ATOM</td>
+      <td>5793</td>
+      <td>CG</td>
+      <td>None</td>
+      <td>PRO</td>
+      <td>A</td>
+      <td>1186</td>
+      <td>None</td>
+      <td>81.295</td>
+      <td>-49.731</td>
+      <td>14.585</td>
+      <td>1.0</td>
+      <td>160.29</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>5793</th>
+      <td>ATOM</td>
+      <td>5794</td>
+      <td>CD</td>
+      <td>None</td>
+      <td>PRO</td>
+      <td>A</td>
+      <td>1186</td>
+      <td>None</td>
+      <td>81.803</td>
+      <td>-48.494</td>
+      <td>15.300</td>
+      <td>1.0</td>
+      <td>158.37</td>
+      <td>C</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>5794</th>
+      <td>ATOM</td>
+      <td>5795</td>
+      <td>OXT</td>
+      <td>None</td>
+      <td>PRO</td>
+      <td>A</td>
+      <td>1186</td>
+      <td>None</td>
+      <td>77.441</td>
+      <td>-48.931</td>
+      <td>16.082</td>
+      <td>1.0</td>
+      <td>151.45</td>
+      <td>O</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+<p>2254 rows × 15 columns</p>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>peptide_df = df_clean.query(&quot;chain_id == &#39;C&#39;&quot;)
+
+peptide_residues_df = peptide_df.groupby([&#39;residue_seq_id&#39;, &#39;residue_insert_code&#39;], dropna=False)
+print(f&#39;The peptide is a {len(peptide_residues_df)}-mer!&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The peptide is a 9-mer!
+</pre></div></div>
+</div>
+<p>Another advantage of using pandas is we can add new columns to annotate properties in the structure that we care about. In this example, since the TCR is from STCRDab and has been renumbered using the <a class="reference external" href="https://www.imgt.org/IMGTScientificChart/Nomenclature/IMGT-FRCDRdefinition.html">IMGT numbering convention</a> we can easily identify the complimentary determining regions based on their <code class="docutils literal notranslate"><span class="pre">residue_seq_id</span></code> property.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>IMGT_CDR1 = set(range(27, 38 + 1))
+IMGT_CDR2 = set(range(56, 65 + 1))
+IMGT_CDR3 = set(range(105, 117 + 1))
+
+
+def assign_cdr_number(seq_id: int) -&gt; int | None:
+    &#39;&#39;&#39;
+    Map imgt_id to CDR domains, return number associated with domain or return None if input is not in a CDR
+    domain.
+    &#39;&#39;&#39;
+    if seq_id in IMGT_CDR1:
+        return 1
+
+    if seq_id in IMGT_CDR2:
+        return 2
+
+    if seq_id in IMGT_CDR3:
+        return 3
+
+    return None
+
+tcr_df = tcr_df.copy()  # Doing this on a copy of the dataframe since it is originally a slice of df!
+tcr_df[&#39;cdr&#39;] = tcr_df[&#39;residue_seq_id&#39;].map(assign_cdr_number)
+</pre></div>
+</div>
+</div>
+<p>We can also annotations for the <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> chain since these are defined by the STCRDab header.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tcr_df[&#39;chain_type&#39;] = tcr_df[&#39;chain_id&#39;].map(lambda chain_id: &#39;alpha&#39; if chain_id == &#39;D&#39; else &#39;beta&#39;)
+</pre></div>
+</div>
+</div>
+<p>Now we can easily get rich information about the TCR CDR loops with ease.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tcr_cdrs_df = tcr_df.query(&#39;cdr.notnull()&#39;)
+
+cdr_lengths = tcr_cdrs_df[
+    [&#39;chain_type&#39;, &#39;cdr&#39;, &#39;residue_seq_id&#39;, &#39;residue_insert_code&#39;]
+].drop_duplicates().groupby([&#39;chain_type&#39;, &#39;cdr&#39;], dropna=False).size()
+
+cdr_lengths
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+chain_type  cdr
+alpha       1.0     6
+            2.0     6
+            3.0     9
+beta        1.0     6
+            2.0     5
+            3.0    13
+dtype: int64
+</pre></div></div>
+</div>
+<p>We can also easily properties such as b-factors in the TCR variable domain.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import seaborn as sns
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tcr_variable_df = tcr_df.query(&#39;residue_seq_id &lt;= 129&#39;)
+sns.lineplot(x=tcr_variable_df[&#39;residue_seq_id&#39;], y=tcr_variable_df[&#39;b_factor&#39;])
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;residue_seq_id&#39;, ylabel=&#39;b_factor&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/source_Working_with_PDB_Structures_in_Pandas_21_1.png" src="../_images/source_Working_with_PDB_Structures_in_Pandas_21_1.png" />
+</div>
+</div>
+<p>Finally, computing things like contacting residues between the TCR CDR loops and the peptide is a breeze.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>CONTACT_DISTANCE = 5  # Angstroms (Å)
+
+def euclidean_distance(x1, y1, z1, x2, y2, z2):
+    return np.sqrt((x2 - x1)**2 + (y2 - y1)**2  + (z2 - z1)**2)
+
+
+interface = tcr_cdrs_df.merge(peptide_df, how=&#39;cross&#39;, suffixes=(&#39;_tcr&#39;, &#39;_peptide&#39;))
+interface[&#39;atom_distances&#39;] = euclidean_distance(interface[&#39;pos_x_tcr&#39;], interface[&#39;pos_y_tcr&#39;], interface[&#39;pos_z_tcr&#39;],
+                                                 interface[&#39;pos_x_peptide&#39;], interface[&#39;pos_y_peptide&#39;], interface[&#39;pos_z_peptide&#39;])
+
+contacting_atoms = interface[interface[&#39;atom_distances&#39;] &lt;= CONTACT_DISTANCE]
+contacting_residues = contacting_atoms[[&#39;chain_id_tcr&#39;, &#39;residue_seq_id_tcr&#39;, &#39;residue_insert_code_tcr&#39;, &#39;cdr&#39;, &#39;chain_type&#39;,
+                                        &#39;residue_seq_id_peptide&#39;, &#39;residue_insert_code_peptide&#39;]].drop_duplicates()
+
+contacting_residues
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>chain_id_tcr</th>
+      <th>residue_seq_id_tcr</th>
+      <th>residue_insert_code_tcr</th>
+      <th>cdr</th>
+      <th>chain_type</th>
+      <th>residue_seq_id_peptide</th>
+      <th>residue_insert_code_peptide</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>6424</th>
+      <td>E</td>
+      <td>108</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>8</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6603</th>
+      <td>E</td>
+      <td>109</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>9</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6641</th>
+      <td>E</td>
+      <td>109</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>7</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6704</th>
+      <td>E</td>
+      <td>109</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>8</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6926</th>
+      <td>E</td>
+      <td>110</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>7</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7151</th>
+      <td>E</td>
+      <td>111</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>7</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7194</th>
+      <td>E</td>
+      <td>111</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>4</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7253</th>
+      <td>E</td>
+      <td>111</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>5</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7261</th>
+      <td>E</td>
+      <td>111</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>6</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7280</th>
+      <td>E</td>
+      <td>111</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>8</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7361</th>
+      <td>E</td>
+      <td>111</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>3</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7594</th>
+      <td>E</td>
+      <td>112</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>4</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7596</th>
+      <td>E</td>
+      <td>112</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>5</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7603</th>
+      <td>E</td>
+      <td>112</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>6</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7607</th>
+      <td>E</td>
+      <td>112</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>7</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7622</th>
+      <td>E</td>
+      <td>112</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>8</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>8114</th>
+      <td>E</td>
+      <td>113</td>
+      <td>None</td>
+      <td>3.0</td>
+      <td>beta</td>
+      <td>5</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>11763</th>
+      <td>D</td>
+      <td>37</td>
+      <td>None</td>
+      <td>1.0</td>
+      <td>alpha</td>
+      <td>5</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>11923</th>
+      <td>D</td>
+      <td>37</td>
+      <td>None</td>
+      <td>1.0</td>
+      <td>alpha</td>
+      <td>4</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>12030</th>
+      <td>D</td>
+      <td>37</td>
+      <td>None</td>
+      <td>1.0</td>
+      <td>alpha</td>
+      <td>2</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>12033</th>
+      <td>D</td>
+      <td>37</td>
+      <td>None</td>
+      <td>1.0</td>
+      <td>alpha</td>
+      <td>3</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>12218</th>
+      <td>D</td>
+      <td>38</td>
+      <td>None</td>
+      <td>1.0</td>
+      <td>alpha</td>
+      <td>5</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>13131</th>
+      <td>D</td>
+      <td>57</td>
+      <td>None</td>
+      <td>2.0</td>
+      <td>alpha</td>
+      <td>5</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="PythonPDB" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="python_pdb" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Benjamin McMaster.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

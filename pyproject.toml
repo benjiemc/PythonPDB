@@ -21,6 +21,7 @@ develop = [
     "flake8",
     "Flake8-pyproject",
     "isort",
+    "nbsphinx",
     "pytest",
     "prysk[pytest-plugin]",
     "python-semantic-release",

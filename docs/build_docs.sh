@@ -8,4 +8,6 @@ fi
 pip install -e ".[develop]"
 
 sphinx-apidoc -f -e -o docs/source src/python_pdb
+cp examples/*.ipynb docs/source/
+
 sphinx-build -b html ./docs public

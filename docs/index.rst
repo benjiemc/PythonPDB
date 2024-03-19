@@ -1,9 +1,15 @@
-PythonPDB
-=========
+.. include:: ../README.md
+   :parser: myst_parser.sphinx_
 
 .. toctree::
    :maxdepth: 2
-   :caption: Python API:
+   :caption: Examples
+
+   source/Working with PDB Structures in Pandas
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Python API
 
    source/modules.rst
 

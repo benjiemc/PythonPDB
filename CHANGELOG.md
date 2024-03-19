@@ -2,6 +2,39 @@
 
 
 
+## v0.1.2 (2024-03-19)
+
+### Documentation
+
+* docs: Move script ([`39a8bf8`](https://github.com/benjiemc/PythonPDB/commit/39a8bf895477c33f0458cbe0fa69ff5771b08080))
+
+* docs: Prepend README to documentation home page ([`e6d4fd0`](https://github.com/benjiemc/PythonPDB/commit/e6d4fd0779212bc845ea9d5b68b0f6f8edf9c000))
+
+* docs: Remove trailing colon in heading titles ([`902c6b9`](https://github.com/benjiemc/PythonPDB/commit/902c6b9366cbccd838df5751e1bb4dfadf85d7ad))
+
+* docs: Add example to documentation ([`386ab1c`](https://github.com/benjiemc/PythonPDB/commit/386ab1c2e189ff6e2acbe34a5bf88bff48593153))
+
+* docs: Add title to example notebook ([`16861c6`](https://github.com/benjiemc/PythonPDB/commit/16861c62aed2e794262857e1b6ffca620af2ed81))
+
+* docs: Fix links ([`09b58f8`](https://github.com/benjiemc/PythonPDB/commit/09b58f8269130521fa6dbce8d1a522067078eebd))
+
+* docs: Add information to README ([`9826eed`](https://github.com/benjiemc/PythonPDB/commit/9826eedd82d172d63d50f1d4275a2f453c71e77b))
+
+### Fix
+
+* fix: Add pandonc to documentation CD pipeline ([`7de110e`](https://github.com/benjiemc/PythonPDB/commit/7de110e3d2b1a238366a9895c259164feb148122))
+
+### Unknown
+
+* Merge pull request #31 from benjiemc/hot-fix
+
+fix: Add pandonc to documentation CD pipeline ([`e54eafe`](https://github.com/benjiemc/PythonPDB/commit/e54eafe700613854ed3a0652e6836fd7825eed48))
+
+* Merge pull request #30 from benjiemc/improve-documentation
+
+Improve documentation ([`7d73dae`](https://github.com/benjiemc/PythonPDB/commit/7d73dae853a57f98a3b201a05ddbe296897cb78f))
+
+
 ## v0.1.1 (2024-03-12)
 
 ### Fix

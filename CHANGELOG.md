@@ -2,6 +2,19 @@
 
 
 
+## v0.1.3 (2024-03-19)
+
+### Fix
+
+* fix: Add specific version to action ([`05b44e9`](https://github.com/benjiemc/PythonPDB/commit/05b44e9aa3c8dab6cf72aca3b0e38a4326b4b28f))
+
+### Unknown
+
+* Merge pull request #32 from benjiemc/hot-fix
+
+fix: Add specific version to action ([`50dc19f`](https://github.com/benjiemc/PythonPDB/commit/50dc19fb4c1526af55019a3ae27374568c4f5eaa))
+
+
 ## v0.1.2 (2024-03-19)
 
 ### Documentation

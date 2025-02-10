@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
@@ -5,23 +7,19 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Working with PDB Structures in Pandas &mdash; PythonPDB  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -96,7 +94,7 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "5c3f16634dce4fc7b93dfc0fa04874c3", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "a592f0bf500f4768a305cc00d83b4513", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -111,7 +109,7 @@ view
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "b588bfc687354568b301ff1cb8a8ac41", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "fc94934525a046a99bdb53b3d0ab0869", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <p>Now let’s load this molecules into a pandas dataframe and do some analysis. The PDB data is loaded into columns in a similar way that PDB files are formatted as columns.</p>
 <div class="nbinput nblast docutils container">
@@ -1173,7 +1171,7 @@ sns.lineplot(x=tcr_variable_df[&#39;residue_seq_id&#39;], y=tcr_variable_df[&#39
 <img alt="../_images/source_Working_with_PDB_Structures_in_Pandas_21_1.png" src="../_images/source_Working_with_PDB_Structures_in_Pandas_21_1.png" />
 </div>
 </div>
-<p>Finally, computing things like contacting residues between the TCR CDR loops and the peptide is a breeze.</p>
+<p>Computing things like contacting residues between the TCR CDR loops and the peptide is a breeze.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
@@ -1470,6 +1468,72 @@ contacting_residues
   </tbody>
 </table>
 </div></div>
+</div>
+<p>Finally, if we want to save part of the data frame as a PDB file, we can convert it back to a <code class="docutils literal notranslate"><span class="pre">Structure</span></code> object and save it to a file.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import warnings
+
+from python_pdb.entities import Structure, StructureConstructionWarning
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Suppressing warnings here because there are alternate locations specified in this PDB file
+with warnings.catch_warnings():
+    warnings.filterwarnings(&#39;ignore&#39;, category=StructureConstructionWarning)
+    tcr_structure = Structure.from_pandas(tcr_df)
+
+with open(&#39;tcr.pdb&#39;, &#39;w&#39;) as fh:
+    fh.write(str(tcr_structure))
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>!ls | grep &#39;.pdb&#39;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+tcr.pdb
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>!head tcr.pdb
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ATOM     58  N   SER E   1      44.786  19.936  31.694  1.00 91.71           N
+ATOM     59  CA  SER E   1      43.328  20.085  31.879  1.00 88.14           C
+ATOM     60  C   SER E   1      42.582  19.234  30.860  1.00 80.31           C
+ATOM     61  O   SER E   1      41.944  19.762  29.940  1.00 81.48           O
+ATOM     62  CB  SER E   1      42.912  21.571  31.778  1.00 93.53           C
+ATOM     63  OG  SER E   1      41.483  21.690  31.841  1.00 93.62           O
+ATOM     64  N   GLN E   2      42.634  17.921  31.043  1.00 72.67           N
+ATOM     65  CA  GLN E   2      41.716  17.039  30.308  1.00 69.30           C
+ATOM     66  C   GLN E   2      40.246  17.307  30.674  1.00 66.83           C
+ATOM     67  O   GLN E   2      39.999  17.911  31.668  1.00 70.99           O
+</pre></div></div>
 </div>
 </section>
 

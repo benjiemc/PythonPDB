@@ -18,24 +18,72 @@ dependencies = [
 
 [project.optional-dependencies]
 develop = [
-    "flake8",
-    "Flake8-pyproject",
-    "isort",
     "myst-parser",
     "nbsphinx",
     "pytest",
     "prysk[pytest-plugin]",
     "python-semantic-release",
+    "ruff",
     "sphinx",
     "sphinx-rtd-theme",
 ]
 
-[tool.flake8]
-max-line-length = 120
-exclude = "venv"
+[tool.ruff]
+line-length = 120
+exclude = ["third_party"]
 
-[tool.isort]
-line_length = 120
+[tool.ruff.lint]
+select = ["ALL"]
+extend-select = ["E501"]
+ignore = ["COM812",     # Allow missing trailing comma: not recommended to be used with the formatter
+          "D107",       # do not require __init__ methods to have a docstring
+          "D203",       # one-blank-line-before-class: ignoring because it clashes with D211
+          "D213",       # multi-line-summary-second-line: ignoring because it clashes with D212
+          "FIX",        # allow TODOs, FIXMEs, etc
+          "ISC001",     # Allow single line str concatenation: not recommended to be used with the formatter
+          "PERF203",    # Allow try-except blocks in loops
+          "PLR0913",    # no maximum number of arguments for a function
+          "PT009",      # allow unit test style asserts
+          "PTH",        # ignore recommendations for pathlib
+          "RET504",     # Allow extra assignment to variable to improve readability
+          "TD",         # allow TODOs, FIXMEs, etc
+          "UP015"]      # allow explicit file modes
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
+multiline-quotes = "single"
+
+[tool.ruff.lint.per-file-ignores]
+"**/apps/*" = ["ANN",       # ignore type annotations in apps
+               "C901",      # ignore complex warnings in apps
+               "D101",      # ignore class docs in apps
+               "D102",      # ignore methods docs in apps
+               "D103",      # ignore function docs in apps
+               "D104",      # ignore package docs in apps
+               "D107",      # ignore constructor docs in apps
+               "PLR0912",   # ignore too many branches in apps
+               "PLR0915",   # ignore too many statements in apps
+               "T201"]      # Allow prints in apps
+"docs/*" = ["INP001",   # Do not require __init__.py for docs
+            "D100",     # Do not require docstring for docs
+            "A001"]     # Allow copyright for sphix docs
+"examples/*" = ["D101",    # ignore class docs in notebooks
+                "D102",    # ignore methods docs in notebooks
+                "D103",    # ignore function docs in notebooks
+                "D107",    # ignore constructor docs in notebooks
+                "T201"]    # Allow print statements in notebooks
+"tests/*" = ["ANN",       # ignore type annotations in tests
+             "D100",      # ignore module docs in tests
+             "D101",      # ignore class docs in tests
+             "D102",      # ignore methods docs in tests
+             "D103",      # ignore function docs in tests
+             "D104",      # ignore package docs in tests
+             "D107",      # ignore constructor docs in tests
+             "SLF001"]    # Allow private methods in tests
+
+[tool.ruff.format]
+quote-style = "preserve"
+docstring-code-format = true
 
 [tool.semantic_release]
 version_variables = [

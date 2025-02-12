@@ -1,5 +1,4 @@
-'''Functions for aligning protein strcutures.'''
-from typing import Type
+"""Functions for aligning protein strcutures."""
 
 import numpy as np
 import pandas as pd
@@ -7,9 +6,10 @@ import pandas as pd
 from python_pdb.entities import Entity
 
 
-def align_sequences(seq1: str, seq2: str,
-                    match_score: float = 1.0, mismatch_score: float = -1.0, indel_score: float = -1.0) -> tuple:
-    '''Align two sequences using the Needleman-Wunch algorithm.
+def align_sequences(
+    seq1: str, seq2: str, match_score: float = 1.0, mismatch_score: float = -1.0, indel_score: float = -1.0
+) -> tuple:
+    """Align two sequences using the Needleman-Wunch algorithm.
 
     See here https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm for more details.
 
@@ -24,7 +24,7 @@ def align_sequences(seq1: str, seq2: str,
         tuple containing the alignment (represented as a list with tuple for each pair) followed by the score given to
         the alignment.
 
-    '''
+    """
     num_cols = len(seq1) + 1
     num_rows = len(seq2) + 1
 
@@ -47,8 +47,9 @@ def align_sequences(seq1: str, seq2: str,
         for j in range(1, num_cols):
             top_score = alignment_matrix[i - 1, j] + indel_score
             left_score = alignment_matrix[i, j - 1] + indel_score
-            diagonal_score = alignment_matrix[i - 1, j - 1] + (match_score if seq1[j - 1] == seq2[i - 1] else
-                                                               mismatch_score)
+            diagonal_score = alignment_matrix[i - 1, j - 1] + (
+                match_score if seq1[j - 1] == seq2[i - 1] else mismatch_score
+            )
             scores = np.array((top_score, left_score, diagonal_score))
             score_taken = np.argmax(scores)
 
@@ -81,12 +82,12 @@ def align_sequences(seq1: str, seq2: str,
     return (list(reversed(reverse_alignment)), alignment_matrix[-1, -1])
 
 
-def align_entities(mobile_coords: np.ndarray, target_coords: np.ndarray, entity_to_move: Type[Entity]) -> Type[Entity]:
-    '''Align entities structure in 3D space.
+def align_entities(mobile_coords: np.ndarray, target_coords: np.ndarray, entity_to_move: type[Entity]) -> type[Entity]:
+    """Align entities structure in 3D space.
 
     Args:
-        mobile: coordinates of atoms in movable region that will align to target.
-        target: coordinates of atoms to align mobile region on to.
+        mobile_coords: coordinates of atoms in movable region that will align to target.
+        target_coords: coordinates of atoms to align mobile region on to.
         entity_to_move: the entity to move based on the alignment of mobile and target region.
 
     Returns:
@@ -95,8 +96,9 @@ def align_entities(mobile_coords: np.ndarray, target_coords: np.ndarray, entity_
         The return type will be an entity with the same level as the `entity_to_move`, or if that is not provided than
         the same as the mobile region.
 
-    '''
-    def _apply_transform(entity, rotation, translation):
+    """
+
+    def _apply_transform(entity: type[Entity], rotation: np.ndarray, translation: np.ndarray) -> None:
         if hasattr(entity, 'position'):
             new_coords = np.dot(np.array(entity.position), rotation) + translation
 
@@ -117,21 +119,22 @@ def align_entities(mobile_coords: np.ndarray, target_coords: np.ndarray, entity_
     return region
 
 
-def align_pandas_structure(mobile_coords: np.ndarray,
-                           target_coords: np.ndarray,
-                           df_to_move: pd.DataFrame) -> pd.DataFrame:
-    '''Align entities structure in 3D space.
+def align_pandas_structure(
+    mobile_coords: np.ndarray, target_coords: np.ndarray, df_to_move: pd.DataFrame
+) -> pd.DataFrame:
+    """Align entities structure in 3D space.
 
     Args:
-        mobile: coordinates of atoms in movable region that will align to target.
-        target: coordinates of atoms to align mobile region on to.
+        mobile_coords: coordinates of atoms in movable region that will align to target.
+        target_coords: coordinates of atoms to align mobile region on to.
         df_to_move: the dataframe to update coordinates based on the alignment of mobile and target region.
 
     Returns:
         A new dataframe with updated coordinates.
 
-    '''
-    def _transform(rotation, translation, row):
+    """
+
+    def _transform(rotation: np.ndarray, translation: np.ndarray, row: pd.Series) -> pd.Series:
         return pd.Series(np.dot(row.to_numpy(), rotation) + translation)
 
     rotation, translation = _compute_rot_trans(mobile_coords, target_coords)
@@ -144,8 +147,8 @@ def align_pandas_structure(mobile_coords: np.ndarray,
     return new_df
 
 
-def _compute_rot_trans(mobile_coords, target_coords):
-    '''Compute the rotation matrix and translation vector for an alignment.'''
+def _compute_rot_trans(mobile_coords: np.ndarray, target_coords: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Compute the rotation matrix and translation vector for an alignment."""
     # center on centroid
     mobile_average = sum(mobile_coords) / len(mobile_coords)
     target_average = sum(target_coords) / len(target_coords)

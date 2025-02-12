@@ -1,3 +1,5 @@
+"""Constants for Chemical properties."""
+
 MOLECULAR_WEIGHTS = {
     'C': 12.011,
     'N': 14.007,

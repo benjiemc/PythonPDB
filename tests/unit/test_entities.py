@@ -92,8 +92,7 @@ class TestResidue(TestCase):
         mock_res.add_atom(mock_atom_1)
         mock_res.add_atom(mock_atom_2)
 
-        np.testing.assert_array_equal(mock_res.get_coordinates(), np.array([[0.00, 0.00, 0.00],
-                                                                            [0.00, 0.00, 0.00]]))
+        np.testing.assert_array_equal(mock_res.get_coordinates(), np.array([[0.00, 0.00, 0.00], [0.00, 0.00, 0.00]]))
 
 
 class TestChain(TestCase):
@@ -147,10 +146,10 @@ class TestChain(TestCase):
         mock_chain.add_residue(mock_res.copy())
         mock_chain.add_residue(mock_res.copy())
 
-        np.testing.assert_array_equal(mock_chain.get_coordinates(), np.array([[1.00, 0.00, 0.00],
-                                                                              [1.00, 0.00, 0.00],
-                                                                              [1.00, 0.00, 0.00],
-                                                                              [1.00, 0.00, 0.00]]))
+        np.testing.assert_array_equal(
+            mock_chain.get_coordinates(),
+            np.array([[1.00, 0.00, 0.00], [1.00, 0.00, 0.00], [1.00, 0.00, 0.00], [1.00, 0.00, 0.00]]),
+        )
 
 
 class TestModel(TestCase):
@@ -179,14 +178,21 @@ class TestModel(TestCase):
         mock_model.add_chain(mock_chain_1.copy())
         mock_model.add_chain(mock_chain_1.copy())
 
-        np.testing.assert_array_equal(mock_model.get_coordinates(), np.array([[1.00, 0.00, 0.00],
-                                                                              [0.00, 1.00, 0.00],
-                                                                              [1.00, 0.00, 0.00],
-                                                                              [0.00, 1.00, 0.00],
-                                                                              [1.00, 0.00, 0.00],
-                                                                              [0.00, 1.00, 0.00],
-                                                                              [1.00, 0.00, 0.00],
-                                                                              [0.00, 1.00, 0.00]]))
+        np.testing.assert_array_equal(
+            mock_model.get_coordinates(),
+            np.array(
+                [
+                    [1.00, 0.00, 0.00],
+                    [0.00, 1.00, 0.00],
+                    [1.00, 0.00, 0.00],
+                    [0.00, 1.00, 0.00],
+                    [1.00, 0.00, 0.00],
+                    [0.00, 1.00, 0.00],
+                    [1.00, 0.00, 0.00],
+                    [0.00, 1.00, 0.00],
+                ]
+            ),
+        )
 
 
 class TestStructure(TestCase):
@@ -215,53 +221,62 @@ class TestStructure(TestCase):
         structure.add_model(model1)
         structure.add_model(model2)
 
-        test_df = pd.DataFrame([
-            {'record_type': 'ATOM',
-             'atom_number': 1,
-             'atom_name': 'N',
-             'alt_loc': None,
-             'residue_name': 'ALA',
-             'chain_id': 'A',
-             'residue_seq_id': 1,
-             'residue_insert_code': None,
-             'pos_x': 0.00,
-             'pos_y': 0.00,
-             'pos_z': 0.00,
-             'occupancy': 1.00,
-             'b_factor': 0.00,
-             'element': 'N',
-             'charge': None,
-             'model_index': 1},
-            {'record_type': 'ATOM',
-             'atom_number': 1,
-             'atom_name': 'N',
-             'alt_loc': None,
-             'residue_name': 'ALA',
-             'chain_id': 'A',
-             'residue_seq_id': 1,
-             'residue_insert_code': None,
-             'pos_x': 0.00,
-             'pos_y': 0.00,
-             'pos_z': 0.00,
-             'occupancy': 1.00,
-             'b_factor': 0.00,
-             'element': 'N',
-             'charge': None,
-             'model_index': 2}])
+        test_df = pd.DataFrame(
+            [
+                {
+                    'record_type': 'ATOM',
+                    'atom_number': 1,
+                    'atom_name': 'N',
+                    'alt_loc': None,
+                    'residue_name': 'ALA',
+                    'chain_id': 'A',
+                    'residue_seq_id': 1,
+                    'residue_insert_code': None,
+                    'pos_x': 0.00,
+                    'pos_y': 0.00,
+                    'pos_z': 0.00,
+                    'occupancy': 1.00,
+                    'b_factor': 0.00,
+                    'element': 'N',
+                    'charge': None,
+                    'model_index': 1,
+                },
+                {
+                    'record_type': 'ATOM',
+                    'atom_number': 1,
+                    'atom_name': 'N',
+                    'alt_loc': None,
+                    'residue_name': 'ALA',
+                    'chain_id': 'A',
+                    'residue_seq_id': 1,
+                    'residue_insert_code': None,
+                    'pos_x': 0.00,
+                    'pos_y': 0.00,
+                    'pos_z': 0.00,
+                    'occupancy': 1.00,
+                    'b_factor': 0.00,
+                    'element': 'N',
+                    'charge': None,
+                    'model_index': 2,
+                },
+            ]
+        )
 
         pd.testing.assert_frame_equal(structure.to_pandas(), test_df)
 
     def test_from_pdb_model(self):
-        mock_pdb = ('MODEL        1 \n'
-                    'ATOM      1  N   ALA A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      2  CA  ALA A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      3  C   ALA A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      4  O   ALA A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM      5  CB  ALA A   3     -11.858   2.289   4.034  1.00  0.00           C \n'
-                    'ATOM      6  H1  ALA A   3     -14.406   2.827   4.625  1.00  0.00           H \n'
-                    'ATOM      7  H2  ALA A   3     -14.140   1.259   4.031  1.00  0.00           H \n'
-                    'ATOM      8  H3  ALA A   3     -15.041   2.374   3.119  1.00  0.00           H \n'
-                    'ENDMDL ')
+        mock_pdb = (
+            'MODEL        1 \n'
+            'ATOM      1  N   ALA A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      2  CA  ALA A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      3  C   ALA A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      4  O   ALA A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM      5  CB  ALA A   3     -11.858   2.289   4.034  1.00  0.00           C \n'
+            'ATOM      6  H1  ALA A   3     -14.406   2.827   4.625  1.00  0.00           H \n'
+            'ATOM      7  H2  ALA A   3     -14.140   1.259   4.031  1.00  0.00           H \n'
+            'ATOM      8  H3  ALA A   3     -15.041   2.374   3.119  1.00  0.00           H \n'
+            'ENDMDL '
+        )
 
         structure = Structure.from_pdb(mock_pdb)
 
@@ -270,23 +285,25 @@ class TestStructure(TestCase):
         self.assertEqual(structure[0]['A'][3]['N'].element, 'N')
 
     def test_from_pdb_disjoint_chain(self):
-        mock_pdb = ('ATOM      1  N   ALA A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      2  CA  ALA A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      3  C   ALA A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      4  O   ALA A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM      6  CB  ALA A   3     -11.858   2.289   4.034  1.00  0.00           C \n'
-                    'ATOM      3  N   ALA B   3     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      5  CA  ALA B   3     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      7  C   ALA B   3     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      9  O   ALA B   3     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM     10  CB  ALA B   3     -11.858   2.289   4.034  1.00  0.00           C \n'
-                    'HETATM 1768  O   HOH A 168      24.679  20.455  20.656  1.00 50.95           O  \n'
-                    'HETATM 1769  O   HOH A 169      49.185  15.758  26.653  1.00 51.45           O  \n'
-                    'HETATM 1770  O   HOH A 170      48.796  14.301  14.334  1.00 52.69           O  \n'
-                    'HETATM 1771  O   HOH A 171      50.515  13.139  24.430  1.00 49.28           O  \n'
-                    'HETATM 1772  O   HOH A 172      41.001  28.226  -9.244  1.00 51.36           O  \n'
-                    'HETATM 1773  O   HOH A 173      47.928  17.149  19.716  1.00 53.37           O  \n'
-                    'HETATM 1774  O   HOH A 174      54.474  15.840  24.498  1.00 53.86           O  \n')
+        mock_pdb = (
+            'ATOM      1  N   ALA A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      2  CA  ALA A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      3  C   ALA A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      4  O   ALA A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM      6  CB  ALA A   3     -11.858   2.289   4.034  1.00  0.00           C \n'
+            'ATOM      3  N   ALA B   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      5  CA  ALA B   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      7  C   ALA B   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      9  O   ALA B   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM     10  CB  ALA B   3     -11.858   2.289   4.034  1.00  0.00           C \n'
+            'HETATM 1768  O   HOH A 168      24.679  20.455  20.656  1.00 50.95           O  \n'
+            'HETATM 1769  O   HOH A 169      49.185  15.758  26.653  1.00 51.45           O  \n'
+            'HETATM 1770  O   HOH A 170      48.796  14.301  14.334  1.00 52.69           O  \n'
+            'HETATM 1771  O   HOH A 171      50.515  13.139  24.430  1.00 49.28           O  \n'
+            'HETATM 1772  O   HOH A 172      41.001  28.226  -9.244  1.00 51.36           O  \n'
+            'HETATM 1773  O   HOH A 173      47.928  17.149  19.716  1.00 53.37           O  \n'
+            'HETATM 1774  O   HOH A 174      54.474  15.840  24.498  1.00 53.86           O  \n'
+        )
 
         structure = Structure.from_pdb(mock_pdb)
 
@@ -295,16 +312,33 @@ class TestStructure(TestCase):
 
     def test_from_pandas(self):
         mock_df = pd.DataFrame(
-            [['ATOM', 10570, 'N',  '', 'VAL', 'C', 4, '', -15.115, 2.602, -43.993, 1.00, 47.21, 'N', ''],
-             ['ATOM', 10571, 'CA', '', 'VAL', 'C', 4, '', -14.470, 1.464, -43.338, 1.00, 41.45, 'C', ''],
-             ['ATOM', 10572, 'C',  '', 'VAL', 'C', 4, '', -13.540, 1.977, -42.246, 1.00, 36.39, 'C', ''],
-             ['ATOM', 10586, 'N',  '', 'GLN', 'd', 5, '', -13.811, 1.612, -40.993, 1.00, 36.76, 'N', ''],
-             ['ATOM', 10587, 'CA', '', 'GLN', 'd', 5, '', -13.021, 2.105, -39.861, 1.00, 35.56, 'C', ''],
-             ['ATOM', 10588, 'C',  '', 'GLN', 'd', 5, '', -12.114, 1.030, -39.260, 1.00, 30.89, 'C', ''],
-             ['ATOM', 10589, 'O',  '', 'GLN', 'd', 5, '', -12.567, 0.013, -38.744, 1.00, 23.49, 'O', '']],
-            columns=['record_type', 'atom_number', 'atom_name', 'alt_loc', 'residue_name', 'chain_id',
-                     'residue_seq_id', 'residue_insert_code', 'pos_x', 'pos_y', 'pos_z', 'occupancy', 'b_factor',
-                     'element', 'charge'])
+            [
+                ['ATOM', 10570, 'N', '', 'VAL', 'C', 4, '', -15.115, 2.602, -43.993, 1.00, 47.21, 'N', ''],
+                ['ATOM', 10571, 'CA', '', 'VAL', 'C', 4, '', -14.470, 1.464, -43.338, 1.00, 41.45, 'C', ''],
+                ['ATOM', 10572, 'C', '', 'VAL', 'C', 4, '', -13.540, 1.977, -42.246, 1.00, 36.39, 'C', ''],
+                ['ATOM', 10586, 'N', '', 'GLN', 'd', 5, '', -13.811, 1.612, -40.993, 1.00, 36.76, 'N', ''],
+                ['ATOM', 10587, 'CA', '', 'GLN', 'd', 5, '', -13.021, 2.105, -39.861, 1.00, 35.56, 'C', ''],
+                ['ATOM', 10588, 'C', '', 'GLN', 'd', 5, '', -12.114, 1.030, -39.260, 1.00, 30.89, 'C', ''],
+                ['ATOM', 10589, 'O', '', 'GLN', 'd', 5, '', -12.567, 0.013, -38.744, 1.00, 23.49, 'O', ''],
+            ],
+            columns=[
+                'record_type',
+                'atom_number',
+                'atom_name',
+                'alt_loc',
+                'residue_name',
+                'chain_id',
+                'residue_seq_id',
+                'residue_insert_code',
+                'pos_x',
+                'pos_y',
+                'pos_z',
+                'occupancy',
+                'b_factor',
+                'element',
+                'charge',
+            ],
+        )
 
         structure = Structure.from_pandas(mock_df)
 
@@ -314,23 +348,41 @@ class TestStructure(TestCase):
 
     def test_from_pandas_model(self):
         mock_df = pd.DataFrame(
-            [['ATOM', 10570, 'N',  '', 'VAL', 'C', 4, '', -15.115, 2.602, -43.993, 1.00, 47.21, 'N', '', 0],
-             ['ATOM', 10571, 'CA', '', 'VAL', 'C', 4, '', -14.470, 1.464, -43.338, 1.00, 41.45, 'C', '', 0],
-             ['ATOM', 10572, 'C',  '', 'VAL', 'C', 4, '', -13.540, 1.977, -42.246, 1.00, 36.39, 'C', '', 0],
-             ['ATOM', 10586, 'N',  '', 'GLN', 'd', 5, '', -13.811, 1.612, -40.993, 1.00, 36.76, 'N', '', 0],
-             ['ATOM', 10587, 'CA', '', 'GLN', 'd', 5, '', -13.021, 2.105, -39.861, 1.00, 35.56, 'C', '', 0],
-             ['ATOM', 10588, 'C',  '', 'GLN', 'd', 5, '', -12.114, 1.030, -39.260, 1.00, 30.89, 'C', '', 0],
-             ['ATOM', 10589, 'O',  '', 'GLN', 'd', 5, '', -12.567, 0.013, -38.744, 1.00, 23.49, 'O', '', 0],
-             ['ATOM', 10570, 'N',  '', 'VAL', 'C', 4, '', -15.115, 2.602, -43.993, 1.00, 47.21, 'N', '', 1],
-             ['ATOM', 10571, 'CA', '', 'VAL', 'C', 4, '', -14.470, 1.464, -43.338, 1.00, 41.45, 'C', '', 1],
-             ['ATOM', 10572, 'C',  '', 'VAL', 'C', 4, '', -13.540, 1.977, -42.246, 1.00, 36.39, 'C', '', 1],
-             ['ATOM', 10586, 'N',  '', 'GLN', 'd', 5, '', -13.811, 1.612, -40.993, 1.00, 36.76, 'N', '', 1],
-             ['ATOM', 10587, 'CA', '', 'GLN', 'd', 5, '', -13.021, 2.105, -39.861, 1.00, 35.56, 'C', '', 1],
-             ['ATOM', 10588, 'C',  '', 'GLN', 'd', 5, '', -12.114, 1.030, -39.260, 1.00, 30.89, 'C', '', 1],
-             ['ATOM', 10589, 'O',  '', 'GLN', 'd', 5, '', -12.567, 0.013, -38.744, 1.00, 23.49, 'O', '', 1]],
-            columns=['record_type', 'atom_number', 'atom_name', 'alt_loc', 'residue_name', 'chain_id',
-                     'residue_seq_id', 'residue_insert_code', 'pos_x', 'pos_y', 'pos_z', 'occupancy', 'b_factor',
-                     'element', 'charge', 'model_index'])
+            [
+                ['ATOM', 10570, 'N', '', 'VAL', 'C', 4, '', -15.115, 2.602, -43.993, 1.00, 47.21, 'N', '', 0],
+                ['ATOM', 10571, 'CA', '', 'VAL', 'C', 4, '', -14.470, 1.464, -43.338, 1.00, 41.45, 'C', '', 0],
+                ['ATOM', 10572, 'C', '', 'VAL', 'C', 4, '', -13.540, 1.977, -42.246, 1.00, 36.39, 'C', '', 0],
+                ['ATOM', 10586, 'N', '', 'GLN', 'd', 5, '', -13.811, 1.612, -40.993, 1.00, 36.76, 'N', '', 0],
+                ['ATOM', 10587, 'CA', '', 'GLN', 'd', 5, '', -13.021, 2.105, -39.861, 1.00, 35.56, 'C', '', 0],
+                ['ATOM', 10588, 'C', '', 'GLN', 'd', 5, '', -12.114, 1.030, -39.260, 1.00, 30.89, 'C', '', 0],
+                ['ATOM', 10589, 'O', '', 'GLN', 'd', 5, '', -12.567, 0.013, -38.744, 1.00, 23.49, 'O', '', 0],
+                ['ATOM', 10570, 'N', '', 'VAL', 'C', 4, '', -15.115, 2.602, -43.993, 1.00, 47.21, 'N', '', 1],
+                ['ATOM', 10571, 'CA', '', 'VAL', 'C', 4, '', -14.470, 1.464, -43.338, 1.00, 41.45, 'C', '', 1],
+                ['ATOM', 10572, 'C', '', 'VAL', 'C', 4, '', -13.540, 1.977, -42.246, 1.00, 36.39, 'C', '', 1],
+                ['ATOM', 10586, 'N', '', 'GLN', 'd', 5, '', -13.811, 1.612, -40.993, 1.00, 36.76, 'N', '', 1],
+                ['ATOM', 10587, 'CA', '', 'GLN', 'd', 5, '', -13.021, 2.105, -39.861, 1.00, 35.56, 'C', '', 1],
+                ['ATOM', 10588, 'C', '', 'GLN', 'd', 5, '', -12.114, 1.030, -39.260, 1.00, 30.89, 'C', '', 1],
+                ['ATOM', 10589, 'O', '', 'GLN', 'd', 5, '', -12.567, 0.013, -38.744, 1.00, 23.49, 'O', '', 1],
+            ],
+            columns=[
+                'record_type',
+                'atom_number',
+                'atom_name',
+                'alt_loc',
+                'residue_name',
+                'chain_id',
+                'residue_seq_id',
+                'residue_insert_code',
+                'pos_x',
+                'pos_y',
+                'pos_z',
+                'occupancy',
+                'b_factor',
+                'element',
+                'charge',
+                'model_index',
+            ],
+        )
 
         structure = Structure.from_pandas(mock_df)
 
@@ -347,22 +399,22 @@ class TestStructure(TestCase):
     def test_construct_from_records(self):
         records = [
             ModelRecord(0),
-            AtomRecord(10570, 'N',  None, 'VAL', 'C', 4, None, -15.115, 2.602, -43.993, 1.00, 47.21, 'N', None),
+            AtomRecord(10570, 'N', None, 'VAL', 'C', 4, None, -15.115, 2.602, -43.993, 1.00, 47.21, 'N', None),
             AtomRecord(10571, 'CA', None, 'VAL', 'C', 4, None, -14.470, 1.464, -43.338, 1.00, 41.45, 'C', None),
-            AtomRecord(10572, 'C',  None, 'VAL', 'C', 4, None, -13.540, 1.977, -42.246, 1.00, 36.39, 'C', None),
-            AtomRecord(10586, 'N',  None, 'GLN', 'd', 5, None, -13.811, 1.612, -40.993, 1.00, 36.76, 'N', None),
+            AtomRecord(10572, 'C', None, 'VAL', 'C', 4, None, -13.540, 1.977, -42.246, 1.00, 36.39, 'C', None),
+            AtomRecord(10586, 'N', None, 'GLN', 'd', 5, None, -13.811, 1.612, -40.993, 1.00, 36.76, 'N', None),
             AtomRecord(10587, 'CA', None, 'GLN', 'd', 5, None, -13.021, 2.105, -39.861, 1.00, 35.56, 'C', None),
-            AtomRecord(10588, 'C',  None, 'GLN', 'd', 5, None, -12.114, 1.030, -39.260, 1.00, 30.89, 'C', None),
-            AtomRecord(10589, 'O',  None, 'GLN', 'd', 5, None, -12.567, 0.013, -38.744, 1.00, 23.49, 'O', None),
+            AtomRecord(10588, 'C', None, 'GLN', 'd', 5, None, -12.114, 1.030, -39.260, 1.00, 30.89, 'C', None),
+            AtomRecord(10589, 'O', None, 'GLN', 'd', 5, None, -12.567, 0.013, -38.744, 1.00, 23.49, 'O', None),
             EndModelRecord(),
             ModelRecord(1),
-            AtomRecord(10570, 'N',  None, 'VAL', 'C', 4, None, -15.115, 2.602, -43.993, 1.00, 47.21, 'N', None),
+            AtomRecord(10570, 'N', None, 'VAL', 'C', 4, None, -15.115, 2.602, -43.993, 1.00, 47.21, 'N', None),
             AtomRecord(10571, 'CA', None, 'VAL', 'C', 4, None, -14.470, 1.464, -43.338, 1.00, 41.45, 'C', None),
-            AtomRecord(10572, 'C',  None, 'VAL', 'C', 4, None, -13.540, 1.977, -42.246, 1.00, 36.39, 'C', None),
-            AtomRecord(10586, 'N',  None, 'GLN', 'd', 5, None, -13.811, 1.612, -40.993, 1.00, 36.76, 'N', None),
+            AtomRecord(10572, 'C', None, 'VAL', 'C', 4, None, -13.540, 1.977, -42.246, 1.00, 36.39, 'C', None),
+            AtomRecord(10586, 'N', None, 'GLN', 'd', 5, None, -13.811, 1.612, -40.993, 1.00, 36.76, 'N', None),
             AtomRecord(10587, 'CA', None, 'GLN', 'd', 5, None, -13.021, 2.105, -39.861, 1.00, 35.56, 'C', None),
-            AtomRecord(10588, 'C',  None, 'GLN', 'd', 5, None, -12.114, 1.030, -39.260, 1.00, 30.89, 'C', None),
-            AtomRecord(10589, 'O',  None, 'GLN', 'd', 5, None, -12.567, 0.013, -38.744, 1.00, 23.49, 'O', None),
+            AtomRecord(10588, 'C', None, 'GLN', 'd', 5, None, -12.114, 1.030, -39.260, 1.00, 30.89, 'C', None),
+            AtomRecord(10589, 'O', None, 'GLN', 'd', 5, None, -12.567, 0.013, -38.744, 1.00, 23.49, 'O', None),
             EndModelRecord(),
         ]
 
@@ -379,26 +431,28 @@ class TestStructure(TestCase):
         self.assertEqual(structure[1]['d'][5].name, 'GLN')
 
     def test_split_states(self):
-        mock_pdb = ('ATOM      1  N  AGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      2  N  BGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      3  CA AGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      4  CA BGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      5  C  AGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      6  C  BGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      7  O  AGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM      8  O  BGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM      10 N  AGLY A   4     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      11 N  BGLY A   4     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      12 CA AGLY A   4     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      13 CA BGLY A   4     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      14 C  AGLY A   4     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      15 C  BGLY A   4     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      16 O  AGLY A   4     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM      17 O  BGLY A   4     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM      18 N   GLY A   5     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      19 CA  GLY A   5     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      20 C   GLY A   5     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      21 O   GLY A   5     -13.721   1.351   1.280  1.00  0.00           O \n')
+        mock_pdb = (
+            'ATOM      1  N  AGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      2  N  BGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      3  CA AGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      4  CA BGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      5  C  AGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      6  C  BGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      7  O  AGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM      8  O  BGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM      10 N  AGLY A   4     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      11 N  BGLY A   4     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      12 CA AGLY A   4     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      13 CA BGLY A   4     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      14 C  AGLY A   4     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      15 C  BGLY A   4     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      16 O  AGLY A   4     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM      17 O  BGLY A   4     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM      18 N   GLY A   5     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      19 CA  GLY A   5     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      20 C   GLY A   5     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      21 O   GLY A   5     -13.721   1.351   1.280  1.00  0.00           O \n'
+        )
 
         with warnings.catch_warnings():
             warnings.filterwarnings('ignore', category=StructureConstructionWarning)
@@ -409,26 +463,28 @@ class TestStructure(TestCase):
         self.assertEqual(len(structure), 2)
 
     def test_split_states_all_combinations(self):
-        mock_pdb = ('ATOM      1  N  AGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      2  N  BGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      3  CA AGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      4  CA BGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      5  C  AGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      6  C  BGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      7  O  AGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM      8  O  BGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM      10 N  AGLY A   4     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      11 N  BGLY A   4     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      12 CA AGLY A   4     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      13 CA BGLY A   4     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      14 C  AGLY A   4     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      15 C  BGLY A   4     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      16 O  AGLY A   4     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM      17 O  BGLY A   4     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM      18 N   GLY A   5     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      19 CA  GLY A   5     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      20 C   GLY A   5     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      21 O   GLY A   5     -13.721   1.351   1.280  1.00  0.00           O \n')
+        mock_pdb = (
+            'ATOM      1  N  AGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      2  N  BGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      3  CA AGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      4  CA BGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      5  C  AGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      6  C  BGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      7  O  AGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM      8  O  BGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM      10 N  AGLY A   4     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      11 N  BGLY A   4     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      12 CA AGLY A   4     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      13 CA BGLY A   4     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      14 C  AGLY A   4     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      15 C  BGLY A   4     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      16 O  AGLY A   4     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM      17 O  BGLY A   4     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM      18 N   GLY A   5     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      19 CA  GLY A   5     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      20 C   GLY A   5     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      21 O   GLY A   5     -13.721   1.351   1.280  1.00  0.00           O \n'
+        )
 
         with warnings.catch_warnings():
             warnings.filterwarnings('ignore', category=StructureConstructionWarning)
@@ -439,26 +495,28 @@ class TestStructure(TestCase):
         self.assertEqual(len(structure), 4)
 
     def test_split_states_different_chains(self):
-        mock_pdb = ('ATOM      1  N  AGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      2  N  BGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      3  CA AGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      4  CA BGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      5  C  AGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      6  C  BGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      7  O  AGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM      8  O  BGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM      10 N  AGLY B   3     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      11 N  BGLY B   3     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      12 CA AGLY B   3     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      13 CA BGLY B   3     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      14 C  AGLY B   3     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      15 C  BGLY B   3     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      16 O  AGLY B   3     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM      17 O  BGLY B   3     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM      18 N   GLY B   4     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      19 CA  GLY B   4     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      20 C   GLY B   4     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      21 O   GLY B   4     -13.721   1.351   1.280  1.00  0.00           O \n')
+        mock_pdb = (
+            'ATOM      1  N  AGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      2  N  BGLY A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      3  CA AGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      4  CA BGLY A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      5  C  AGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      6  C  BGLY A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      7  O  AGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM      8  O  BGLY A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM      10 N  AGLY B   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      11 N  BGLY B   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      12 CA AGLY B   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      13 CA BGLY B   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      14 C  AGLY B   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      15 C  BGLY B   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      16 O  AGLY B   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM      17 O  BGLY B   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM      18 N   GLY B   4     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      19 CA  GLY B   4     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      20 C   GLY B   4     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      21 O   GLY B   4     -13.721   1.351   1.280  1.00  0.00           O \n'
+        )
 
         with warnings.catch_warnings():
             warnings.filterwarnings('ignore', category=StructureConstructionWarning)
@@ -469,23 +527,24 @@ class TestStructure(TestCase):
         self.assertEqual(len(structure), 2)
 
     def test_split_states_8ecq(self):
-        '''pdb was causing issues splitting into three states instead of two as expected.'''
-        with open('tests/data/8ecq.pdb', 'r') as fh:
-            with warnings.catch_warnings():
-                warnings.filterwarnings('ignore', category=StructureConstructionWarning)
-                structure = Structure.from_pdb(fh.read())
+        """Pdb was causing issues splitting into three states instead of two as expected."""
+        with open('tests/data/8ecq.pdb', 'r') as fh, warnings.catch_warnings():
+            warnings.filterwarnings('ignore', category=StructureConstructionWarning)
+            structure = Structure.from_pdb(fh.read())
 
         self.assertEqual(len(structure), 1)
         structure.split_states()
         self.assertEqual(len(structure), 2)
 
     def test_dehydrate(self):
-        mock_pdb = ('ATOM      1  N   ALA A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
-                    'ATOM      2  CA  ALA A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
-                    'ATOM      3  C   ALA A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
-                    'ATOM      4  O   ALA A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
-                    'ATOM      5  CB  ALA A   3     -11.858   2.289   4.034  1.00  0.00           C \n'
-                    'HETATM    6  O   HOH A   4     -15.330  29.061 101.651  1.00 24.28           O \n')
+        mock_pdb = (
+            'ATOM      1  N   ALA A   3     -14.239   2.261   3.769  1.00  0.00           N \n'
+            'ATOM      2  CA  ALA A   3     -12.988   2.726   3.102  1.00  0.00           C \n'
+            'ATOM      3  C   ALA A   3     -12.843   2.059   1.732  1.00  0.00           C \n'
+            'ATOM      4  O   ALA A   3     -13.721   1.351   1.280  1.00  0.00           O \n'
+            'ATOM      5  CB  ALA A   3     -11.858   2.289   4.034  1.00  0.00           C \n'
+            'HETATM    6  O   HOH A   4     -15.330  29.061 101.651  1.00 24.28           O \n'
+        )
 
         structure = Structure.from_pdb(mock_pdb)
 
@@ -531,19 +590,26 @@ class TestStructure(TestCase):
         mock_structure.add_model(mock_model.copy())
         mock_structure.add_model(mock_model.copy())
 
-        np.testing.assert_array_equal(mock_structure.get_coordinates(), np.array([[1.00, 0.00, 0.00],
-                                                                                  [0.00, 1.00, 0.00],
-                                                                                  [1.00, 0.00, 0.00],
-                                                                                  [0.00, 1.00, 0.00],
-                                                                                  [1.00, 0.00, 0.00],
-                                                                                  [0.00, 1.00, 0.00],
-                                                                                  [1.00, 0.00, 0.00],
-                                                                                  [0.00, 1.00, 0.00],
-                                                                                  [1.00, 0.00, 0.00],
-                                                                                  [0.00, 1.00, 0.00],
-                                                                                  [1.00, 0.00, 0.00],
-                                                                                  [0.00, 1.00, 0.00],
-                                                                                  [1.00, 0.00, 0.00],
-                                                                                  [0.00, 1.00, 0.00],
-                                                                                  [1.00, 0.00, 0.00],
-                                                                                  [0.00, 1.00, 0.00]]))
+        np.testing.assert_array_equal(
+            mock_structure.get_coordinates(),
+            np.array(
+                [
+                    [1.00, 0.00, 0.00],
+                    [0.00, 1.00, 0.00],
+                    [1.00, 0.00, 0.00],
+                    [0.00, 1.00, 0.00],
+                    [1.00, 0.00, 0.00],
+                    [0.00, 1.00, 0.00],
+                    [1.00, 0.00, 0.00],
+                    [0.00, 1.00, 0.00],
+                    [1.00, 0.00, 0.00],
+                    [0.00, 1.00, 0.00],
+                    [1.00, 0.00, 0.00],
+                    [0.00, 1.00, 0.00],
+                    [1.00, 0.00, 0.00],
+                    [0.00, 1.00, 0.00],
+                    [1.00, 0.00, 0.00],
+                    [0.00, 1.00, 0.00],
+                ]
+            ),
+        )

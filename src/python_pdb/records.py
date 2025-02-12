@@ -1,38 +1,44 @@
-'''Dataclasses to store PDB record information.'''
+"""Dataclasses to store PDB record information."""
+
 from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
 class Record:
-    '''Base record from which all others are inherited.'''
+    """Base record from which all others are inherited."""
 
 
 @dataclass(frozen=True)
 class ModelRecord(Record):
-    '''MODEL record.
+    """MODEL record.
 
     Attributes:
         serial_number: can optionally have a serial number associated with the model.
 
-    '''
+    """
+
     serial_number: int | None
 
     @property
     def record_type(self) -> str:
-        '''Type of record.'''
+        """Type of record."""
         return 'MODEL'
 
 
 @dataclass(frozen=True)
 class EndModelRecord(Record):
+    """ENDMDL record."""
+
     @property
     def record_type(self) -> str:
-        '''Type of record.'''
+        """Type of record."""
         return 'ENDMDL'
 
 
 @dataclass(frozen=True)
 class ParticleRecord(Record):
+    """Base class for ATOMs and HETATMs."""
+
     atom_num: int
     atom_name: str
     alt_loc: str | None
@@ -51,15 +57,19 @@ class ParticleRecord(Record):
 
 @dataclass(frozen=True)
 class AtomRecord(ParticleRecord):
+    """ATOM record."""
+
     @property
     def record_type(self) -> str:
-        '''Type of record.'''
+        """Type of record."""
         return 'ATOM'
 
 
 @dataclass(frozen=True)
 class HetAtomRecord(ParticleRecord):
+    """HETATM record."""
+
     @property
     def record_type(self) -> str:
-        '''Type of record.'''
+        """Type of record."""
         return 'HETATM'

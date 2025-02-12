@@ -10,5 +10,5 @@ pip install -e ".[develop]"
 
 pytest
 
-isort --check-only .
-flake8
+ruff check
+ruff format
